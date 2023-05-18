@@ -19,6 +19,7 @@ const Layout = ({ children }) => {
       }}
     >
       {children}
+      {/** @ts-ignore */}
       <Scene
         style={{
           position: 'fixed',

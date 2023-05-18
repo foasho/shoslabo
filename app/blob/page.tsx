@@ -30,9 +30,11 @@ export default function Page() {
           <p className='mb-8 text-2xl leading-normal'>A minimalist starter for React, React-three-fiber and Threejs.</p>
         </div>
       </div>
-
+      {/** @ts-ignore */}
       <View className='absolute top-0 flex h-screen w-full flex-col items-center justify-center'>
+        {/** @ts-ignore */}
         <Blob />
+        {/** @ts-ignore */}
         <Common />
       </View>
     </>
