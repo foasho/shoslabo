@@ -5,8 +5,7 @@ import dynamic from 'next/dynamic'
 const Scene = dynamic(() => import('@/components/canvas/Scene'), { ssr: false })
 
 const Layout = ({ children }) => {
-  const ref = useRef<HTMLDivElement>();
-
+  const ref = useRef<any>();
   return (
     <div
       ref={ref}
