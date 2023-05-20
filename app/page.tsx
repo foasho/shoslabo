@@ -1,5 +1,4 @@
 'use client'
-
 import dynamic from 'next/dynamic'
 import { Suspense } from 'react'
 
@@ -21,9 +20,12 @@ const View = dynamic(() => import('@/components/canvas/View').then((mod) => mod.
     </div>
   ),
 })
-const Common = dynamic(() => import('@/components/canvas/View').then((mod) => mod.Common), { ssr: false })
+const Common = dynamic(() => import('@/components/canvas/View').then((mod) => mod.Common), { ssr: false });
+
+
 
 export default function Page() {
+
   return (
     <>
       <div className='mx-auto flex w-full flex-col flex-wrap items-center md:flex-row  lg:w-4/5'>
@@ -33,6 +35,10 @@ export default function Page() {
           <h1 className='my-4 text-5xl font-bold leading-tight'>Next 3D Starter</h1>
           <p className='mb-8 text-2xl leading-normal'>A minimalist starter for React, React-three-fiber and Threejs.</p>
         </div>
+
+        {/* ConnectWallet Btn */}
+        {/* <WalletConnectBtn /> */}
+        
 
         <div className='w-full text-center md:w-3/5'>
           {/** @ts-ignore */}

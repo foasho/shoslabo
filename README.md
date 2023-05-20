@@ -1,3 +1,8 @@
 # shoslabo
 
-This project was bootstrapped with [`create-r3f-app`](https://github.com/utsuboco/create-r3f-app)
+
+```
+yarn prisma studio
+yarn prisma generate
+yarn prisma db push && yarn prisma generate
+```

@@ -13,16 +13,25 @@
     "@ducanh2912/next-pwa": "^8.2.0",
     "@react-three/drei": "^9.65.3",
     "@react-three/fiber": "^8.12.0",
+    "ethers": "^5.7.2",
     "glsl-random": "^0.0.5",
+    "mongodb": "^5.5.0",
     "next": "^13.4.2",
+    "next-auth": "^4.22.1",
+    "prisma": "^4.14.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-icons": "^4.8.0",
+    "siwe": "^2.1.4",
+    "sweetalert2": "^11.7.5",
     "three": "^0.151.3",
     "three-stdlib": "^2.21.8",
-    "tunnel-rat": "^0.1.2"
+    "tunnel-rat": "^0.1.2",
+    "wagmi": "^0.11.7"
   },
   "devDependencies": {
     "@next/bundle-analyzer": "^13.3.0",
+    "@prisma/client": "^4.14.1",
     "@types/node": "^20.2.0",
     "@types/react": "^18.2.6",
     "autoprefixer": "^10.4.14",
@@ -42,10 +51,12 @@
   },
   "scripts": {
     "lint": "next lint --fix --dir app",
-    "dev": "next dev",
-    "build": "next build",
+    "dev": "yarn update && next dev",
+    "build": "yarn update && next build",
     "analyze": "ANALYZE=true next build",
     "start": "next start",
+    "update": "yarn prisma db push && yarn prisma generate",
+    "studio": "yarn prisma studio",
     "prettier": "npx prettier --list-different \"./src/**/*.{ts,tsx,md}\" \"./app/**/*.{ts,tsx,md}\"\""
   }
 }

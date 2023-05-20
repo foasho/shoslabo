@@ -4,7 +4,10 @@
     "paths": {
       "@/*": [
         "app/*",
-        "src/*"
+        "src/*",
+        "pages/*",
+        "prisma/*",
+        "providers/*"
       ]
     },
     "target": "es5",
@@ -29,7 +32,8 @@
       {
         "name": "next"
       }
-    ]
+    ],
+    "strictNullChecks": true
   },
   "include": [
     "next-env.d.ts",
@@ -38,6 +42,7 @@
     ".next/types/**/*.ts"
   ],
   "exclude": [
-    "node_modules"
+    "node_modules",
+    "./dist/connectors/injected",
   ]
 }
