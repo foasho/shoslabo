@@ -3,6 +3,7 @@
 import { forwardRef, Suspense, useImperativeHandle, useRef } from 'react'
 import { OrbitControls, PerspectiveCamera, View as ViewImpl } from '@react-three/drei'
 import { Three } from '@/helpers/components/Three'
+import { Perf } from 'r3f-perf'
 
 export const Common = (
   { 
@@ -19,14 +20,31 @@ export const Common = (
   </Suspense>
 )
 
+export const DebugComponent = () => {
+  return (
+    <>
+      <Perf
+        position='top-left'
+        minimal
+      />
+    </>
+  )
+}
+
 export interface IViewProps {
   children?: React.ReactNode
   orbit?: boolean
+  debug?: boolean
   className?: string
 }
 const View = forwardRef(
 (
-  { children, orbit, ...props }: IViewProps
+  { 
+    children, 
+    orbit, 
+    debug, 
+    ...props
+  }: IViewProps
   , 
   ref
 ) => {
@@ -40,6 +58,7 @@ const View = forwardRef(
         <ViewImpl track={localRef}>
           {children}
           {orbit && <OrbitControls />}
+          {debug && <DebugComponent />}
         </ViewImpl>
       </Three>
     </>

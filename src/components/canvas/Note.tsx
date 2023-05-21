@@ -45,7 +45,7 @@ const HighlightedCodeBlock = ({
 
   return (
     <div
-      className="relative w-full overflow-hidden h-screen"
+      className="relative w-full max-h-100"
       style={{
         backgroundColor: "#1e1e1e",
       }}
@@ -64,11 +64,14 @@ const HighlightedCodeBlock = ({
           )}
         </a>
       </div>
+      <div
+        
+      ></div>
       <SyntaxHighlighter 
         language="tsx"
         style={vscDarkPlus}
-        showLineNumbers
-        wrapLines
+        showLineNumbers={true}
+        // wrapLines
         showInlineLineNumbers
         customStyle={{ margin: 0, paddingTop: 30 }}
       >
@@ -82,9 +85,10 @@ const HighlightedCodeBlock = ({
  * 
  */
 interface INoteProps extends IViewProps {
-  children?: React.ReactNode;
+  children?: React.ReactNode | React.ReactNode[];
   sourceCode?: string;
   orbit?: boolean;
+  debug?: boolean;
   common?: boolean;
 }
 export const R3FNote = (
@@ -92,29 +96,48 @@ export const R3FNote = (
     children,
     sourceCode,
     orbit = false,
+    debug = false,
     common = true,
   }: INoteProps,
 ) => {
+  // childrenが2つある場合は、最後のもの以外をViewにいれて、最後のものをViewの外に出す
+  let isArr = false;
+  if (Array.isArray(children) && children.length > 1) {
+    isArr = true;
+  }
   const [viewType, setViewType] = useState<'view' | 'code' | 'split'>("view");
   return (
-    <div className={`flex h-screen ${viewType !== 'split' ? 'justify-center' : ''}`}>
+    <div className={`relative flex h-screen ${viewType !== 'split' ? 'justify-center' : ''}`}>
       {/** view */}
       {(viewType === 'view' || viewType == 'split') &&
-      <>
+      <div
+          className={`absolute h-screen ${viewType === 'split' ? 'w-1/2 d-flex' : 'w-full'}`}
+      >
         {/** @ts-ignore */}
         <View 
-          className={`overflow-hidden ${viewType === 'split' ? 'w-1/2 d-flex' : 'w-full'}`}
+            className={`absolute w-full h-full ${viewType === 'split' ? 'w-1/2' : ''}`}
           orbit={orbit}
+          debug={debug}
         >
-          {children} 
+          {children && isArr && Array.isArray(children) ? 
+            children.slice(0, children.length - 1)
+           : children}
           {common && <Common />}
         </View>
-      </>
+        {/** @ts-ignore */}
+        {children && isArr && Array.isArray(children) &&
+        <div
+          className={`absolute z-10 ${viewType === 'split' ? 'w-1/2 d-flex left-1/2' : 'w-full'}`}
+        >
+          {children[children.length - 1]}
+        </div>
+        }
+      </div>
       }
       {/** code */}
       {(viewType === 'code' || viewType == 'split') && 
         <div
-          className={`overflow-hidden ${viewType === 'split' ? 'w-1/2 d-flex' : 'w-full'}`}
+          className={`absolute ${viewType === 'split' ? 'w-1/2 d-flex left-1/2' : 'w-full'}`}
         >
           <HighlightedCodeBlock code={sourceCode} />;
         </div>

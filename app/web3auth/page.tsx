@@ -1,7 +1,7 @@
 'use client';
 import React, { useState } from 'react';
 import { signOut, useSession } from 'next-auth/react'
-import useConnectWallet from '@/templates/hooks/useConnectWallet';
+import useConnectWallet from '@/hooks/useConnectWallet';
 import ClientOnly from '@/client-only';
 import Swal from 'sweetalert2';
 
