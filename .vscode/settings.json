@@ -4,6 +4,13 @@
   "editor.codeActionsOnSave": {
     "source.fixAll": true
   },
-  "eslint.validate": ["javascript"],
-  "eslint.workingDirectories": [{ "mode": "auto" }]
+  "eslint.validate": [
+    "javascript"
+  ],
+  "eslint.workingDirectories": [
+    {
+      "mode": "auto"
+    }
+  ],
+  "editor.tabSize": 2
 }
