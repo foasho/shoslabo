@@ -2,10 +2,12 @@ import React, { useEffect, useState, useRef, MutableRefObject } from "react";
 import { OrbitControls, useGLTF, Html, GizmoHelper, GizmoViewport, useFont, Text3D } from "@react-three/drei";
 import { EffectComposer, Bloom, Noise } from "@react-three/postprocessing";
 import { BlendFunction } from "postprocessing";
-import { DoubleSide, Vector3 } from "three";
+import { DoubleSide, Vector3, ShaderMaterial, Vector4, Color } from "three";
 import { useFrame, useThree } from "@react-three/fiber";
 import { animated, useSpring } from '@react-spring/web';
 import { OrbitControls as OrbitControlsImpl } from "three-stdlib";
+import simplevert from "@/shaders/sample.vert";
+import simplefrag from "@/shaders/sample.frag";
 
 export const Home = () => {
   const device = detectDeviceType();
@@ -78,9 +80,59 @@ export const Home = () => {
         camera={camera}
         enabled={!init}
       />
+      <PointerSelect3D />
       <MyEffect />
       {/* {debug && <MyDebug />} */}
     </>
+  )
+}
+
+interface PointerSelect3DProps {
+  position?: [number, number, number] | Vector3;
+}
+const PointerSelect3D = (
+  {
+    position = [0, -1, 0]
+  }: PointerSelect3DProps
+) => {
+  console.log("PointerSelect3D");
+  console.log(simplefrag);
+  const myShaderMaterial = new ShaderMaterial({
+    side: DoubleSide,
+    uniforms: {
+      // time: { value: 0 },
+      // colorStart: { value: new Color('hotpink') },
+      // colorEnd: { value: new Color('white') }
+    },
+    // vertexShader: simplevert,
+    fragmentShader: simplefrag
+  });
+  useFrame(({ mouse }) => {
+
+  });
+  return (
+    <group
+      position={position}
+    >
+      <mesh
+        position={[0, 0, 0]}
+      >
+        <sphereBufferGeometry attach="geometry" args={[0.5, 32, 32]} />
+        <primitive attach="material" object={myShaderMaterial} />
+      </mesh>
+      <mesh
+        position={[2, 0, 0]}
+      >
+        <sphereBufferGeometry attach="geometry" args={[0.5, 32, 32]} />
+        <meshBasicMaterial attach="material" color="white" />
+      </mesh>
+      <mesh
+        position={[4, 0, 0]}
+      >
+        <sphereBufferGeometry attach="geometry" args={[0.5, 32, 32]} />
+        <meshBasicMaterial attach="material" color="white" />
+      </mesh>
+    </group>
   )
 }
 
