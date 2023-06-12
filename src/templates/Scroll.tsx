@@ -20,8 +20,8 @@ const state = {
 const { damp } = THREE.MathUtils
 
 export default function Scroll({ children }) {
-  const content = useRef(null)
-  const wrapper = useRef(null)
+  const content = useRef<HTMLDivElement>(null);
+  const wrapper = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const lenis = new Lenis({
