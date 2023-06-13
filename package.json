@@ -37,6 +37,7 @@
     "siwe": "^2.1.4",
     "sweetalert2": "^11.7.5",
     "three": "^0.151.3",
+    "three-custom-shader-material": "^5.3.7",
     "three-stdlib": "^2.21.8",
     "tunnel-rat": "^0.1.2",
     "wagmi": "^0.11.7"
