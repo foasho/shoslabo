@@ -1,12 +1,12 @@
 "use client"
 import React, { MutableRefObject, Suspense, useEffect, useMemo, useRef, useState } from "react";
 import { useThree, useFrame } from "@react-three/fiber"
-import { 
-  useGLTF, 
-  OrbitControls, 
-  RoundedBox, 
+import {
+  useGLTF,
+  OrbitControls,
+  RoundedBox,
   Environment,
- } from "@react-three/drei";
+} from "@react-three/drei";
 import { StaticGeometryGenerator, MeshBVH } from "three-mesh-bvh";
 import { OrbitControls as OrbitControlsImpl } from "three-stdlib";
 import { MeshReflectorMaterial, Bvh } from "@react-three/drei";
@@ -47,12 +47,12 @@ const Field = (
             scale={[citySize, citySize, 1]}
             name="ground"
           >
-            <planeBufferGeometry />
+            <planeGeometry />
             <MeshReflectorMaterial mirror={1} resolution={mirrorResolution} />
           </mesh>
           {/** 適当なBoxes, 位置も回転もばらばら */}
           {[...Array(1000)].map((_, i) => (
-            <RandomBoxes 
+            <RandomBoxes
               key={i}
               citySize={citySize}
               maxHeight={3}
@@ -110,7 +110,7 @@ const Player = ({
   initRotation = new Euler(0, 0, 0),
 }: IPlayerProps) => {
   const playerRef: MutableRefObject<Mesh | null> = useRef<Mesh>(null);
-  const circleRef: MutableRefObject<Mesh| null> = useRef<Mesh>(null);
+  const circleRef: MutableRefObject<Mesh | null> = useRef<Mesh>(null);
   const circleInitScale = 0.1;
   const circleMaxSize = 3;
   const circleSpeed = 2;
@@ -196,11 +196,11 @@ const PlayerControl = (
     cameraOffset = new Vector3(-0.25, 1, -5),
     firstPerson,
     resetPosition = new Vector3(0.0, 3, -30)
-}: IPlayerControlProps) => {
-  const { input } = useInputControl({});  
+  }: IPlayerControlProps) => {
+  const { input } = useInputControl({});
   const orbitMove = useRef(false);
   const isInit = useRef(true);
-  const player: React.MutableRefObject<Mesh|null> = useRef<Mesh>(null);
+  const player: React.MutableRefObject<Mesh | null> = useRef<Mesh>(null);
   const capsuleInfo = useRef<{ radius: number, segment: Line3 }>();
   capsuleInfo.current = {
     radius: 0.5,

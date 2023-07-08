@@ -1,10 +1,10 @@
 'use client'
+import { Header } from '@/components/commons/Header';
 import { Canvas } from '@react-three/fiber';
 import dynamic from 'next/dynamic'
 import { Suspense } from 'react';
 
-const Home = dynamic(() => import('@/components/canvas/Home').then((mod) => mod.Home), { ssr: false });
-const View = dynamic(() => import('@/components/canvas/View').then((mod) => mod.View), {
+const Home = dynamic(() => import('@/components/canvas/Home').then((mod) => mod.Home), { 
   ssr: false,
   loading: () => (
     <div className='flex h-96 w-full flex-col items-center justify-center'>
@@ -18,30 +18,24 @@ const View = dynamic(() => import('@/components/canvas/View').then((mod) => mod.
       </svg>
     </div>
   ),
-})
-const Common = dynamic(() => import('@/components/canvas/View').then((mod) => mod.Common), { ssr: false });
-
-
+});
 
 export default function Page() {
 
   return (
     <>
-      <div className='mx-auto flex w-full flex-col flex-wrap items-center md:flex-row'>
-        <div className='w-full text-center h-screen'>
+      <div
+        id="target"
+        className="absolute w-full top-0"
+        style={
+          {
+            height: '100%',
+          }
+        }
+      >
+          <Header />
           {/** @ts-ignore */}
-          <Canvas style={
-            {
-              height: '100vh',
-              width: '100vw'
-            }
-          }>
-            <Suspense fallback={null}>
-              {/** @ts-ignore */}
-              <Home />
-            </Suspense>
-          </Canvas>
-        </div>
+          <Home />
       </div>
     </>
   )

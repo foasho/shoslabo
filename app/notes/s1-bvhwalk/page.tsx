@@ -65,7 +65,7 @@ const Field = (
             scale={[citySize, citySize, 1]}
             name="ground"
           >
-            <planeBufferGeometry />
+            <planeGeometry />
             <MeshReflectorMaterial mirror={1} resolution={mirrorResolution} />
           </mesh>
           {/** 適当なBoxes, 位置も回転もばらばら */}

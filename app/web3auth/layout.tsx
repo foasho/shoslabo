@@ -1,6 +1,7 @@
 import { Layout } from '@/components/dom/Layout'
 import '@/global.css';
 import { Metadata } from "next";
+import RootProvider from "@/root.container";
 
 const title = 'Sho\'s Labo'
 const url = 'https://shoslabo.vercel.app/'
@@ -54,11 +55,10 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang='ja' className='antialiased'>
-      <head />
-      <body>
-        <Layout>{children}</Layout>
-      </body>
-    </html>
+    <section>
+      <RootProvider>
+        {children}
+      </RootProvider>
+    </section >
   )
 }

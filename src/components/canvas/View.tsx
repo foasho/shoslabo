@@ -57,7 +57,7 @@ const View = forwardRef(
         {/** @ts-ignore */}
         <ViewImpl track={localRef}>
           {children}
-          {orbit && <OrbitControls />}
+          {orbit && <OrbitControls enableZoom={false} />}
           {debug && <DebugComponent />}
         </ViewImpl>
       </Three>

@@ -1,25 +1,42 @@
 import { Environment, MeshReflectorMaterial, OrbitControls, Scroll, ScrollControls, Sky, useGLTF, useScroll, useTexture } from "@react-three/drei";
-import { useThree, applyProps, useLoader, useFrame } from "@react-three/fiber";
+import { useThree, Canvas, useFrame } from "@react-three/fiber";
 import { EffectComposer, Bloom, SSR, LUT, Outline, Noise, DepthOfField } from "@react-three/postprocessing";
-import { createContext, useContext, useEffect, useLayoutEffect, useState, useMemo, useRef } from "react";
+import { createContext, useContext, useEffect, useLayoutEffect, useState, useMemo, useRef, Suspense } from "react";
 import { Group, Mesh, Vector3, ShaderMaterial, Color, DoubleSide, MeshStandardMaterial } from "three";
 import { LUTCubeLoader } from 'postprocessing';
 // @ts-ignore
 import CustomShaderMaterial from "three-custom-shader-material";
+import { HomeHtml } from "./HomeHtml";
+import { Loading3D } from "../commons/Loading3D";
+import ClientOnly from "@/client-only";
 
 export const Home = () => {
 
   return (
-    <MyProvider>
-      <ScrollControls
-        pages={5}
-      >
-        <Lighting />
-        <MyEffect />
-        <Table />
-        <MyCamera />
-      </ScrollControls>
-    </MyProvider>
+    <ClientOnly>
+      <div id="hero" className="h-full w-full">
+        <Canvas style={
+          {
+            height: '100vh',
+            width: '100%'
+          }
+        }>
+          <ScrollControls pages={5}>
+            <MyProvider>
+              <Lighting />
+              <MyEffect />
+              <Suspense fallback={<Loading3D position={[0, 0, 0]} />}>
+                <Table />
+                <MyCamera />
+              </Suspense>
+            </MyProvider>
+            <Scroll html>
+              <HomeHtml />
+            </Scroll>
+          </ScrollControls>
+        </Canvas>
+      </div>
+    </ClientOnly>
   )
 }
 
@@ -63,7 +80,7 @@ const MyCamera = (
 
   return (
     <>
-      <OrbitControls />
+      {/* <OrbitControls /> */}
     </>
   )
 }
@@ -92,7 +109,6 @@ const MyEffect = () => {
   }
   return (
     <>
-      {/* <color attach="background" args={['#171720']} /> */}
       <EffectComposer multisampling={0} disableNormalPass autoClear={false}>
         <DepthOfField
           focusDistance={0}
@@ -384,7 +400,7 @@ const Alexa = () => {
             scale={0.5}
             position={[-0.075, 0, 0]}
           >
-            <circleBufferGeometry args={[0.1, 32]} />
+            <circleGeometry args={[0.1, 32]} />
             <meshBasicMaterial
               map={mode === "dark" ? nightmodeTex : lightmodeTex}
             />
@@ -393,7 +409,7 @@ const Alexa = () => {
           <mesh
             scale={0.5}
           >
-            <planeBufferGeometry args={[0.1, 0.1]} />
+            <planeGeometry args={[0.1, 0.1]} />
             <meshBasicMaterial
               map={arrow}
               transparent={true}
@@ -403,7 +419,7 @@ const Alexa = () => {
             scale={0.5}
             position={[0.075, 0, 0]}
           >
-            <circleBufferGeometry args={[0.1, 32]} />
+            <circleGeometry args={[0.1, 32]} />
             <meshBasicMaterial
               map={mode === "dark" ? lightmodeTex : nightmodeTex}
             />

@@ -20,20 +20,20 @@ const GlassPlane = () => {
     <mesh
       rotation={[-Math.PI / 2, 0, 0]}
     >
-      <planeBufferGeometry attach="geometry" args={[100, 100]} />
+      <planeGeometry attach="geometry" args={[100, 100]} />
       <meshStandardMaterial attach="material" color="#000f00" />
     </mesh>
   )
 }
 
 const Grass = (
-  { 
-    options = { bW: 0.12, bH: 1, joints: 5 }, 
-    width = 100, 
-    instances = 50000, 
+  {
+    options = { bW: 0.12, bH: 1, joints: 5 },
+    width = 100,
+    instances = 50000,
     colorTexture = "/textures/blade_diffuse.jpg",
     shapeTexture = "/textures/blade_alpha.jpg",
-    ...props 
+    ...props
   }
 ) => {
   const { bW, bH, joints } = options
@@ -41,9 +41,9 @@ const Grass = (
   const [texture, alphaMap] = useLoader(TextureLoader, [colorTexture, shapeTexture])
   const attributeData = useMemo(() => getAttributeData(instances, width), [instances, width])
   const baseGeom = useMemo(() => new PlaneGeometry(bW, bH, 1, joints).translate(0, bH / 2, 0), [options])
-  
+
   useFrame((state) => {
-    if (materialRef.current && materialRef.current.uniforms && materialRef.current.uniforms.time){
+    if (materialRef.current && materialRef.current.uniforms && materialRef.current.uniforms.time) {
       {/* @ts-ignore */ }
       materialRef.current.uniforms.time.value = state.clock.elapsedTime / 4
     }
@@ -63,11 +63,11 @@ const Grass = (
         {/* @ts-ignore */}
         <grassMaterial ref={materialRef} map={texture} alphaMap={alphaMap} transparent depthWrite={false} />
       </mesh>
-      <mesh 
+      <mesh
         position={[0, 0, 0]}
         rotation={[-Math.PI / 2, 0, 0]}
       >
-        <planeBufferGeometry 
+        <planeGeometry
           attach="geometry"
           args={[width, width, 32, 32]}
         />

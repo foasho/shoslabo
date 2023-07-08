@@ -15,5 +15,43 @@
     margin: 0;
     padding: 0;
     overflow: hidden;
+    font-family: "/fonts/MPLUS1-Light.ttf";
+  }
+
+  /* スクロールバーの幅 */
+  ::-webkit-scrollbar {
+    width: 5px;
+    /* スクロールバーの幅を調整 */
+  }
+
+  /* スクロールバーのトラック */
+  ::-webkit-scrollbar-track {
+    background-color: transparent;
+    /* スクロールバーのトラックの背景色 */
+  }
+
+  /* スクロールバーのハンドル（スクロールバーの動く部分） */
+  ::-webkit-scrollbar-thumb {
+    background-color: #efcb16;
+    /* スクロールバーのハンドルの背景色 */
+    border-radius: 2.5px;
+    /* スクロールバーのハンドルの角丸 */
+  }
+
+  /* スクロールバーのハンドルをドラッグした際の背景色 */
+  ::-webkit-scrollbar-thumb:hover {
+    background-color: #efcb16;
+  }
+
+  /* 水平方向のスクロールバー */
+  ::-webkit-scrollbar-horizontal {
+    height: 20px;
+    /* 水平方向のスクロールバーの高さを調整 */
+  }
+
+  /* 垂直方向のスクロールバー */
+  ::-webkit-scrollbar-vertical {
+    width: 5px;
+    /* 垂直方向のスクロールバーの幅を調整 */
   }
 }
