@@ -5,48 +5,42 @@ export default function Page() {
 
   const cards = [
     {
+      key: 'card-1',
       title: 'Card 1',
       description: 'Lorem ipsum dolor sit amet, consectetur adipiscing',
       image: 'https://tailwindcss.com/img/card-top.jpg',
       tags: ['tag1', 'tag2', 'tag3'],
     },
     {
+      key: 'card-2',
       title: 'Card 1',
       description: 'Lorem ipsum dolor sit amet, consectetur adipiscing',
       image: 'https://tailwindcss.com/img/card-top.jpg',
       tags: ['tag1', 'tag2', 'tag3'],
     },
     {
+      key: 'card-3',
       title: 'Card 1',
       description: 'Lorem ipsum dolor sit amet, consectetur adipiscing',
       image: 'https://tailwindcss.com/img/card-top.jpg',
       tags: ['tag1', 'tag2', 'tag3'],
     },
     {
+      key: 'card-4',
       title: 'Card 1',
       description: 'Lorem ipsum dolor sit amet, consectetur adipiscing',
       image: 'https://tailwindcss.com/img/card-top.jpg',
       tags: ['tag1', 'tag2', 'tag3'],
     },
     {
+      key: 'card-5',
       title: 'Card 1',
       description: 'Lorem ipsum dolor sit amet, consectetur adipiscing',
       image: 'https://tailwindcss.com/img/card-top.jpg',
       tags: ['tag1', 'tag2', 'tag3'],
     },
     {
-      title: 'Card 1',
-      description: 'Lorem ipsum dolor sit amet, consectetur adipiscing',
-      image: 'https://tailwindcss.com/img/card-top.jpg',
-      tags: ['tag1', 'tag2', 'tag3'],
-    },
-    {
-      title: 'Card 1',
-      description: 'Lorem ipsum dolor sit amet, consectetur adipiscing',
-      image: 'https://tailwindcss.com/img/card-top.jpg',
-      tags: ['tag1', 'tag2', 'tag3'],
-    },
-    {
+      key: 'card-6',
       title: 'Card 1',
       description: 'Lorem ipsum dolor sit amet, consectetur adipiscing',
       image: 'https://tailwindcss.com/img/card-top.jpg',
@@ -70,7 +64,10 @@ export default function Page() {
       {/** カードリスト */}
       <div className="flex flex-wrap -mx-4">
         {cards.map((card, idx) => (
-          <div className="w-full md:w-1/2 lg:w-1/3 px-4 mb-8" key={idx}>
+          <div 
+            key={`card-${idx}`}
+            className="w-full md:w-1/2 lg:w-1/3 px-4 mb-8" 
+          >
             <div className="bg-white rounded-lg overflow-hidden shadow-lg">
               <img
                 className="w-full h-56 object-cover object-center"
@@ -79,8 +76,8 @@ export default function Page() {
               />
               <div className="p-4">
                 <p className="uppercase tracking-wide text-sm font-bold text-gray-700">
-                  {card.tags.map((tag) => (
-                    <span className="mr-2">{tag}</span>
+                  {card.tags.map((tag, i) => (
+                    <span key={`tag-${i}`} className="mr-2">{tag}</span>
                   ))}
                 </p>
                 <p className="text-3xl font-semibold">{card.title}</p>
