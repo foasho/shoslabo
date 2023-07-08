@@ -1,4 +1,4 @@
-import { Environment, MeshReflectorMaterial, OrbitControls, Scroll, ScrollControls, Sky, useGLTF, useScroll, useTexture } from "@react-three/drei";
+import { Environment, MeshReflectorMaterial, OrbitControls, Scroll, ScrollControls, useGLTF, useScroll, useTexture } from "@react-three/drei";
 import { useThree, Canvas, useFrame } from "@react-three/fiber";
 import { EffectComposer, Bloom, SSR, LUT, Outline, Noise, DepthOfField } from "@react-three/postprocessing";
 import { createContext, useContext, useEffect, useLayoutEffect, useState, useMemo, useRef, Suspense } from "react";
