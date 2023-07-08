@@ -69,8 +69,8 @@ export default function Page() {
       </div>
       {/** カードリスト */}
       <div className="flex flex-wrap -mx-4">
-        {cards.map((card) => (
-          <div className="w-full md:w-1/2 lg:w-1/3 px-4 mb-8">
+        {cards.map((card, idx) => (
+          <div className="w-full md:w-1/2 lg:w-1/3 px-4 mb-8" key={idx}>
             <div className="bg-white rounded-lg overflow-hidden shadow-lg">
               <img
                 className="w-full h-56 object-cover object-center"
