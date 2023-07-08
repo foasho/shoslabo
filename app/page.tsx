@@ -25,7 +25,6 @@ export default function Page() {
   return (
     <>
       <div
-        id="target"
         className="absolute w-full top-0"
         style={
           {

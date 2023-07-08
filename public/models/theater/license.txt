@@ -1,8 +1,0 @@
-Model Information:
-* title:	Movie Theater
-* source:	https://sketchfab.com/3d-models/movie-theater-33a8f4afed77445693ccf862e4aeb614
-* author:	Janis Zeps (https://sketchfab.com/zeps9001)
-
-Model License:
-* license type:	SKETCHFAB Standard (https://sketchfab.com/licenses)
-* requirements:	Under basic restrictions, use worldwide, on all types of media, commercially or not, and in all types of derivative works

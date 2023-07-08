@@ -1,9 +1,9 @@
-import { Line, useCursor, useGLTF, useScroll } from "@react-three/drei";
+import { Line, Text3D, useCursor, useFont, useGLTF, useScroll, Text, MeshPortalMaterial } from "@react-three/drei";
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import dynamic from "next/dynamic";
 import { Suspense, useEffect, useMemo, useRef, useState } from "react";
 import { RxDoubleArrowDown } from "react-icons/rx";
-import { EllipseCurve, Group, Mesh } from "three";
+import { DoubleSide, EllipseCurve, Group, Mesh } from "three";
 import { Loading3D } from "../commons/Loading3D";
 
 const View = dynamic(() => import('@/components/canvas/View').then((mod) => mod.View), {
@@ -27,7 +27,6 @@ export const HomeHtml = ({
   title = "Sho'sLabo",
   fontColor = "#fff",
 }) => {
-  console.log('HomeHtml');
   const [now, setNow] = useState<Date>();
   const birthStr = "1995-01-11";
   const age = useMemo(() => {
@@ -43,13 +42,14 @@ export const HomeHtml = ({
 
   return (
     <>
-      {/** タイトルロゴ */}
+      {/** 1:タイトルロゴ */}
       <div
         className='px-3 mx-auto h-screen flex flex-wrap justify-center flex-col md:flex-row items-center w-screen'
         style={{
           color: fontColor,
         }}
       >
+        <FixedFlicker />
         <div className="relative w-full h-full">
           <div className='absolute z-10 top-1/2 left-1/2 text-6xl md:text-8xl font-bold text-center w-full -translate-x-1/2 -translate-y-1/2'>
             {title}
@@ -63,7 +63,7 @@ export const HomeHtml = ({
           </div>
         </div>
       </div>
-      {/** 名前と生年月日 */}
+      {/** 2:名前と生年月日 */}
       <div
         className='w-screen h-screen flex items-center justify-center'
         style={{
@@ -79,7 +79,10 @@ export const HomeHtml = ({
           {/** Age */}
           <div className='w-3/4 h-3/4 flex flex-col items-center justify-center'>
             <div className='text-6xl font-bold'>
-              ShoOsaka
+              <ruby>
+                ShoOsaka
+                <rt>ITエンジニア</rt>
+              </ruby>
             </div>
             <div className='text-2xl'>
               {birthStr}({age})
@@ -87,46 +90,56 @@ export const HomeHtml = ({
           </div>
         </div>
       </div>
-      {/** 技術スタック一覧(Python <FastAPI, Django, Flask, Tensorflow>, React <Typescript, Three.js>, Cloud <AWS, Azure>) */}
-      <div className='h-screen w-screen pt-8  bg-gradient-to-b from-transparent via-indigo-300 via-20% bg-opacity-50'>
-        <div className={"px-6 text-white my-4 relative"}>
-          <div className={"absolute w-4 h-4 top-[-10px] bg-white z-0 rounded-sm rotate-12 animate-bounce"}></div>
-          <div className={"text-3xl font-bold relative z-10 text-white"}>
+      {/** 3:技術スタック一覧 */}
+      <div className='h-screen w-screen pt-8 px-8'>
+        <div className={"px-6 text-white my-4 relative text-center"}>
+          <div className={"absolute w-4 h-4 top-[-10px] left-[30%] bg-white z-0 rounded-sm rotate-12 animate-bounce"}></div>
+          <div className={"absolute w-4 h-4 top-[-10px] left-[50%] bg-white z-0 rounded-sm rotate-12 animate-bounce"}></div>
+          <div className={"absolute w-4 h-4 top-[-10px] left-[70%] bg-white z-0 rounded-sm rotate-12 animate-bounce"}></div>
+          <div className={"text-3xl pt-4 font-bold relative z-10 text-white select-none"}>
             技術スタック一覧
           </div>
-          <div className={"text-md pt-1 text-indigo-800 font-bold"}>
+          <div className={"text-md pt-1 font-bold select-none"}>
             Tech Stack
           </div>
         </div>
         <div
-          className="w-full h-[350px] px-2 flex relative text-white"
+          className="w-full h-full px-2 relative text-white block md:flex"
         >
+          {/** React */}
           <div
-            className="relative mx-auto hover:scale-[1.1] transition duration-300 md:w-1/3 w-full"
+            className="relative hover:scale-[1.1] transition duration-300 md:w-1/3 w-full px-2"
           >
             <Suspense fallback={null}>
               {/** @ts-ignore */}
-              <View orbit className="h-full w-full">
+              <View orbit className="h-64 w-full">
                 <ambientLight />
                 <ReactLogo />
               </View>
             </Suspense>
             {/** タイトルと説明 */}
             <div className='text-center'>
-              <div className='text-2xl font-bold'>
+              <div className='text-2xl font-bold select-none'>
                 React
               </div>
-              <div className='text-md'>
-                Typescript, Three.js
+              <div className='text-md select-none'>
+                Typescript, Three.js(R3F)
+              </div>
+              <div className='text-sx select-none'>
+                Webアプリケーションの開発において、Reactを用いた開発を行った経験があります。
+                また、Three.jsを用いた本サイトのような3DWebサイトを作成することができます。
+                個人でもWebGLのゲームエンジンを作成したことがあり、
+                業界最速のパフォーマンスで3Dアプリケーションを開発することができます。
               </div>
             </div>
           </div>
+          {/** Python */}
           <div
-            className="relative mx-auto hover:scale-[1.1] transition duration-300 md:w-1/3 w-full"
+            className="relative hover:scale-[1.1] transition duration-300 md:w-1/3 w-full px-2"
           >
             <Suspense fallback={<Loading3D position={[0, 0, 0]}/>}>
               {/** @ts-ignore */}
-              <View orbit className="h-full w-full">
+              <View orbit className="h-64 w-full">
                 <directionalLight intensity={0.5} position={[0, 1, 5]} />
                 <spotLight
                   position={[10, 10, 10]}
@@ -141,13 +154,13 @@ export const HomeHtml = ({
             </Suspense>
             {/** タイトルと説明 */}
             <div className='text-center'>
-              <div className='text-2xl font-bold'>
+              <div className='text-2xl font-bold select-none'>
                 Python
               </div>
-              <div className='text-md my-2'>
+              <div className='text-md my-2 select-none'>
                 FastAPI, Django, Tensorflow, OpenCV
               </div>
-              <div className='text-sx'>
+              <div className='text-sx select-none'>
                 Web技術を中心に、機械学習や画像処理などの分野で実務経験があります。
                 また、Pythonのライブラリを用いて、Webアプリケーションの開発を行った経験があります。
                 AIシステムの開発において、機械学習のモデルの開発から、Webアプリケーションの開発まで、
@@ -155,11 +168,99 @@ export const HomeHtml = ({
               </div>
             </div>
           </div>
+          {/** Cloud */}
+          <div
+            className="relative hover:scale-[1.1] transition duration-300 md:w-1/3 w-full px-2"
+          >
+            <Suspense fallback={null}>
+              {/** @ts-ignore */}
+              <View orbit className="h-64 w-full">
+                <ambientLight />
+                <CloudLogo />
+              </View>
+            </Suspense>
+            {/** タイトルと説明 */}
+            <div className='text-center'>
+              <div className='text-2xl font-bold select-none'>
+                Cloud
+              </div>
+              <div className='text-md select-none'>
+                AWS, Azure
+              </div>
+              <div className='text-sx select-none'>
+                AWSを用いたインフラ設計と構築を行った経験があります。
+                また、Azureを用いたAADを活用した業務システムの開発を行った経験があります。
+                両方のクラウドサービスを用いた開発を行うことができます。
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      {/** 4:経歴 */}
+      <div className='h-screen w-screen pt-8 px-8'></div>
+      {/** 5:サービス */}
+      <div className='h-screen w-screen pt-8 px-8 relative'>
+        {/** 3つのサービスを並べる */}
+        <div className="absolute w-full h-full text-center md:pt-32 pt-72 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 items-center justify-center">
+          {/** 1つ目:【お絵描き道場】 */}
+          <div className='w-full h-1/3 md:w-1/3 md:h-full md:inline-block items-center justify-center hover:scale-[1.1] transition duration-300'>
+            <img 
+              src='/img/logo.svg'
+              className='w-36 md:w-72 h-full mx-auto rounded-full md:px-4'
+            />
+          </div>
+          {/** 2つ目:【3DWebサイト】 */}
+          <div className='w-full h-1/3 md:w-1/3 md:h-full md:inline-block items-center justify-center hover:scale-[1.1] transition duration-300'>
+            <img
+              src='/img/logo.svg'
+              className='w-36 md:w-72 h-full mx-auto rounded-full md:px-4'
+            />
+          </div>
+          {/** 3つ目:【AIシステム】 */}
+          <div className='w-full h-1/3 md:w-1/3 md:h-full md:inline-block items-center justify-center hover:scale-[1.1] transition duration-300'>
+            <img
+              src='/img/logo.svg'
+              className='w-36 md:w-72 h-full mx-auto rounded-full md:px-4'
+            />
+          </div>
         </div>
       </div>
     </>
   )
 }
+
+/**
+ * スクロールちらつき防止用のコンポーネント
+ */
+const FixedFlicker = () => {
+  const changeFixed = () => {
+    const target = document.getElementById("target");
+    if (target) {
+      if (!target.children[0]) return;
+      if (target.children[0] instanceof HTMLElement) {
+        // さらに子要素を取得する
+        const child = target.children[0].children[1];
+        if (child instanceof HTMLElement) {
+          child.style.position = "fixed";
+        }
+      }
+    }
+  }
+  useEffect(() => {
+    // スクロール部のカクツキがでるため、targetのchildren[0]のさらにchild[1](2つ目)要素fixedにする
+    setTimeout(() => {
+      changeFixed();
+    }, 1000);
+  }, []);
+
+  return (
+    <></>
+  )
+}
+
+/**
+ * 3DのViewのコンポーネント
+ */
 
 /**
  * ReactLogoのコンポーネント
@@ -212,21 +313,18 @@ const PythonLogo = ({
   cycleTime = 2,
   scale = 0.04,
 }) => {
-  const grp = useRef<Group>(null);
-  const { gl } = useThree();
   const { scene } = useGLTF('/models/python.glb');
-
+  const grp = useRef<Group>(null);
+  
   useFrame((state, delta) => {
+    const t = state.clock.getElapsedTime();
     if (grp.current) {
       // バウンドさせる
-      grp.current.position.y = Math.sin(state.clock.elapsedTime * 2 * Math.PI / cycleTime) * 0.1;
+      grp.current.position.y = Math.sin(t * 2 * Math.PI / cycleTime) * 0.1;
+      grp.current.rotation.y = Math.sin(t) * (Math.PI / 8);
+      grp.current.rotation.x = Math.cos(t) * (Math.PI / 8);
     }
   });
-
-  useEffect(() => {
-    // 背景を透過する
-    gl.setClearColor('#FFF', 0);
-  }, []);
 
   return (
     <group 
@@ -235,5 +333,62 @@ const PythonLogo = ({
     >
       <primitive object={scene} />
     </group>
+  )
+}
+
+/**
+ * 
+ */
+const CloudLogo = ({
+  cycleTime = 2,
+  scale = 0.07,
+}) => {
+
+  const font = useFont('/fonts/MPLUS.json');
+  const { scene } = useGLTF('/models/aws.glb');
+  const grp = useRef<Group>(null);
+
+  useFrame((state, delta) => {
+    const t = state.clock.getElapsedTime();
+    if (grp.current) {
+      // バウンドさせる
+      grp.current.position.y = Math.sin(t * 2 * Math.PI / cycleTime) * 0.1;
+      grp.current.rotation.y = Math.sin(t) * (Math.PI / 8);
+      grp.current.rotation.x = Math.cos(t) * (Math.PI / 8);
+    }
+  });
+
+  return (
+    <group
+      ref={grp}
+    >
+      <group position={[-1.5, 0, 0]}>
+        <Text3D 
+          font={font.data}
+        >
+          {"AWS"}
+          <meshStandardMaterial
+            attach={'material'}
+            color={'#FFF'}
+          />
+        </Text3D>
+        <group
+          scale={scale}
+          position={[-0.1, -0.25, 0]}
+          rotation={[0, -Math.PI/2, 0]}
+        >
+          <primitive object={scene} />
+        </group>
+      </group>
+    </group>
+  )
+}
+
+export const SelectCanvas = () => {
+
+  return (
+    <>
+      <color attach="background" args={['#f0f0f0']} />
+    </>
   )
 }

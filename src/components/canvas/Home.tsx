@@ -1,8 +1,8 @@
-import { Environment, MeshReflectorMaterial, OrbitControls, Scroll, ScrollControls, useGLTF, useScroll, useTexture } from "@react-three/drei";
-import { useThree, Canvas, useFrame } from "@react-three/fiber";
+import { Environment, MeshReflectorMaterial, OrbitControls, Scroll, ScrollControls, Text, useGLTF, useScroll, useTexture } from "@react-three/drei";
+import { useThree, Canvas, useFrame, applyProps } from "@react-three/fiber";
 import { EffectComposer, Bloom, SSR, LUT, Outline, Noise, DepthOfField } from "@react-three/postprocessing";
-import { createContext, useContext, useEffect, useLayoutEffect, useState, useMemo, useRef, Suspense } from "react";
-import { Group, Mesh, Vector3, ShaderMaterial, Color, DoubleSide, MeshStandardMaterial } from "three";
+import { createContext, useContext, useEffect, useLayoutEffect, useState, useMemo, useRef, Suspense, use } from "react";
+import { Group, Mesh, Vector3, ShaderMaterial, Color, DoubleSide, MeshStandardMaterial, Quaternion } from "three";
 import { LUTCubeLoader } from 'postprocessing';
 // @ts-ignore
 import CustomShaderMaterial from "three-custom-shader-material";
@@ -10,37 +10,47 @@ import { HomeHtml } from "./HomeHtml";
 import { Loading3D } from "../commons/Loading3D";
 import ClientOnly from "@/client-only";
 
-export const Home = () => {
+export const Home = ({
+  initPos = new Vector3(0, 1, 1),
+}) => {
 
   return (
     <ClientOnly>
-      <div id="hero" className="h-full w-full">
-        <Canvas style={
+      <Canvas 
+        id="target"
+        style={
           {
             height: '100vh',
-            width: '100%'
+            width: '100%',
           }
-        }>
-          <ScrollControls pages={5}>
-            <MyProvider>
-              <Lighting />
-              <MyEffect />
-              <Suspense fallback={<Loading3D position={[0, 0, 0]} />}>
-                <Table />
-                <MyCamera />
-              </Suspense>
-            </MyProvider>
-            <Scroll html>
-              <HomeHtml />
-            </Scroll>
-          </ScrollControls>
-        </Canvas>
-      </div>
+        }
+        camera={
+          {
+            position: initPos,
+          }
+        }
+      >
+        <ScrollControls pages={5}>
+          <MyProvider initPos={initPos}>
+            <Lighting />
+            <MyEffect />
+            <Suspense fallback={<Loading3D position={[0, 0, 0]} />}>
+              <Table />
+            </Suspense>
+            <MyCamera initPos={initPos} />
+          </MyProvider>
+          <Scroll html>
+            <HomeHtml />
+            
+          </Scroll>
+        </ScrollControls>
+      </Canvas>
     </ClientOnly>
   )
 }
 
 interface IMyProvider {
+  initPos: Vector3;
   mode: "light" | "dark";
   setMode: (mode: "light" | "dark") => void;
   hovered: any;
@@ -48,11 +58,11 @@ interface IMyProvider {
 }
 const MyContext = createContext({ mode: "light", setMode: (mode: "light" | "dark") => { } } as IMyProvider);
 // Provider
-const MyProvider = ({ children }) => {
+const MyProvider = ({ children, initPos }) => {
   const [mode, setMode] = useState<"light" | "dark">("dark");
   const [hovered, setHovered] = useState<any>(null);
   return (
-    <MyContext.Provider value={{ mode, setMode, hovered, setHovered }}>
+    <MyContext.Provider value={{ initPos, mode, setMode, hovered, setHovered }}>
       {children}
     </MyContext.Provider>
   );
@@ -85,6 +95,9 @@ const MyCamera = (
   )
 }
 
+/**
+ * 環境/エフェクト
+ */
 const MyEffect = () => {
 
   const { mode, hovered } = useMyContext();
@@ -106,6 +119,7 @@ const MyEffect = () => {
   let lutEffect: any = null;
   if (texture && mode === "dark") {
     lutEffect = <LUT lut={texture} />;
+    bloomEffect = <Bloom luminanceThreshold={0.1} mipmapBlur luminanceSmoothing={0} intensity={1.15} />;
   }
   return (
     <>
@@ -154,7 +168,7 @@ const MyEffect = () => {
           visibleEdgeColor={edgeColor}
           blur={true}
         />
-        <Noise opacity={0.02} />
+        <Noise opacity={0.05} />
       </EffectComposer>
       <Environment
         preset={mode === "dark" ? "night" : "sunset"}
@@ -166,6 +180,9 @@ const MyEffect = () => {
   )
 }
 
+/**
+ * ライティング
+ */
 const Lighting = () => {
   const { mode } = useMyContext();
   return (
@@ -187,6 +204,9 @@ const Lighting = () => {
   )
 }
 
+/**
+ * テーブル
+ */
 const Table = () => {
   const scroll = useScroll();
   const { camera } = useThree();
@@ -215,8 +235,10 @@ const Table = () => {
 }
 
 const ComputerDesk = () => {
+  const { mode } = useMyContext();
   const [marbleTex] = useTexture(['/textures/marble.jpg']);
-  const { nodes } = useGLTF('/models/computer_desk.glb') as any;
+  const { nodes, materials } = useGLTF('/models/computer_desk.glb') as any;
+
   return (
     <group
       position={[0, -1.47, 0]}
@@ -244,15 +266,82 @@ const ComputerDesk = () => {
 /**
  * モニター
  */
-const Monitor = () => {
+const Monitor = ({
+  position = [0, 0.74, -0.25],
+}) => {
+  const { initPos: initCameraPos } = useMyContext();
+  const cameraQut = useRef<Quaternion>();
   const { scene } = useGLTF('/models/monitor.glb') as any;
+  const { camera } = useThree();
+  const screenRef = useRef<Group>(null);
+  const scroll = useScroll();
+  const pos = useMemo(() => {
+    // [number, number, number]の場合Vector3に変換
+    if (Array.isArray(position)) {
+      return new Vector3(position[0], position[1], position[2]);
+    }
+    return position;
+  }, []);
+  const screenPos = pos.clone().add(new Vector3(0, 0.24, 0.062));
+  useEffect(() => {
+    initCameraPos.copy(camera.position.clone());
+    cameraQut.current = camera.quaternion.clone();
+  }, []);
+  useFrame((state, delta) => {
+    if (!screenRef.current) return;
+    const targetPos = screenPos.clone().add(new Vector3(0, -0.55, 0));
+    const move = scroll.range(0.6, 1);
+    // moveは0 ~ 1の間で動く、1に近づくほどscreenPosに近くなるようにカメラを移動したい
+    // 0~0.4を0~1の値を再設定しvalとする。
+    const val = (move) / 0.4;
+    let newPos = new Vector3().lerpVectors(initCameraPos, targetPos, val);
+    const maxVal = 0.86
+    if (val < maxVal) {
+      if (val > 0.00001)  {
+        // カメラに近づき、画面に近づく
+        camera.position.copy(newPos);
+        screenRef.current.visible = true;
+      }
+      else {
+        screenRef.current.visible = false;
+      }
+    }
+    if (val < 1){
+      const targetRot = screenRef.current!.rotation.clone();
+      if (cameraQut.current) {
+        let initQuaternion = new Quaternion().copy(cameraQut.current!);
+        let targetQuaternion = new Quaternion().setFromEuler(targetRot);
+        let newQuaternion = new Quaternion().slerpQuaternions(initQuaternion, targetQuaternion, val);
+        camera.rotation.setFromQuaternion(newQuaternion);
+      }
+    }
+  });
   return (
-    <mesh
-      position={[0, 0.74, -0.25]}
-      scale={0.01}
-    >
-      <primitive object={scene} />
-    </mesh>
+    <>
+      <group
+        position={pos}
+        scale={0.01}
+        >
+        {/** @ts-ignore */}
+        <primitive object={scene} />
+      </group>
+      <group
+        position={screenPos}
+        scale={0.28}
+        ref={screenRef}
+      >
+        <mesh>
+          <planeGeometry args={[1.6, 0.9]} />
+          <meshBasicMaterial
+            color={'#FFF'}
+          />
+        </mesh>
+        <Text position={[0, 0.3, 0.01]} scale={0.08} color={"#000"}>
+          {"Services"}
+        </Text>
+      </group>
+      {/* <OrbitControls /> */}
+    </>
   )
 }
 
