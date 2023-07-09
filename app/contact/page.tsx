@@ -2,7 +2,7 @@
 import { Common } from "@/components/canvas/View";
 import { Input, Form, Submit } from "@/components/canvas/items/r3f-form";
 import { Header } from "@/components/commons/Header";
-import { OrbitControls, OrthographicCamera, Sky, Text, useGLTF } from "@react-three/drei";
+import { Cloud, OrbitControls, OrthographicCamera, Sky, Text, useGLTF } from "@react-three/drei";
 import { useThree, extend, useFrame } from "@react-three/fiber";
 import dynamic from "next/dynamic";
 import { useEffect, useMemo, useState } from "react";
@@ -241,15 +241,24 @@ const Page = () => {
             />
             <CameraRig />
           </OrthographicCamera>
+          <Cloud
+            opacity={0.9}
+            color={"#FFFFFF"}
+            speed={0.4}
+            width={10}
+            depth={4.5}
+            segments={20}
+            position={[0, 4.5, -10]}
+            scale={0.5}
+          />
           <Sky />
-          {/* <OrbitControls /> */}
           <group
             position={[0, -0.5, 0]}
             scale={0.1}
           >
             <GrassPlane />
           </group>
-          <Common />
+          <Common color={"#1E90FF"} />
         </View>
       </div>
     </>
@@ -262,10 +271,10 @@ const CameraRig = () => {
     const range = 0.05;
     const d = 30;
     easing.damp3(
-      state.camera.position, 
-      [-range + (state.pointer.x * state.viewport.width) / d, 
-      (range + state.pointer.y) / d, 5.5], 
-      0.5, 
+      state.camera.position,
+      [-range + (state.pointer.x * state.viewport.width) / d,
+      (range + state.pointer.y) / d, 5.5],
+      0.5,
       delta
     );
     state.camera.lookAt(0, 0, 0);
