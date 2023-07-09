@@ -249,7 +249,7 @@ const Page = () => {
             depth={4.5}
             segments={20}
             position={[0, 4.5, -10]}
-            scale={0.5}
+            scale={0.2}
           />
           <Sky />
           <group
