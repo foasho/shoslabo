@@ -12,7 +12,7 @@ const MyCanvas = () => {
   return (
     <Canvas>
       <mesh>
-        <boxBufferGeometry args={[1, 1, 1]} />
+        <boxGeometry args={[1, 1, 1]} />
         <meshStandardMaterial color='hotpink' />
       </mesh>
     </Canvas>
@@ -44,7 +44,7 @@ export default function MyComponent() {
     // @ts-ignore
     <R3FNote sourceCode={sourceCode} orbit debug>
       <mesh>
-        <boxBufferGeometry args={[1, 1, 1]} />
+        <boxGeometry args={[1, 1, 1]} />
         <meshStandardMaterial color='hotpink' />
       </mesh>
       <div className='text-xl flex justify-center items-center mt-24'>

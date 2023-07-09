@@ -106,7 +106,7 @@ const RandomBoxes = (
   }, []);
   return (
     <mesh position={p} castShadow receiveShadow>
-      <boxBufferGeometry attach="geometry" args={[size, size, size]} />
+      <boxGeometry attach="geometry" args={[size, size, size]} />
       <meshStandardMaterial attach="material" color={color} />
     </mesh>
   );

@@ -32,16 +32,20 @@ export const DebugComponent = () => {
 }
 
 export interface IViewProps {
-  children?: React.ReactNode
-  orbit?: boolean
-  debug?: boolean
-  className?: string
+  children?: React.ReactNode;
+  orbit?: boolean;
+  orbitEnabledZoom?: boolean;
+  position ?: [number, number, number];
+  debug?: boolean;
+  className?: string;
 }
 const View = forwardRef(
 (
   { 
     children, 
     orbit, 
+    orbitEnabledZoom,
+    position,
     debug, 
     ...props
   }: IViewProps
@@ -57,7 +61,7 @@ const View = forwardRef(
         {/** @ts-ignore */}
         <ViewImpl track={localRef}>
           {children}
-          {orbit && <OrbitControls enableZoom={false} />}
+          {orbit && <OrbitControls enableZoom={orbitEnabledZoom? true: false} position={position} />}
           {debug && <DebugComponent />}
         </ViewImpl>
       </Three>

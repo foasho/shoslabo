@@ -4,7 +4,7 @@ export const MyScene = () => {
   return (
     <>
       <mesh>
-        <boxBufferGeometry attach="geometry" />
+        <boxGeometry attach="geometry" />
         <meshBasicMaterial attach="material" color="hotpink" />
       </mesh>
     </>

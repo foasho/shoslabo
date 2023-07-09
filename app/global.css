@@ -2,6 +2,13 @@
 @tailwind components;
 @tailwind utilities;
 
+/**
+* メインカラー(黄色)：#EFCB16
+* サブカラー(Sky色)：#A0D8EF
+* アクセントカラー(ピンク)：#F5BDC8
+* アクティブカラー(強い青)：#1E88E5
+**/
+
 @layer base {
   * {
     box-sizing: border-box;

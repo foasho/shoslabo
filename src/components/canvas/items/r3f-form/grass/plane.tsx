@@ -3,60 +3,8 @@ import { extend, useFrame, useLoader } from '@react-three/fiber';
 import { OrbitControls, Sky, shaderMaterial, useTexture } from "@react-three/drei";
 import { TextureLoader, Vector3, Vector4, PlaneGeometry, DoubleSide, Color, Material, BufferGeometry } from 'three';
 import { Geometry } from 'three-stdlib';
-import { get } from 'http';
-import { Loading3D } from '@/components/commons/Loading3D';
 
-export const MyScene = () => {
-  return (
-    <>
-      <Sky azimuth={1} inclination={0.6} distance={1000} />
-      <ambientLight />
-      <pointLight position={[10, 10, 10]} />
-      <Suspense fallback={<Loading3D />}>
-        <Grass />
-      </Suspense>
-      <GlassPlane />
-      <OrbitControls />
-    </>
-  )
-}
-
-/**
- * 海
- */
-const Ground = ({  }) => {
-
-  return (
-    <>
-    </>
-  )
-}
-
-const getYPosition = (
-  x: number, 
-  z: number, 
-  maxY = 1,
-  minY = -1,
-  seed=1294321992
-) => {
-  // XとZの値を組み合わせて再現性のあるランダムな値を生成
-  const rand = (x * 12.9898 + z * 78.233 + seed * 43758.5453) % 1;
-  // 最大値と最小値の間の値を生成
-  return (rand * (maxY - minY)) + minY;
-}
-
-const GlassPlane = () => {
-  return (
-    <mesh
-      rotation={[-Math.PI / 2, 0, 0]}
-    >
-      <planeGeometry attach="geometry" args={[100, 100]} />
-      <meshStandardMaterial attach="material" color="#000f00" />
-    </mesh>
-  )
-}
-
-const Grass = (
+export const GrassPlane = (
   {
     options = { bW: 0.12, bH: 1, joints: 5 },
     width = 100,
@@ -71,18 +19,18 @@ const Grass = (
   const [texture, alphaMap] = useTexture([colorTexture, shapeTexture]);
   const attributeData = useMemo(() => getAttributeData(instances, width), [instances, width])
   const baseGeom = useMemo(() => new PlaneGeometry(bW, bH, 1, joints).translate(0, bH / 2, 0), [options]);
-  const groundGeo = useMemo(() => {
-    const geo = new Geometry().fromBufferGeometry(new PlaneGeometry(width, width, 32, 32))
-    geo.verticesNeedUpdate = true;
-    // 
-    geo.lookAt(new Vector3(0, 1, 0));
-    for (let i = 0; i < geo.vertices.length; i++) {
-      const v = geo.vertices[i]
-      v.y = getYPosition(v.x, v.z)
-    }
-    geo.computeVertexNormals()
-    return geo
-  }, [width]);
+  // const groundGeo = useMemo(() => {
+  //   const geo = new Geometry().fromBufferGeometry(new PlaneGeometry(width, width, 32, 32))
+  //   geo.verticesNeedUpdate = true;
+  //   // 
+  //   geo.lookAt(new Vector3(0, 1, 0));
+  //   for (let i = 0; i < geo.vertices.length; i++) {
+  //     const v = geo.vertices[i]
+  //     v.y = getYPosition(v.x, v.z)
+  //   }
+  //   geo.computeVertexNormals()
+  //   return geo
+  // }, [width]);
 
   useFrame((state) => {
     if (materialRef.current && materialRef.current.uniforms && materialRef.current.uniforms.time) {
@@ -105,12 +53,31 @@ const Grass = (
         {/* @ts-ignore */}
         <grassMaterial ref={materialRef} map={texture} alphaMap={alphaMap} transparent depthWrite={false} />
       </mesh>
-      <mesh position={[0, 0, 0]}>
-        <bufferGeometry attach="geometry" {...groundGeo} />
+      <mesh
+        position={[0, 0, 0]}
+        rotation={[-Math.PI / 2, 0, 0]}
+      >
+        <planeGeometry
+          attach="geometry"
+          args={[width, width, 32, 32]}
+        />
         <meshStandardMaterial color="#000f00" />
       </mesh>
     </group>
   )
+}
+
+const getYPosition = (
+  x: number,
+  z: number,
+  maxY = 1,
+  minY = -1,
+  seed = 1294321992
+) => {
+  // XとZの値を組み合わせて再現性のあるランダムな値を生成
+  const rand = (x * 12.9898 + z * 78.233 + seed * 43758.5453) % 1;
+  // 最大値と最小値の間の値を生成
+  return (rand * (maxY - minY)) + minY;
 }
 
 const getAttributeData = (instances, width) => {

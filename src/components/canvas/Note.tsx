@@ -115,7 +115,7 @@ export const R3FNote = (
       >
         {/** @ts-ignore */}
         <View 
-            className={`absolute w-full h-full ${viewType === 'split' ? 'w-1/2' : ''}`}
+          className={`absolute w-full h-full ${viewType === 'split' ? 'w-1/2' : ''}`}
           orbit={orbit}
           debug={debug}
         >

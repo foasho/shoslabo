@@ -6,7 +6,7 @@ const Grass = dynamic(() => import('@/components/canvas/notes/S3-Grass').then((m
 export default function Page() {
   return (
     // @ts-ignore
-    <R3FNote sourceCode={SourceCode} debug orbit>
+    <R3FNote sourceCode={SourceCode} debug orbit={false}>
       {/** @ts-ignore */}
       <Grass />
     </R3FNote>
