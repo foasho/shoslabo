@@ -14,8 +14,8 @@ export default function Page() {
       key: 'card-1',
       title: 'BVH-Walk',
       description: 'BVH法を利用したThridPerson移動',
-      image: '/img/blogs/s1-bvhwalk.png',
-      route: '/blogs/s1-bvhwalk',
+      image: 'https://solb-v1.s3.us-east-2.amazonaws.com/files/47066359-thumb.jpg',
+      route: '/arts/a1-sasuke',
       tags: ['React', 'Three.js', 'R3F'],
     },
     {
