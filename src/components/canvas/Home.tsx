@@ -337,7 +337,7 @@ const Monitor = ({
           />
         </mesh>
         <Text position={[0, 0.3, 0.01]} scale={0.08} color={"#000"}>
-          {"Services"}
+          {"SNS"}
         </Text>
       </group>
       {/* <OrbitControls /> */}

@@ -4,6 +4,7 @@ import { useRouter } from "next/navigation"
 export const Header = ({
   fixed = true,
   fontColor = '#fff',
+  title = "SOLB",
 }) => {
 
   const router = useRouter();
@@ -17,8 +18,13 @@ export const Header = ({
       }}
     >
       <div className='w-11/12 h-full flex items-center justify-between'>
-        <div className='flex items-center'>
-          <div className='ml-2 font-bold text-xl'>{"Sho'sLabo"}</div>
+        <div
+          className='flex items-center '>
+          <div
+            onClick={() => router.push("/")}
+            className='ml-2 font-bold text-xl cursor-pointer'>
+            {title}
+          </div>
         </div>
         <div className='flex items-center'>
           <div className='text-xl ml-4 cursor-pointer'>

@@ -24,8 +24,11 @@ const View = dynamic(() => import('@/components/canvas/View').then((mod) => mod.
 const Common = dynamic(() => import('@/components/canvas/View').then((mod) => mod.Common), { ssr: false });
 
 export const HomeHtml = ({
-  title = "Sho'sLabo",
+  title = "SOLB",
   fontColor = "#fff",
+  twitter = "https://twitter.com/sakanosho",
+  github = "https://github.com/foasho",
+  qiita = "https://qiita.com/osakasho",
 }) => {
   const [now, setNow] = useState<Date>();
   const birthStr = "1995-01-11";
@@ -199,32 +202,40 @@ export const HomeHtml = ({
       {/** 4:経歴 */}
       <div className='h-screen w-screen pt-8 px-8'></div>
       {/** 5:サービス */}
-      <div className='h-screen w-screen pt-8 px-8 relative'>
+      <div className='h-screen w-screen pt-8 px-8 flex items-center justify-center'>
         {/** 3つのサービスを並べる */}
-        <div className="absolute w-full h-full text-center md:pt-32 pt-72 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 items-center justify-center">
-          {/** 1つ目:【お絵描き道場】 */}
-          <div className='w-full h-1/3 md:w-1/3 md:h-full md:inline-block items-center justify-center hover:scale-[1.1] transition duration-300'>
-            <img 
-              src='/img/logo.svg'
-              className='w-36 md:w-72 h-full mx-auto rounded-full md:px-4'
+        <div className="flex flex-wrap md:flex-nowrap">
+          {/** 1つ目:【Github】 */}
+          <div 
+            onClick={() => window.open(github, '_blank')}
+            className='cursor-pointer w-full md:p-8 md:w-1/3 h-36 md:h-72 md:inline-block items-center justify-center hover:scale-[1.1] transition duration-300'>
+            <img
+              src='/img/logos/github-logo.png'
+              className='w-36 h-36 md:h-72 md:w-72 mx-auto md:p-4'
             />
           </div>
-          {/** 2つ目:【3DWebサイト】 */}
-          <div className='w-full h-1/3 md:w-1/3 md:h-full md:inline-block items-center justify-center hover:scale-[1.1] transition duration-300'>
+          {/** 2つ目:【Twitterサイト】 */}
+          <div 
+            onClick={() => window.open(twitter, '_blank')}
+            className='cursor-pointer w-full md:p-8 md:w-1/3 h-36 md:h-72 my-4 md:my-4 md:inline-block items-center justify-center hover:scale-[1.1] transition duration-300'>
             <img
-              src='/img/logo.svg'
-              className='w-36 md:w-72 h-full mx-auto rounded-full md:px-4'
+              src='/img/logos/twitter-logo.png'
+              className='w-36 h-36 md:h-72 md:w-72 mx-auto md:p-4'
             />
           </div>
-          {/** 3つ目:【AIシステム】 */}
-          <div className='w-full h-1/3 md:w-1/3 md:h-full md:inline-block items-center justify-center hover:scale-[1.1] transition duration-300'>
+          {/** 3つ目:【Qiitaシステム】 */}
+          <div 
+            onClick={() => window.open(qiita, '_blank')}
+            className='cursor-pointer w-full md:p-8 md:w-1/3 h-36 md:h-72 md:inline-block items-center justify-center hover:scale-[1.1] transition duration-300'>
             <img
-              src='/img/logo.svg'
-              className='w-36 md:w-72 h-full mx-auto rounded-full md:px-4'
+              src='/img/logos/qiita-logo.png'
+              className='w-36 h-36 md:h-72 md:w-72 mx-auto md:p-4'
             />
           </div>
         </div>
       </div>
+
+
     </>
   )
 }

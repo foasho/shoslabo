@@ -20,11 +20,11 @@ export default function Page() {
     },
     {
       key: 'card-2',
-      title: 'Octree-Walk',
-      description: 'Octree法を利用したThridPerson移動',
-      image: 'https://tailwindcss.com/img/card-top.jpg',
-      route: '/blogs/s2-octreewalk',
-      tags: ['React', 'Three.js', 'R3F'],
+      title: 'R3F-JP-FORM',
+      description: '日本語対応のWebGL用3D入力フォーム',
+      image: '/img/blogs/s2-r3f-jp-form.jpg',
+      route: 'https://codesandbox.io/s/r3f-jp-form-q8pxhf',
+      tags: ['React', 'Three.js', 'R3F', 'XR'],
     },
     {
       key: 'card-3',
