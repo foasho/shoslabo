@@ -30,7 +30,7 @@ export default function Page() {
       key: 'card-3',
       title: 'SimpleGrass',
       description: 'WebGLでの草原の描画',
-      image: 'https://tailwindcss.com/img/card-top.jpg',
+      image: '/img/blogs/s3-3d-grass.jpg',
       route: '/blogs/s3-grass',
       tags: ['React', 'Three.js', 'R3F'],
     },

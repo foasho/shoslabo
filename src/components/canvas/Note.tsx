@@ -8,6 +8,7 @@ import tsx from 'react-syntax-highlighter/dist/cjs/languages/prism/tsx';
 import { docco } from 'react-syntax-highlighter/dist/esm/styles/hljs';
 import { vscDarkPlus } from 'react-syntax-highlighter/dist/cjs/styles/prism';
 import { useState } from 'react';
+import { Vector3 } from 'three';
 
 SyntaxHighlighter.registerLanguage('jsx', jsx);
 SyntaxHighlighter.registerLanguage('tsx', tsx);
@@ -65,9 +66,9 @@ const HighlightedCodeBlock = ({
         </a>
       </div>
       <div
-        
+
       ></div>
-      <SyntaxHighlighter 
+      <SyntaxHighlighter
         language="tsx"
         style={vscDarkPlus}
         showLineNumbers={true}
@@ -90,6 +91,7 @@ interface INoteProps extends IViewProps {
   orbit?: boolean;
   debug?: boolean;
   common?: boolean;
+  camraPosition?: [number, number, number] | Vector3;
 }
 export const R3FNote = (
   {
@@ -98,6 +100,7 @@ export const R3FNote = (
     orbit = false,
     debug = false,
     common = true,
+    camraPosition = [0, 0, 5],
   }: INoteProps,
 ) => {
   // childrenが2つある場合は、最後のもの以外をViewにいれて、最後のものをViewの外に出す
@@ -110,32 +113,34 @@ export const R3FNote = (
     <div className={`relative flex h-screen ${viewType !== 'split' ? 'justify-center' : ''}`}>
       {/** view */}
       {(viewType === 'view' || viewType == 'split') &&
-      <div
-          className={`absolute h-screen ${viewType === 'split' ? 'w-1/2 d-flex' : 'w-full'}`}
-      >
-        {/** @ts-ignore */}
-        <View 
-          className={`absolute w-full h-full ${viewType === 'split' ? 'w-1/2' : ''}`}
-          orbit={orbit}
-          debug={debug}
-        >
-          {children && isArr && Array.isArray(children) ? 
-            children.slice(0, children.length - 1)
-           : children}
-          {common && <Common />}
-        </View>
-        {/** @ts-ignore */}
-        {children && isArr && Array.isArray(children) &&
         <div
-          className={`absolute z-10 ${viewType === 'split' ? 'w-1/2 d-flex left-1/2' : 'w-full'}`}
+          className={`absolute h-screen ${viewType === 'split' ? 'w-1/2 d-flex' : 'w-full'}`}
         >
-          {children[children.length - 1]}
+          {/** @ts-ignore */}
+          <View
+            // @ts-ignore
+            position={camraPosition}
+            className={`absolute w-full h-full ${viewType === 'split' ? 'w-1/2' : ''}`}
+            orbit={orbit}
+            debug={debug}
+          >
+            {children && isArr && Array.isArray(children) ?
+              children.slice(0, children.length - 1)
+              : children}
+            {common && <Common />}
+          </View>
+          {/** @ts-ignore */}
+          {children && isArr && Array.isArray(children) &&
+            <div
+              className={`absolute z-10 ${viewType === 'split' ? 'w-1/2 d-flex left-1/2' : 'w-full'}`}
+            >
+              {children[children.length - 1]}
+            </div>
+          }
         </div>
-        }
-      </div>
       }
       {/** code */}
-      {(viewType === 'code' || viewType == 'split') && 
+      {(viewType === 'code' || viewType == 'split') &&
         <div
           className={`absolute ${viewType === 'split' ? 'w-1/2 d-flex left-1/2' : 'w-full'}`}
         >
