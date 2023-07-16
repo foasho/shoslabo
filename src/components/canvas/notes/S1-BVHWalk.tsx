@@ -54,6 +54,7 @@ const Field = (
           {[...Array(1000)].map((_, i) => (
             <RandomBoxes
               key={i}
+              index={i}
               citySize={citySize}
               maxHeight={3}
             />
@@ -66,20 +67,17 @@ const Field = (
 
 const RandomBoxes = (
   {
+    index,
     citySize = 128,
     maxHeight = 3,
   }
 ) => {
+  const seed = 191963927123;
   // X: -citySize/2~citySize/2, Y: 0~maxHeight, Z: citySize/2の範囲でランダムに配置
   const p = new Vector3(
     Math.random() * citySize - citySize / 2,
     Math.random() * maxHeight,
     Math.random() * citySize - citySize / 2
-  );
-  const r = new Euler(
-    Math.random() * Math.PI,
-    Math.random() * Math.PI,
-    Math.random() * Math.PI
   );
   // 1~3のランダムなサイズ
   const size: number = Math.random() * 2 + 1;

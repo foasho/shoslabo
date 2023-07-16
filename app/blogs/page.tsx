@@ -15,7 +15,7 @@ export default function Page() {
       title: 'BVH-Walk',
       description: 'BVH法を利用したThridPerson移動',
       image: '/img/blogs/s1-bvhwalk.png',
-      route: '/blogs/s1-bvhwalk',
+      route: 'https://codesandbox.io/s/bvh-walk-5942gn',
       tags: ['React', 'Three.js', 'R3F'],
     },
     {
