@@ -12,7 +12,7 @@ interface CreateBlogProps {
   keywords?: string;
 }
 export const createBlog = async (props: CreateBlogProps) => {
-  const { title, content, keywords } = props;
+  const { title, content, keywords, description, image } = props;
   const blog = await prisma.blog.create({
     data: {
       title,
@@ -23,6 +23,14 @@ export const createBlog = async (props: CreateBlogProps) => {
     },
   });
   return blog;
+}
+
+/**
+ * すべてのBlogを取得する
+ */
+export const getBlogs = async () => {
+  const blogs = await prisma.blog.findMany();
+  return blogs;
 }
 
 /**

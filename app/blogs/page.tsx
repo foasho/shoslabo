@@ -4,7 +4,16 @@ import dynamic from 'next/dynamic'
 import { Header } from '@/components/commons/Header';
 import { useRouter } from 'next/navigation';
 
-export default function Page() {
+const getData = async () => {
+  const res = await fetch("https://jsonplaceholder.typicode.com/posts/1", {
+    next: {
+      revalidate: 30,
+    }
+  });
+  return res.json();
+}
+
+export default async function Page() {
 
   const router = useRouter();
   const [searchText, setSearchText] = useState('');

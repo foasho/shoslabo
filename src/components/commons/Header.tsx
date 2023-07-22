@@ -27,17 +27,22 @@ export const Header = ({
           </div>
         </div>
         <div className='flex items-center'>
-          <div className='text-xl ml-4 cursor-pointer'>
+          <div className='text-lg md:text-xl ml-2 md:ml-4 cursor-pointer'>
+            <a onClick={() => router.push("blogs")}>
+              Works
+            </a>
+          </div>
+          <div className='text-lg md:text-xl ml-2 md:ml-4 cursor-pointer'>
             <a onClick={() => router.push("blogs")}>
               Blog
             </a>
           </div>
-          <div className='text-xl ml-4 cursor-pointer'>
+          <div className='text-lg md:text-xl ml-2 md:ml-4 cursor-pointer'>
             <a onClick={() => router.push("arts")}>
               Art
             </a>
           </div>
-          <div className='text-xl ml-4 cursor-pointer'>
+          <div className='text-lg md:text-xl ml-2 md:ml-4 cursor-pointer'>
             <a onClick={() => router.push("contact")}>
               Contact
             </a>

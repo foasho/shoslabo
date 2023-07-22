@@ -3,12 +3,13 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { commands, ICommand, TextState } from '@uiw/react-md-editor';
 import '@uiw/react-md-editor/markdown-editor.css'
 import '@uiw/react-markdown-preview/markdown.css'
-import { MdOpenInNew, MdLogout, MdSave } from "react-icons/md"
+import { MdOpenInNew, MdLogout, MdSave, MdHome } from "react-icons/md"
 import mermaid from 'mermaid'
 import plantumlEncoder from 'plantuml-encoder'
 import dynamic from "next/dynamic";
 import Swal from "sweetalert2";
 import { signOut, useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
 
 const MDEditor = dynamic(
   () => import("@uiw/react-md-editor").then((mod) => mod.default),
@@ -53,7 +54,7 @@ const Editor = ({
   const [keywords, setKeywords] = useState<string | null>(null);
   const [content, setContent] = useState(initContent || '');
   const { data: session } = useSession();
-
+  const router = useRouter();
 
   /**
    * 画像アップロード
@@ -108,210 +109,230 @@ const Editor = ({
       return;
     }
 
-    Swal.fire({
-      title: '保存しますか？',
-      text: '保存すると、記事が公開されます。',
-      icon: 'question',
-      showCancelButton: true,
-      confirmButtonText: '保存',
-      cancelButtonText: 'キャンセル',
-      confirmButtonColor: '#3085d6',
-      cancelButtonColor: '#d33',
-    }).then(async (result) => {
-      if (result.isConfirmed) {
-        const res = await fetch('/api/blogs/create', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            title,
-            description,
-            thumbnail,
-            keywords,
-            content,
-          }),
-        })
-        const data = await res.json()
-        if (data.error) {
-          Swal.fire({
-            title: 'エラーが発生しました',
-            text: data.error.message,
-            icon: 'error',
+    if (session && (session.user as any).isAdmin) {
+      Swal.fire({
+        title: '保存しますか？',
+        text: '保存すると、記事が公開されます。',
+        icon: 'question',
+        showCancelButton: true,
+        confirmButtonText: '保存',
+        cancelButtonText: 'キャンセル',
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+      }).then(async (result) => {
+        if (result.isConfirmed) {
+          const res = await fetch('/api/blog/create', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              title,
+              description,
+              image: thumbnail,
+              keywords,
+              content,
+            }),
           })
-        } else {
-          Swal.fire({
-            title: '保存しました',
-            text: '記事を公開しました',
-            icon: 'success',
-          })
+          const data = await res.json()
+          if (data.error) {
+            Swal.fire({
+              title: 'エラーが発生しました',
+              text: data.error.message,
+              icon: 'error',
+            })
+          } else {
+            Swal.fire({
+              title: '保存しました',
+              text: '記事を公開しました',
+              icon: 'success',
+            })
+          }
         }
-      }
-    })
+      })
+    }
+    else {
+      Swal.fire({
+        title: '権限がありません',
+        text: '管理者権限が必要です',
+        icon: 'error',
+      })
+    }
   }
 
   return (
     <>
-      {session && (session.user as any).isAdmin &&
+      <div
+        className={"h-full w-full relative"}
+        data-color-mode={'light'}
+      >
+        {/** ログアウトボタン/保存ボタン */}
         <div
-          className={"h-full w-full relative"}
-          data-color-mode={'light'}
+          className="absolute z-10 top-10 right-2 h-[20vh] flex flex-col justify-center items-center gap-4"
         >
-          <div className="absolute top-0 w-full py-8 px-4">
-            <div className="flex items-center mb-2">
-              {/** タイトル入力 */}
-              <div className="w-1/3 px-2" data-te-input-wrapper-init>
-                <label
-                  className="block text-gray-700 text-sm font-bold mb-2"
-                  htmlFor="title"
-                >
-                  タイトル
-                </label>
-                <input
-                  className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                  id="title"
-                  type="text"
-                  value={title}
-                  placeholder="タイトルを入力してください"
-                  onChange={(e) => setTitle(e.target.value)}
-                />
-              </div>
-              {/** 説明入力(任意) */}
-              <div className="w-2/3 px-2 pr-16" data-te-input-wrapper-init>
-                <label
-                  className="block text-gray-700 text-sm font-bold mb-2"
-                  htmlFor="description"
-                >
-                  説明(任意)
-                </label>
-                <input
-                  className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                  id="title"
-                  type="text"
-                  value={description}
-                  placeholder="必要に応じて説明を入力してください"
-                  onChange={(e) => setDescription(e.target.value)}
-                />
-              </div>
-            </div>
-            <div className="flex items-center mb-2">
-              {/** 画像 */}
-              <div className="w-1/3 px-2">
-                <label
-                  className="block text-gray-700 text-sm font-bold mb-2"
-                  htmlFor="file_input"
-                >
-                  サムネイル
-                </label>
-                <input
-                  className="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
-                  id="file_input"
-                  type="file"
-                  accept="image/*"
-                  onChange={async (e) => {
-                    if (e.target.files) {
-                      const file = e.target.files[0]
-                      const url = await uploadImage(file)
-                      if (url) {
-                        setThumbnail(url)
-                      }
-                    }
-                  }}
-                  disabled={thumbnail !== null}
-                />
-              </div>
-              {/** タグ入力(任意) */}
-              <div className="w-2/3 px-2 pr-16" data-te-input-wrapper-init>
-                <label
-                  className="block text-gray-700 text-sm font-bold mb-2"
-                  htmlFor="tags"
-                >
-                  タグ(任意)
-                </label>
-                <input
-                  className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                  id="tags"
-                  type="text"
-                  placeholder="必要に応じてタグを入力してください"
-                />
-              </div>
-            </div>
+          <div>
+            <button
+              className="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow"
+              onClick={() => save()}
+            >
+              <MdSave />
+            </button>
           </div>
-          {/** ログアウトボタン/保存ボタン */}
-          <div 
-            className="absolute top-10 right-2 h-[20vh] flex flex-col justify-center items-center gap-4"
-          >
-            <div>
-              <button
-                className="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow"
-                onClick={() => save()}
-              >
-                <MdSave />
-              </button>
-            </div>
-            <div>
-              <button
-                className="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow"
-                onClick={() => signOut()}
-              >
-                <MdLogout />
-              </button>
-            </div>
+          <div>
+            <button
+              className="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow"
+              onClick={() => signOut()}
+            >
+              <MdLogout />
+            </button>
           </div>
-
-          {/** Editor */}
-          <div
-            className="absolute top-[28vh] left-1/2 -translate-x-1/2 w-full px-6"
-          >
-            {/** @ts-ignore */}
-            <MDEditor
-              className="min-h-[70vh] w-full"
-              value={content}
-              onChange={onChangeEditor}
-              preview={viewType}
-              hideToolbar={viewType === ViewType.Preview}
-              visibleDragbar={false}
-              previewOptions={{
-                components: {
-                  code: Code,
-                  p: ({ children }) => (
-                    <>
-                      {children.map((p, i) => {
-                        if (typeof p === 'string') {
-                          const splitP = p.split('\n')
-                          return splitP.map((p, j) => <p key={`${p}${i}_${j}`}>{p}</p>)
+          <div>
+            <button
+              className="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow"
+              onClick={() => router.push("/")}
+            >
+              <MdHome />
+            </button>
+          </div>
+        </div>
+        {session && (session.user as any).isAdmin &&
+          <>
+            <div className="absolute top-0 w-full py-8 px-4">
+              <div className="flex items-center mb-2">
+                {/** タイトル入力 */}
+                <div className="w-1/3 px-2" data-te-input-wrapper-init>
+                  <label
+                    className="block text-gray-700 text-sm font-bold mb-2"
+                    htmlFor="title"
+                  >
+                    タイトル
+                  </label>
+                  <input
+                    className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                    id="title"
+                    type="text"
+                    value={title}
+                    placeholder="タイトルを入力してください"
+                    onChange={(e) => setTitle(e.target.value)}
+                  />
+                </div>
+                {/** 説明入力(任意) */}
+                <div className="w-2/3 px-2 pr-16" data-te-input-wrapper-init>
+                  <label
+                    className="block text-gray-700 text-sm font-bold mb-2"
+                    htmlFor="description"
+                  >
+                    説明(任意)
+                  </label>
+                  <input
+                    className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                    id="title"
+                    type="text"
+                    value={description}
+                    placeholder="必要に応じて説明を入力してください"
+                    onChange={(e) => setDescription(e.target.value)}
+                  />
+                </div>
+              </div>
+              <div className="flex items-center mb-2">
+                {/** 画像 */}
+                <div className="w-1/3 px-2">
+                  <label
+                    className="block text-gray-700 text-sm font-bold mb-2"
+                    htmlFor="file_input"
+                  >
+                    サムネイル
+                  </label>
+                  <input
+                    className="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
+                    id="file_input"
+                    type="file"
+                    accept="image/*"
+                    onChange={async (e) => {
+                      if (e.target.files) {
+                        const file = e.target.files[0]
+                        const url = await uploadImage(file)
+                        if (url) {
+                          setThumbnail(url)
                         }
-                        return <p key={`${p}${i}`}>{p}</p>
-                      })}
-                    </>
-                  ),
-                  a: ({ children, href, node: { properties } }) => {
-                    // リンク付きの場合は、クリックしたときに別タブで開く
-                    if (href && href.startsWith('http')) {
-                      return (
-                        <>
-                          <a href={href} target='_blank' rel='noopener noreferrer'>
-                            {children.pop()}
-                          </a>
-                          <MdOpenInNew style={{ fontSize: '.8rem' }} />
-                        </>
-                      )
-                    }
-                    return <a {...properties}>{children.pop()}</a>
+                      }
+                    }}
+                    disabled={thumbnail !== null}
+                  />
+                </div>
+                {/** タグ入力(任意) */}
+                <div className="w-2/3 px-2 pr-16" data-te-input-wrapper-init>
+                  <label
+                    className="block text-gray-700 text-sm font-bold mb-2"
+                    htmlFor="tags"
+                  >
+                    タグ(任意)
+                  </label>
+                  <input
+                    className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                    id="tags"
+                    type="text"
+                    placeholder="(例: タグ1,タグ2,タグ3,...)"
+                    onChange={(e) => setKeywords(e.target.value)}
+                  />
+                </div>
+              </div>
+            </div>
+
+            {/** Editor */}
+            <div
+              className="absolute top-[28vh] left-1/2 -translate-x-1/2 w-full px-6"
+            >
+              {/** @ts-ignore */}
+              <MDEditor
+                className="min-h-[70vh] w-full"
+                value={content}
+                onChange={onChangeEditor}
+                preview={viewType}
+                hideToolbar={viewType === ViewType.Preview}
+                visibleDragbar={false}
+                previewOptions={{
+                  components: {
+                    code: Code,
+                    p: ({ children }) => (
+                      <>
+                        {children.map((p, i) => {
+                          if (typeof p === 'string') {
+                            const splitP = p.split('\n')
+                            return splitP.map((p, j) => <p key={`${p}${i}_${j}`}>{p}</p>)
+                          }
+                          return <p key={`${p}${i}`}>{p}</p>
+                        })}
+                      </>
+                    ),
+                    a: ({ children, href, node: { properties } }) => {
+                      // リンク付きの場合は、クリックしたときに別タブで開く
+                      if (href && href.startsWith('http')) {
+                        return (
+                          <>
+                            <a href={href} target='_blank' rel='noopener noreferrer'>
+                              {children.pop()}
+                            </a>
+                            <MdOpenInNew style={{ fontSize: '.8rem' }} />
+                          </>
+                        )
+                      }
+                      return <a {...properties}>{children.pop()}</a>
+                    },
                   },
-                },
-              }}
-            />
+                }}
+              />
+            </div>
+          </>
+        }
+        {!session &&
+          <div id="login_title" className="my-4 text-gray-700 text-bold">
+            <h1 className="text-4xl font-bold text-center">
+              権限がありません。
+            </h1>
           </div>
-        </div>
-      }
-      {!session &&
-        <div id="login_title" className="my-4 text-gray-700 text-bold">
-          <h1 className="text-4xl font-bold text-center">
-            権限がありません。
-          </h1>
-        </div>
-      }
+        }
+      </div>
     </>
   )
 }
