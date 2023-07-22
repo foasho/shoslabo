@@ -6,8 +6,6 @@ const Editor = dynamic(() => import("@/components/editor/Editor"), {
   ssr: false,
 });
 
-
-
 const Page = () => {
   return (
     <div className="w-full h-full bg-slate-200">

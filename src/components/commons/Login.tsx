@@ -2,10 +2,12 @@
 import { signIn, useSession } from "next-auth/react";
 import React from "react";
 import { Loading2D } from "./Loading2D";
+import { useRouter } from "next/navigation";
 
-export const AdminLogin = () => {
+export const Login = () => {
 
   const { status } = useSession();
+  const router = useRouter();
 
   const signInGoogle = () => {
     signIn("google");
@@ -49,6 +51,18 @@ export const AdminLogin = () => {
                 </g>
               </svg>
               <span>Continue with Google</span>
+            </button>
+            {/** ホームに戻る */}
+            <button
+              onClick={() => router.push("/")}
+              className="flex items-center bg-white border border-gray-300 rounded-lg shadow-md max-w-xs px-6 py-2 text-sm font-medium text-gray-800 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 min-w-[350px]"
+            >
+              <svg className="h-6 w-6 mr-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                <path fillRule="evenodd"
+                  d="M10 18a8 8 0 100-16 8 8 0 000 16zm0-2a6 6 0 100-12 6 6 0 000 12zm-2.707-4.707a1 1 0 011.414 0L10 13.586l2.293-2.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z"
+                  clipRule="evenodd" />
+              </svg>
+              <span>Back to Home</span>
             </button>
           </>
         }
