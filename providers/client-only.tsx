@@ -1,3 +1,4 @@
+'use client'
 import React, { useState, useEffect } from "react";
 
 // eslint-disable-next-line react/function-component-definition

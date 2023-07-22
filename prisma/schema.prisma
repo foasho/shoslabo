@@ -18,9 +18,11 @@ model User {
   updatedAt DateTime @updatedAt
 }
 
-model Article {
+model Blog {
   id        String   @id @default(auto()) @map("_id") @db.ObjectId
   title     String
+  description String?
+  image     String   // url
   keywords  String?  // comma separated
   content   String
   createdAt DateTime @default(now())

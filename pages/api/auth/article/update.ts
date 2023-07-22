@@ -1,5 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from "next";
-import { updateArticle } from "@/crud/article";
+import { updateArticle } from "@/crud/blog";
 
 export default async function handler(
   req: NextApiRequest,

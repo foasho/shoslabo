@@ -1,5 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from "next";
-import { deleteArticle } from "@/crud/article";
+import { deleteArticle } from "@/crud/blog";
 
 export default async function handler(
   req: NextApiRequest,
