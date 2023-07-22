@@ -8,6 +8,7 @@ import { BsBoxes, BsCodeSlash, BsLayoutSplit } from "react-icons/bs";
 import mermaid from 'mermaid'
 import plantumlEncoder from 'plantuml-encoder'
 import dynamic from "next/dynamic";
+import Swal from "sweetalert2";
 
 const MDEditor = dynamic(
   () => import("@uiw/react-md-editor").then((mod) => mod.default),
@@ -49,7 +50,29 @@ const Editor = ({
   const [title, setTitle] = useState<string>('');
   const [description, setDescription] = useState<string>('');
   const [thumbnail, setThumbnail] = useState<string | null>(null);
+  const [keywords, setKeywords] = useState<string | null>(null);
   const [content, setContent] = useState(initContent || '');
+
+
+  /**
+   * 画像アップロード
+   * @param file 
+   * @returns 
+   */
+  const uploadImage = async (file: File) => {
+    if (!file) return;
+    const formData = new FormData()
+    formData.append('file', file)
+    formData.append('filePath', "thumbnails/" + file.name)
+    const res = await fetch('/api/storage/upload', {
+      method: 'POST',
+      body: formData,
+    })
+    const data = await res.json()
+    if (!data.data) return null;
+    if (!data.data.signedUrl) return null;
+    return data.data.signedUrl;
+  }
 
   const onChangeEditor = (value?: string) => {
     if (value !== undefined) {
@@ -57,34 +80,166 @@ const Editor = ({
     }
   }
 
+  const save = async () => {
+    // 値の確認
+    if (!title || title === '') {
+      Swal.fire({
+        title: 'タイトルが入力されていません',
+        text: 'タイトルを入力してください',
+        icon: 'error',
+      })
+      return;
+    }
+    if (!thumbnail) {
+      Swal.fire({
+        title: 'サムネイルが設定されていません',
+        text: 'サムネイルを設定してください',
+        icon: 'error',
+      })
+      return;
+    }
+    if (!content || content === '') {
+      Swal.fire({
+        title: '記事が入力されていません',
+        text: '記事を入力してください',
+        icon: 'error',
+      })
+      return;
+    }
+
+    Swal.fire({
+      title: '保存しますか？',
+      text: '保存すると、記事が公開されます。',
+      icon: 'question',
+      showCancelButton: true,
+      confirmButtonText: '保存',
+      cancelButtonText: 'キャンセル',
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        const res = await fetch('/api/blogs/create', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            title,
+            description,
+            thumbnail,
+            keywords,
+            content,
+          }),
+        })
+        const data = await res.json()
+        if (data.error) {
+          Swal.fire({
+            title: 'エラーが発生しました',
+            text: data.error.message,
+            icon: 'error',
+          })
+        } else {
+          Swal.fire({
+            title: '保存しました',
+            text: '記事を公開しました',
+            icon: 'success',
+          })
+        }
+      }
+    })
+  }
+
   return (
     <div
-      className={"container mx-auto md:px-8 px-20 relative h-screen"}
+      className={"h-full w-full relative"}
       data-color-mode={'light'}
     >
-      <div className="absolute top-0 left-1/2 w-full">
-        {/** タイトル入力 */}
-        <div className="relative mb-3" data-te-input-wrapper-init>
-          <input
-            type="text"
-            className="peer block min-h-[auto] w-full rounded border-0 bg-transparent px-3 py-[0.32rem] leading-[2.15] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 peer-focus:text-primary data-[te-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none dark:text-neutral-200 dark:placeholder:text-neutral-200 dark:peer-focus:text-primary [&:not([data-te-input-placeholder-active])]:placeholder:opacity-0"
-            id="exampleFormControlInput2"
-            placeholder="Form control lg" />
-          <label
-            htmlFor="exampleFormControlInput2"
-            className="pointer-events-none absolute left-3 top-0 mb-0 max-w-[90%] origin-[0_0] truncate pt-[0.37rem] leading-[2.15] text-neutral-500 transition-all duration-200 ease-out peer-focus:-translate-y-[1.15rem] peer-focus:scale-[0.8] peer-focus:text-primary peer-data-[te-input-state-active]:-translate-y-[1.15rem] peer-data-[te-input-state-active]:scale-[0.8] motion-reduce:transition-none dark:text-neutral-200 dark:peer-focus:text-primary"
-          >
-            タイトル
-          </label>
+      <div className="absolute top-0 w-full py-8 px-4">
+        <div className="flex items-center mb-2">
+          {/** タイトル入力 */}
+          <div className="w-1/3 px-2" data-te-input-wrapper-init>
+            <label
+              className="block text-gray-700 text-sm font-bold mb-2"
+              htmlFor="title"
+            >
+              タイトル
+            </label>
+            <input
+              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              id="title"
+              type="text"
+              value={title}
+              placeholder="タイトルを入力してください"
+              onChange={(e) => setTitle(e.target.value)}
+            />
+          </div>
+          {/** 説明入力(任意) */}
+          <div className="w-2/3 px-2" data-te-input-wrapper-init>
+            <label
+              className="block text-gray-700 text-sm font-bold mb-2"
+              htmlFor="description"
+            >
+              説明(任意)
+            </label>
+            <input
+              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              id="title"
+              type="text"
+              value={description}
+              placeholder="必要に応じて説明を入力してください"
+              onChange={(e) => setDescription(e.target.value)}
+            />
+          </div>
         </div>
-        {/** サムネイルアップロード */}
-        {/** タグ入力(任意) */}
-        {/** 説明入力(任意) */}
+        {/** 画像 */}
+        <div className="flex items-center mb-2">
+          <div className="w-1/3 px-2">
+            <label
+              className="block text-gray-700 text-sm font-bold mb-2"
+              htmlFor="file_input"
+            >
+              サムネイル
+            </label>
+            <input
+              className="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
+              id="file_input"
+              type="file"
+              accept="image/*"
+              onChange={async (e) => {
+                if (e.target.files) {
+                  const file = e.target.files[0]
+                  const url = await uploadImage(file)
+                  if (url) {
+                    setThumbnail(url)
+                  }
+                }
+              }}
+              disabled={thumbnail !== null}
+            />
+          </div>
+          {/** タグ入力(任意) */}
+          <div className="w-2/3 px-2" data-te-input-wrapper-init>
+            <label
+              className="block text-gray-700 text-sm font-bold mb-2"
+              htmlFor="tags"
+            >
+              タグ(任意)
+            </label>
+            <input
+              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              id="tags"
+              type="text"
+              placeholder="必要に応じてタグを入力してください"
+            />
+          </div>
+        </div>
       </div>
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full">
+      <div
+        className="absolute top-[28vh] left-1/2 -translate-x-1/2 w-full px-6"
+      >
         {/** @ts-ignore */}
         <MDEditor
-          className="min-h-[78vh]"
+          className="min-h-[70vh] w-full"
           value={content}
           onChange={onChangeEditor}
           preview={viewType}

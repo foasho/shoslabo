@@ -40,16 +40,16 @@ export const uploadFileToS3 = async (
   file: Buffer,
   contentType: string,
   filePath: string,
-  saveType: string | null = null
+  isPublic = true,
 ): Promise<S3.ManagedUpload.SendData> => {
   const params: S3.PutObjectRequest = {
-    Bucket: (saveType && saveType == "public") ? process.env.S3_BUCKET_PUBLIC_NAME! : process.env.S3_BUCKET_NAME!,
+    Bucket: process.env.S3_BUCKET_NAME as string,
     Key: filePath,
     Body: file,
     ContentType: contentType,
   };
 
-  const signedUrl = await getSingedUrl(filePath);
+  const signedUrl = isPublic? publicUrl(filePath) : (await getSingedUrl(filePath));
 
   return new Promise((resolve, reject) => {
     s3.upload(params, (err, data: any) => {
@@ -69,8 +69,7 @@ export const uploadFileToS3 = async (
 export const uploadJsonToS3 = async (
   jsonObject: any,
   filePath: string,
-  saveType: string | null = null
 ): Promise<S3.ManagedUpload.SendData> => {
   const file = Buffer.from(JSON.stringify(jsonObject));
-  return uploadFileToS3(file, 'application/json', filePath, saveType);
+  return uploadFileToS3(file, 'application/json', filePath);
 };

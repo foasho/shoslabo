@@ -20,23 +20,16 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         const form = new formidable.IncomingForm();
         form.parse(req, (err, fields, files) => {
           if (err) reject(err);
-          resolve({
-            file: files.file as File,
-            fields
-          });
+          resolve({ file: files.file as File, fields });
         });
       });
-      const saveType = data.fields.saveType as string || null;
-
       const contentType = data.file.mimetype || "application/octet-stream";
-      const filename = data.file.newFilename || data.file.originalFilename;
-      const ext = contentType.split("/")[1];
-      const filePath = data.fields.filePath as string || `${AssetDir}/${filename}.${ext}`;
+      const filePath = data.fields.filePath as string;
       const fileBuffer = await fs.promises.readFile(data.file.filepath);
-
-      const result = await uploadFileToS3(fileBuffer, contentType, filePath, saveType);
+      const result = await uploadFileToS3(fileBuffer, contentType, filePath);
       res.status(200).json({ message: "File uploaded successfully", data: result });
     } catch (error) {
+      console.log(error);
       res.status(500).json({ error: "Error uploading file" });
     }
   } else {
