@@ -1,4 +1,3 @@
-"use client"
 import React, { useEffect } from 'react';
 import { Props } from "./layout";
 import dynamic from 'next/dynamic';
@@ -7,12 +6,8 @@ const Preview = dynamic(() => import('@/components/editor/Preview'), {
   ssr: false
 });
 
-interface BlogData {
-  id: string;
-
-}
-async function getData({ blogId }) {
-  const res = await fetch("https://jsonplaceholder.typicode.com/posts/1", {
+const getBlog = async ({ blogId }): Promise<any> => {
+  const res = await fetch(`${process.env.NEXTAUTH_URL}/api/blog/get?blogId=${blogId}`, {
     next: {
       revalidate: 30,
     }
@@ -24,22 +19,30 @@ const Page = async ({
   params
 }: Props) => {
   const { blogId } = params;
-  const blogData = await getData({ blogId });
-  console.log(blogData);
-  const samplehtml = `
-    <h1>h1</h1>
-    <h2>h2</h2>
-    <h3>h3</h3>
-    <p>paragraph</p>
-    <a href="https://zenn.dev">link</a>
-    <img src="https://zenn.dev/images/og.png" />
-    <pre><code>code</code></pre>
-  `;
+  const blog = await getBlog({ blogId });
   return (
     <div>
-      Page: {blogId}
+      {/** タイトル */}
+      <div 
+        className="text-3xl font-bold text-center"
+      >
+        {blog.title}
+      </div>
+      {/** タグ */}
+      <div
+        className="text-center"
+      >
+        {blog.keywords.split(",").map((keyword, idx) => {
+          return (
+            <span key={`kw-${idx}`}>
+              {keyword}
+            </span>
+          )
+        })}
+      </div>
+
       {/** @ts-ignore */}
-      <Preview html={samplehtml} />
+      <Preview content={blog.content} />
     </div>
   );
 }

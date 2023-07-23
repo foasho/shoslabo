@@ -14,7 +14,7 @@ export const metadata: Metadata = {
   metadataBase: new URL(url),
   title: {
     default: title,
-    template: "%s - PrimeMeta",
+    template: "%s - SOLB",
   },
   description: description,
   applicationName: title,

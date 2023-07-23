@@ -10,16 +10,26 @@ export interface Props {
 
 const authorName = "ShoOsaka";
 
+const getBlog = async (blogId: string): Promise<any> => {
+  const res = await fetch(`${process.env.NEXTAUTH_URL}/api/blog/get?blogId=${blogId}`, {
+    next: {
+      revalidate: 30,
+    }
+  });
+  return res.json();
+}
+
 export async function generateMetadata(
   { params }: Props
 ): Promise<Metadata>{
   const { blogId } = params;
-  const title = "title";
-  const description = "description";
-  const applicationName = "applicationName";
+  const blog = await getBlog(blogId);
+  const title = blog.title;
+  const description = blog.description || "";
+  const applicationName = title;
   const manifest = "/manifest.json";
   const themeColor = "#efcb16";
-  const keywords = "keywords";
+  const keywords = blog.keywords;
   const authors = {
     name: authorName,
     url: process.env.NEXTAUTH_URL as string,
@@ -36,7 +46,7 @@ export async function generateMetadata(
     site: authorName,
     siteId: authorName,
   };
-  const shareImage = "/icons/share.png";
+  const shareImage = blog.image;
   const openGraph = {
     title: title,
     type: "website",

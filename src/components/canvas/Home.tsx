@@ -234,9 +234,10 @@ const Table = () => {
   )
 }
 
+/**
+ * コンピュータデスク
+ */
 const ComputerDesk = () => {
-  const { mode } = useMyContext();
-  const [marbleTex] = useTexture(['/textures/marble.jpg']);
   const { nodes, materials } = useGLTF('/models/computer_desk.glb') as any;
 
   return (
@@ -270,6 +271,7 @@ const Monitor = ({
   position = [0, 0.74, -0.25],
 }) => {
   const { initPos: initCameraPos } = useMyContext();
+  const codeTex = useTexture('/textures/code.png');
   const cameraQut = useRef<Quaternion>();
   const { scene } = useGLTF('/models/monitor.glb') as any;
   const { camera } = useThree();
@@ -283,10 +285,12 @@ const Monitor = ({
     return position;
   }, []);
   const screenPos = pos.clone().add(new Vector3(0, 0.24, 0.062));
+
   useEffect(() => {
     initCameraPos.copy(camera.position.clone());
     cameraQut.current = camera.quaternion.clone();
   }, []);
+
   useFrame((state, delta) => {
     if (!screenRef.current) return;
     const targetPos = screenPos.clone().add(new Vector3(0, -0.55, 0));
@@ -316,6 +320,7 @@ const Monitor = ({
       }
     }
   });
+
   return (
     <>
       <group
@@ -330,10 +335,11 @@ const Monitor = ({
         scale={0.28}
         ref={screenRef}
       >
-        <mesh>
+        <mesh
+        >
           <planeGeometry args={[1.6, 0.9]} />
           <meshBasicMaterial
-            color={'#FFF'}
+            map={codeTex}
           />
         </mesh>
         <Text position={[0, 0.3, 0.01]} scale={0.08} color={"#000"}>

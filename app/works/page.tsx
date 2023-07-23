@@ -1,69 +1,61 @@
 'use client'
-import { useEffect, useMemo, useState } from 'react';
+import { useState } from 'react';
 import dynamic from 'next/dynamic'
 import { Header } from '@/components/commons/Header';
 import { useRouter } from 'next/navigation';
-
-interface BlogProp {
-  key: string;
-  title: string;
-  description: string;
-  image: string;
-  route: string;
-  tags: string[];
-  createdAt: string;
-  updatedAt: string;
-}
 
 export default function Page() {
 
   const router = useRouter();
   const [searchText, setSearchText] = useState('');
-  const [blogs, setBlogs] = useState<BlogProp[]>([]);
 
-  const getBlogs = async () => {
-    const res = await fetch('/api/blog/list', {
-      next: {
-        revalidate: 30,
-      }
-    });
-    return res.json();
-  }
+  const cards = [
+    {
+      key: 'work-1',
+      title: 'PrimeMeterEye',
+      description: '株式会社プライムキャスト 様',
+      image: '/works/pme.png',
+      route: 'https://www.primemeter-eye.com/',
+      tags: ['Python', 'Tensorflow', 'FastAPI', 'PlatfromIO', 'React'],
+    },
+    {
+      key: 'card-2',
+      title: 'Uniee',
+      description: '株式会社プライムキャスト 様',
+      image: '/works/uniee.png',
+      route: 'https://uniee.vercel.app/',
+      tags: ['React', 'Three.js', 'R3F', 'Next.js'],
+    },
+    {
+      key: 'card-3',
+      title: 'お絵描き道場',
+      description: '多機能Webペイントツール',
+      image: '/works/oekaki.png',
+      route: 'https://paintmonitor.com/',
+      tags: ['個人開発', 'Django', 'Python', 'Vue.js'],
+    },
+    {
+      key: 'card-4',
+      title: 'NinjaGL',
+      description: 'WebGLゲームエンジン',
+      image: '/works/ninjagl.png',
+      route: 'https://ninjagl.vercel.app/',
+      tags: ['個人開発', 'Three.js', 'Next.js', 'R3F'],
+    },
+  ];
 
-  useEffect(() => {
-    getBlogs().then((datas: any[]) => {
-      console.log(datas);
-      const _blogs = datas.map((data) => {
-        const param = {
-          key: data.id,
-          title: data.title,
-          description: data.description,
-          image: data.image,
-          route: `/blogs/${data.id}`,
-          tags: data.tags ? data.tags.split(",") : [],
-          createdAt: data.createdAt,
-          updatedAt: data.updatedAt,
-        }
-        return param;
-      });
-      setBlogs(_blogs);
-    });
-  }, []);
-
-  const filteredCards = useMemo(
-    () => blogs.filter((card) => {
-      // 検索文字列が空の場合は全てのカードを表示
-      if (searchText === '') {
-        return true;
-      }
-      // 小文字に変換して検索
-      const title = card.title.toLowerCase();
-      const description = card.description.toLowerCase();
-      const tags = card.tags.join(' ').toLowerCase();
-      const search = searchText.toLowerCase();
-      return title.includes(search) || description.includes(search) || tags.includes(search);
-    })
-    , [blogs, searchText]);
+  const filteredCards = cards.filter((card) => {
+    // 検索文字列が空の場合は全てのカードを表示
+    if (searchText === '') {
+      return true;
+    }
+    // 小文字に変換して検索
+    const title = card.title.toLowerCase();
+    const description = card.description.toLowerCase();
+    const tags = card.tags.join(' ').toLowerCase();
+    const search = searchText.toLowerCase();
+    return title.includes(search) || description.includes(search) || tags.includes(search);
+  });
 
   return (
     <>
@@ -73,11 +65,14 @@ export default function Page() {
       >
         {/** タイトル */}
         <div className="text-4xl font-bold mb-8">
-          Blog
+          Works
         </div>
         {/** サブタイトル */}
         <div className="text-xl font-bold mb-8">
-          ここには、技術的なメモを残していきます。
+          開発実績
+          <div className="text-xs text-gray-400 text-light">
+            ※ここに掲載させていただいている実績は、許可をいただけたもののみ掲載しています。
+          </div>
         </div>
         {/** 検索 */}
         <div className="mb-8">

@@ -28,7 +28,7 @@ export const Header = ({
         </div>
         <div className='flex items-center'>
           <div className='text-lg md:text-xl ml-2 md:ml-4 cursor-pointer'>
-            <a onClick={() => router.push("blogs")}>
+            <a onClick={() => router.push("works")}>
               Works
             </a>
           </div>
@@ -43,8 +43,8 @@ export const Header = ({
             </a>
           </div>
           <div className='text-lg md:text-xl ml-2 md:ml-4 cursor-pointer'>
-            <a onClick={() => router.push("contact")}>
-              Contact
+            <a onClick={() => router.push("about")}>
+              About
             </a>
           </div>
         </div>

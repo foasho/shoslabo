@@ -1,10 +1,9 @@
 "use client"
-import { useEffect, useMemo, useRef, useState } from "react";
-import { commands, ICommand, TextState } from '@uiw/react-md-editor';
+import { useEffect, useRef, useState } from "react";
 import '@uiw/react-md-editor/markdown-editor.css'
 import '@uiw/react-markdown-preview/markdown.css'
 import { MdOpenInNew, MdLogout, MdSave, MdHome } from "react-icons/md"
-import mermaid from 'mermaid'
+import mermaid from "mermaid"
 import plantumlEncoder from 'plantuml-encoder'
 import dynamic from "next/dynamic";
 import Swal from "sweetalert2";
@@ -142,11 +141,7 @@ const Editor = ({
               icon: 'error',
             })
           } else {
-            Swal.fire({
-              title: '保存しました',
-              text: '記事を公開しました',
-              icon: 'success',
-            })
+            router.push(`/blogs/${data.data.id}`);
           }
         }
       })

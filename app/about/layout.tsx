@@ -2,10 +2,10 @@ import { Layout } from '@/components/dom/Layout'
 import '@/global.css';
 import { Metadata } from "next";
 
-const title = 'Sho\'s Labo'
-const url = 'https://shoslabo.vercel.app/'
-const description = 'Portfolio Site of ShoOsaka'
-const author = 'ShoOsaka'
+const title = 'About'
+const url = 'https://shoslabo.vercel.app/about'
+const description = 'We are Web Developer. We are interested in WebGL and AI, Web3.0.'
+const author = 'Sho Osaka'
 const twitter = '@sakanosho'
 const themeColor = '#efcb16';
 
@@ -13,7 +13,7 @@ export const metadata: Metadata = {
   metadataBase: new URL(url),
   title: {
     default: title,
-    template: "%s - SOLB",
+    template: "%s | SOLB",
   },
   description: description,
   applicationName: title,
@@ -52,13 +52,8 @@ export const metadata: Metadata = {
   }
 };
 
-export default function RootLayout({ children }) {
+export default function AboutLayout({ children }) {
   return (
-    <html lang='ja' className='antialiased'>
-      <head />
-      <body>
-        <Layout>{children}</Layout>
-      </body>
-    </html>
+    <>{children}</>
   )
 }

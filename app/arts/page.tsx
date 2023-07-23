@@ -1,8 +1,10 @@
 'use client'
-import { useState } from 'react';
+import { Suspense, useState } from 'react';
 import dynamic from 'next/dynamic'
 import { Header } from '@/components/commons/Header';
 import { useRouter } from 'next/navigation';
+import Image from 'next/image';
+import { Loading2D } from '@/components/commons/Loading2D';
 
 export default function Page() {
 
@@ -12,51 +14,43 @@ export default function Page() {
   const cards = [
     {
       key: 'card-1',
-      title: 'BVH-Walk',
-      description: 'BVH法を利用したThridPerson移動',
-      image: 'https://solb-v1.s3.us-east-2.amazonaws.com/files/47066359-thumb.jpg',
-      route: '/arts/a1-sasuke',
-      tags: ['React', 'Three.js', 'R3F'],
+      title: 'Sasuke',
+      description: '実家にいたミニチュアダックスフンド',
+      image: 'https://i.pinimg.com/originals/05/38/37/053837841e45d256511bae656f3fd776.png',
+      route: 'https://www.pinterest.jp/pin/677369600197854915/',
+      tags: ['油絵', '動物', 'Art'],
     },
     {
       key: 'card-2',
-      title: 'Octree-Walk',
-      description: 'Octree法を利用したThridPerson移動',
-      image: 'https://tailwindcss.com/img/card-top.jpg',
-      route: '/blogs/s2-octreewalk',
-      tags: ['React', 'Three.js', 'R3F'],
+      title: 'Colmar',
+      description: 'Colmarの街並み',
+      image: 'https://i.pinimg.com/originals/23/57/b0/2357b0c5858ee6ca2dadb26c09915a13.jpg',
+      route: 'https://www.pinterest.jp/pin/677369600197854915/',
+      tags: ['水彩画', '風景画', 'Art'],
     },
     {
       key: 'card-3',
-      title: 'SimpleGrass',
-      description: 'WebGLでの草原の描画',
-      image: 'https://tailwindcss.com/img/card-top.jpg',
-      route: '/blogs/s3-grass',
-      tags: ['React', 'Three.js', 'R3F'],
+      title: '民族衣装の女性',
+      description: '2021東京都恵比寿弘重ギャラリーにて展示',
+      image: 'https://i.pinimg.com/originals/bb/bd/86/bbbd86410c2a516b854b08f99efffea6.jpg',
+      route: 'https://www.pinterest.jp/pin/677369600228748321/',
+      tags: ['油絵', '人物画', 'Art'],
     },
     {
       key: 'card-4',
-      title: 'お絵描き道場',
-      description: '多機能Webペイントツール',
-      image: '/img/blogs/s4-oekakidojo.png',
-      route: 'https://paintmonitor.com/',
-      tags: ['個人開発', 'Python', 'Vue.js', 'Django'],
+      title: 'Girl01',
+      description: '美人画',
+      image: 'https://i.pinimg.com/originals/94/8a/89/948a8962a165d4fa59a9d023c7de9e00.jpg',
+      route: 'https://www.pinterest.jp/pin/677369600228748335/',
+      tags: ['油絵', '人物画', 'Art'],
     },
     {
       key: 'card-5',
-      title: 'NinjaGL',
-      description: 'WebGLゲームエンジン',
-      image: 'https://tailwindcss.com/img/card-top.jpg',
-      route: '/blogs/s5-voxel',
-      tags: ['Three.js', 'Next.js', 'R3F'],
-    },
-    {
-      key: 'card-6',
-      title: 'Card 1',
-      description: 'Lorem ipsum dolor sit amet, consectetur adipiscing',
-      image: 'https://tailwindcss.com/img/card-top.jpg',
-      route: '/blogs/s6-voxel',
-      tags: ['tag1', 'tag2', 'tag3'],
+      title: 'Sketch01',
+      description: 'デジタルペイントでのスケッチ01',
+      image: 'https://i.pinimg.com/originals/69/1a/1f/691a1f7130c88e3dd48e8d8e893a8845.png',
+      route: 'https://www.pinterest.jp/pin/677369600228748502',
+      tags: ['油絵', '人物画', 'Art'],
     },
   ];
 
@@ -81,11 +75,11 @@ export default function Page() {
       >
         {/** タイトル */}
         <div className="text-4xl font-bold mb-8">
-          Arts
+          Arts / Designs
         </div>
         {/** サブタイトル */}
         <div className="text-xl font-bold mb-8">
-          Figmaで作成したデザイン、趣味で書いた油絵、Three.jsで作ったシーンなどを紹介します。
+          趣味の油絵やWebGLで作ったアート、そのほかデザインしたものを紹介します。
         </div>
         {/** 検索 */}
         <div className="mb-8">
@@ -112,11 +106,13 @@ export default function Page() {
               }}
             >
               <div className="bg-white rounded-lg overflow-hidden shadow-lg">
+                <Suspense fallback={<Loading2D/>}>
                 <img
                   className="w-full h-56 object-cover object-center"
                   src={card.image}
                   alt="avatar"
                 />
+                </Suspense>
                 <div className="p-4">
                   <p className="uppercase tracking-wide text-sm font-bold text-gray-700">
                     {card.tags.map((tag, i) => (

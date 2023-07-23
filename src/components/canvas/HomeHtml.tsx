@@ -84,7 +84,7 @@ export const HomeHtml = ({
             <div className='text-6xl font-bold'>
               <ruby>
                 ShoOsaka
-                <rt>ITエンジニア</rt>
+                <rt>Creative Developer</rt>
               </ruby>
             </div>
             <div className='text-2xl'>
@@ -140,7 +140,7 @@ export const HomeHtml = ({
           <div
             className="relative hover:scale-[1.1] transition duration-300 md:w-1/3 w-full px-2"
           >
-            <Suspense fallback={<Loading3D position={[0, 0, 0]}/>}>
+            <Suspense fallback={<Loading3D position={[0, 0, 0]} />}>
               {/** @ts-ignore */}
               <View orbit className="h-64 w-full">
                 <directionalLight intensity={0.5} position={[0, 1, 5]} />
@@ -206,7 +206,7 @@ export const HomeHtml = ({
         {/** 3つのサービスを並べる */}
         <div className="flex flex-wrap md:flex-nowrap">
           {/** 1つ目:【Github】 */}
-          <div 
+          <div
             onClick={() => window.open(github, '_blank')}
             className='cursor-pointer w-full md:p-8 md:w-1/3 h-36 md:h-72 md:inline-block items-center justify-center hover:scale-[1.1] transition duration-300'>
             <img
@@ -215,7 +215,7 @@ export const HomeHtml = ({
             />
           </div>
           {/** 2つ目:【Twitterサイト】 */}
-          <div 
+          <div
             onClick={() => window.open(twitter, '_blank')}
             className='cursor-pointer w-full md:p-8 md:w-1/3 h-36 md:h-72 my-4 md:my-4 md:inline-block items-center justify-center hover:scale-[1.1] transition duration-300'>
             <img
@@ -224,7 +224,7 @@ export const HomeHtml = ({
             />
           </div>
           {/** 3つ目:【Qiitaシステム】 */}
-          <div 
+          <div
             onClick={() => window.open(qiita, '_blank')}
             className='cursor-pointer w-full md:p-8 md:w-1/3 h-36 md:h-72 md:inline-block items-center justify-center hover:scale-[1.1] transition duration-300'>
             <img
@@ -311,7 +311,7 @@ const ReactLogo = ({
       <Line worldUnits points={points} color={color} lineWidth={0.15} rotation={[0, 0, -1]} />
       <mesh onPointerOver={() => hover(true)} onPointerOut={() => hover(false)}>
         <sphereGeometry args={[0.55, 64, 64]} />
-        <meshPhysicalMaterial roughness={0} color={hovered ? activeColor : color } />
+        <meshPhysicalMaterial roughness={0} color={hovered ? activeColor : color} />
       </mesh>
     </group>
   )
@@ -326,7 +326,7 @@ const PythonLogo = ({
 }) => {
   const { scene } = useGLTF('/models/python.glb');
   const grp = useRef<Group>(null);
-  
+
   useFrame((state, delta) => {
     const t = state.clock.getElapsedTime();
     if (grp.current) {
@@ -338,7 +338,7 @@ const PythonLogo = ({
   });
 
   return (
-    <group 
+    <group
       ref={grp}
       scale={scale}
     >
@@ -374,7 +374,7 @@ const CloudLogo = ({
       ref={grp}
     >
       <group position={[-1.5, 0, 0]}>
-        <Text3D 
+        <Text3D
           font={font.data}
         >
           {"AWS"}
@@ -386,7 +386,7 @@ const CloudLogo = ({
         <group
           scale={scale}
           position={[-0.1, -0.25, 0]}
-          rotation={[0, -Math.PI/2, 0]}
+          rotation={[0, -Math.PI / 2, 0]}
         >
           <primitive object={scene} />
         </group>

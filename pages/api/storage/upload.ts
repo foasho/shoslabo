@@ -1,11 +1,8 @@
 
 import { NextApiRequest, NextApiResponse } from "next";
 import fs from "fs";
-import path from "path";
 import formidable, { File } from "formidable";
 import { uploadFileToS3 } from "@/s3controls";
-
-const AssetDir = "uploads";
 
 export const config = {
   api: {
