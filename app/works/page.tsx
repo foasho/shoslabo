@@ -36,11 +36,19 @@ export default function Page() {
     },
     {
       key: 'card-4',
-      title: 'NinjaGL',
+      title: 'NinjaGL(調整中)',
       description: 'WebGLゲームエンジン',
       image: '/works/ninjagl.png',
       route: 'https://ninjagl.vercel.app/',
       tags: ['個人開発', 'Three.js', 'Next.js', 'R3F'],
+    },
+    {
+      key: 'card-5',
+      title: 'らくらく健康IoT(調整中)',
+      description: 'オープンソースIoTプロジェクト',
+      image: '/works/rakuken.png',
+      route: 'https://rakuken-iot.net/',
+      tags: ['個人開発', 'Python', 'FastAPI', 'Kotlin', 'C++'],
     },
   ];
 
