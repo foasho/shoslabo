@@ -73,7 +73,7 @@ export default function Page() {
       >
         {/** タイトル */}
         <div className="text-4xl font-bold mb-8">
-          Works2
+          Works
         </div>
         {/** サブタイトル */}
         <div className="text-xl font-bold mb-8">
