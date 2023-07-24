@@ -1,11 +1,10 @@
-import { Environment, MeshReflectorMaterial, OrbitControls, Scroll, ScrollControls, Text, useGLTF, useScroll, useTexture } from "@react-three/drei";
-import { useThree, Canvas, useFrame, applyProps } from "@react-three/fiber";
-import { EffectComposer, Bloom, SSR, LUT, Outline, Noise, DepthOfField } from "@react-three/postprocessing";
-import { createContext, useContext, useEffect, useLayoutEffect, useState, useMemo, useRef, Suspense, use } from "react";
-import { Group, Mesh, Vector3, ShaderMaterial, Color, DoubleSide, MeshStandardMaterial, Quaternion } from "three";
+import { Environment, Scroll, ScrollControls, Text, useGLTF, useScroll, useTexture } from "@react-three/drei";
+import { useThree, Canvas, useFrame } from "@react-three/fiber";
+import { EffectComposer, Bloom, LUT, Outline, Noise, DepthOfField } from "@react-three/postprocessing";
+import { createContext, useContext, useEffect, useState, useMemo, useRef, Suspense } from "react";
+import { Group, Mesh, Vector3, ShaderMaterial, Color, Quaternion } from "three";
 import { LUTCubeLoader } from 'postprocessing';
 // @ts-ignore
-import CustomShaderMaterial from "three-custom-shader-material";
 import { HomeHtml } from "./HomeHtml";
 import { Loading3D } from "../commons/Loading3D";
 import ClientOnly from "@/client-only";
