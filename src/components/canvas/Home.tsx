@@ -9,6 +9,7 @@ import CustomShaderMaterial from "three-custom-shader-material";
 import { HomeHtml } from "./HomeHtml";
 import { Loading3D } from "../commons/Loading3D";
 import ClientOnly from "@/client-only";
+import { useRouter } from "next/navigation";
 
 export const Home = ({
   initPos = new Vector3(0, 1, 1),
@@ -41,7 +42,6 @@ export const Home = ({
           </MyProvider>
           <Scroll html>
             <HomeHtml />
-            
           </Scroll>
         </ScrollControls>
       </Canvas>
@@ -209,12 +209,7 @@ const Lighting = () => {
  */
 const Table = () => {
   const scroll = useScroll();
-  const { camera } = useThree();
   const { scene: lamp } = useGLTF('/models/lamp/lamp.gltf');
-  useFrame((state, delta) => {
-    const data = scroll.range(0, 1);
-    const offset = 1 - scroll.offset;
-  });
   return (
     <group
     >
@@ -238,10 +233,17 @@ const Table = () => {
  * コンピュータデスク
  */
 const ComputerDesk = () => {
+  const router = useRouter();
+  {/** ThirdPerson用 */}
+  const grp = useRef<Group>(null);
+  {/** デスク */}
   const { nodes, materials } = useGLTF('/models/computer_desk.glb') as any;
+  {/** 南京錠(Loginになる) */}
+  const { scene: lock } = useGLTF('/models/lockKey.glb') as any;
 
   return (
     <group
+      ref={grp}
       position={[0, -1.47, 0]}
       scale={2}
     >
@@ -252,6 +254,14 @@ const ComputerDesk = () => {
       {/** 天板 */}
       <mesh>
         <primitive object={nodes['comp_desk_top_2']} />
+      </mesh>
+      {/** 南京錠 */}
+      <mesh
+        scale={0.005}
+        position={[-0.2, 0.7, -0.1]}
+        onClick={() => router.push("/blogs/create")}
+      >
+        <primitive object={lock} />
       </mesh>
       {/** モニター */}
       <Monitor />

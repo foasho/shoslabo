@@ -54,7 +54,7 @@ export const HomeHtml = ({
       >
         <FixedFlicker />
         <div className="relative w-full h-full">
-          <div className='absolute z-10 top-1/2 left-1/2 text-6xl md:text-8xl font-bold text-center w-full -translate-x-1/2 -translate-y-1/2'>
+          <div id="home-title" className='absolute z-10 top-1/2 left-1/2 text-6xl md:text-8xl font-bold text-center w-full -translate-x-1/2 -translate-y-1/2'>
             {title}
           </div>
           {/* <div className='absolute top-0 left-0 w-full h-full flex items-center justify-center'>
