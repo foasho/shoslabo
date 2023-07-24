@@ -66,14 +66,14 @@ export default function Page() {
   });
 
   return (
-    <>
+    <div className="fixed w-screen h-screen top-0 left-0 overflow-y-auto z-10">
       <Header fontColor={"#1e1e1e"} />
       <div
         className="container mx-auto px-4 py-8 text-gray-800 pt-24"
       >
         {/** タイトル */}
         <div className="text-4xl font-bold mb-8">
-          Works
+          Works2
         </div>
         {/** サブタイトル */}
         <div className="text-xl font-bold mb-8">
@@ -126,6 +126,6 @@ export default function Page() {
           ))}
         </div>
       </div>
-    </>
+    </div>
   )
 }
