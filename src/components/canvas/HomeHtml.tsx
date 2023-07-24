@@ -81,10 +81,10 @@ export const HomeHtml = ({
           </div>
           {/** Age */}
           <div className='w-3/4 h-3/4 flex flex-col items-center justify-center'>
-            <div className='text-6xl font-bold'>
+            <div className='text-2xl font-bold'>
               <ruby>
                 ShoOsaka
-                <rt>Creative Developer</rt>
+                <rt>Web Developer</rt>
               </ruby>
             </div>
             <div className='text-2xl'>
