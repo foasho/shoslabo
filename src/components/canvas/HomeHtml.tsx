@@ -129,10 +129,10 @@ export const HomeHtml = ({
                 Typescript, Three.js(R3F)
               </div>
               <div className='text-sx select-none'>
-                Webアプリケーションの開発において、Reactを用いた開発を行った経験があります。
-                また、Three.jsを用いた本サイトのような3DWebサイトを作成することができます。
-                個人でもWebGLのゲームエンジンを作成したことがあり、
-                業界最速のパフォーマンスで3Dアプリケーションを開発することができます。
+                Web開発において、主にReactを用いて開発しています。
+                また、3DのWebサイトを作成することができます。
+                個人開発でWebGL用3Dエディタを作成しており、
+                メタバース関連の3Dアプリケーションを最適に開発することができます。
               </div>
             </div>
           </div>
