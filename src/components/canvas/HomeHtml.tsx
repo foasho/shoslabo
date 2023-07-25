@@ -54,7 +54,7 @@ export const HomeHtml = ({
       >
         <FixedFlicker />
         <div className="relative w-full h-full">
-          <div id="home-title" className='absolute z-10 top-1/2 left-1/2 text-6xl md:text-8xl font-bold text-center w-full -translate-x-1/2 -translate-y-1/2'>
+          <div id="home-title" className='absolute z-10 top-1/2 left-1/2 text-6xl md:text-8xl font-bold text-center select-none w-full -translate-x-1/2 -translate-y-1/2'>
             {title}
           </div>
           {/* <div className='absolute top-0 left-0 w-full h-full flex items-center justify-center'>
@@ -128,7 +128,7 @@ export const HomeHtml = ({
               <div className='text-md select-none'>
                 Typescript, Three.js(R3F)
               </div>
-              <div className='text-sx select-none'>
+              <div className='text-sx select-none md:px-3'>
                 Web開発において、主にReactを用いて開発しています。
                 また、3DのWebサイトを作成することができます。
                 個人開発でWebGL用3Dエディタを作成しており、
@@ -163,7 +163,7 @@ export const HomeHtml = ({
               <div className='text-md my-2 select-none'>
                 FastAPI, Django, Tensorflow, OpenCV
               </div>
-              <div className='text-sx select-none'>
+              <div className='text-sx select-none md:px-3'>
                 Web技術を中心に、機械学習や画像処理などの分野で実務経験があります。
                 また、Pythonのライブラリを用いて、Webアプリケーションの開発を行った経験があります。
                 AIシステムの開発において、機械学習のモデルの開発から、Webアプリケーションの開発まで、
@@ -190,7 +190,7 @@ export const HomeHtml = ({
               <div className='text-md select-none'>
                 AWS, Azure
               </div>
-              <div className='text-sx select-none'>
+              <div className='text-sx select-none md:px-3'>
                 AWSを用いたインフラ設計と構築を行った経験があります。
                 また、Azureを用いたAADを活用した業務システムの開発を行った経験があります。
                 両方のクラウドサービスを用いた開発を行うことができます。
