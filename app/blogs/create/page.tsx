@@ -1,9 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import dynamic from "next/dynamic";
-import ClientOnly from "@/client-only";
+import { Loading2D } from "@/components/commons/Loading2D";
+
 
 const Editor = dynamic(() => import("@/components/editor/Editor"), {
   ssr: false,
+  loading: () => <Loading2D />,
 });
 
 const Page = () => {
