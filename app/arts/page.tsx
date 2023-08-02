@@ -1,7 +1,7 @@
 'use client'
 import { Suspense, useState } from 'react';
 import dynamic from 'next/dynamic'
-import { Header } from '@/components/commons/Header';
+import Header from '@/components/commons/Header';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 import { Loading2D } from '@/components/commons/Loading2D';

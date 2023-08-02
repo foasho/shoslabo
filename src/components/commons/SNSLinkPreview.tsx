@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useRef, useMemo } from "react";
 import { MdOpenInNew } from "react-icons/md";
 import { TwitterTweetEmbed } from "react-twitter-embed";
+import { Loading2D } from "./Loading2D";
 
 interface OGData {
   ogDescription: string;
@@ -22,6 +23,7 @@ export const SNSLinkPreview = ({ text }: { text: string }) => {
   const [isYoutube, setIsYoutube] = useState(false);
   const [isAny, setIsAny] = useState(false);
   const [ogData, setOgData] = useState<OGData|null>(null);
+  const [isMounted, setIsMounted] = useState(false);
 
   const mounted = useRef(false);
 
@@ -62,6 +64,10 @@ export const SNSLinkPreview = ({ text }: { text: string }) => {
   useEffect(() => {
     if (isAny && text.includes("https://")) {
       getOGdata(text);
+      setIsMounted(true);
+    }
+    else if (isAny) {
+      setIsMounted(true);
     }
   }, [isAny, text]);
 
@@ -118,20 +124,40 @@ export const SNSLinkPreview = ({ text }: { text: string }) => {
           </div>
         </div>
       }
-      {isAny && !ogData &&
-        <div className="block w-3/4 mx-auto cursor-pointer mb-3">
-          <a
-            className="text-xs text-blue-500 whitespace-normal"
-            href={text}
-            target="_blank"
-            rel="noopener noreferrer"
-            >
-            <MdOpenInNew
-              className="inline-block mr-1"
+      {isAny && isMounted && !ogData &&
+        <div className="block w-3/4 mx-auto cursor-pointer mb-3" onClick={
+          () => window.open(text, "_blank")
+        }>
+          <div className="flex space-x-4 px-2 py-3 items-start border border-gray-300 rounded-lg relative">
+            <div className="w-20 h-20 md:w-32 md:h-32 lg:w-48 lg:h-48">
+              <img
+                src={"/icons/404.jpg"}
+                alt={"UnKnown"}
+                className="object-cover h-full w-full rounded-lg my-auto mx-auto"
               />
-            {text}
-          </a>
+            </div>
+            <div className="flex-1 space-y-2 overflow-hidden max-h-32">
+              <div className="font-bold xl:text-lg md:text-md text-sm whitespace-normal">
+                {text}
+              </div>
+              <p className="text-xs md:text-sm text-gray-700 whitespace-normal"></p>
+            </div>
+            <a
+              href={text}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-[6px] md:text-xs text-blue-500 whitespace-normal absolute -bottom-4 right-0"
+            >
+              <MdOpenInNew
+                className="inline-block mr-1"
+              />
+              {text}
+            </a>
+          </div>
         </div>
+      }
+      {isAny && !isMounted &&
+        <Loading2D />
       }
     </>
   );

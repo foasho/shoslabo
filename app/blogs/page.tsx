@@ -1,7 +1,7 @@
 'use client'
 import { useEffect, useMemo, useState } from 'react';
 import dynamic from 'next/dynamic'
-import { Header } from '@/components/commons/Header';
+import Header from '@/components/commons/Header';
 import { useRouter } from 'next/navigation';
 
 interface BlogProp {

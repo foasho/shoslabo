@@ -6,6 +6,10 @@ const Preview = dynamic(() => import('@/components/editor/Preview'), {
   ssr: false
 });
 
+const Header = dynamic(() => import('@/components/commons/Header'), {
+  ssr: false
+});
+
 const getBlog = async ({ blogId }): Promise<any> => {
   const res = await fetch(`${process.env.NEXTAUTH_URL}/api/blog/get?blogId=${blogId}`, {
     next: {
@@ -21,29 +25,12 @@ const Page = async ({
   const { blogId } = params;
   const blog = await getBlog({ blogId });
   return (
-    <div>
-      {/** タイトル */}
-      <div 
-        className="text-3xl font-bold text-center"
-      >
-        {blog.title}
-      </div>
-      {/** タグ */}
-      <div
-        className="text-center"
-      >
-        {blog.keywords.split(",").map((keyword, idx) => {
-          return (
-            <span key={`kw-${idx}`}>
-              {keyword}
-            </span>
-          )
-        })}
-      </div>
-
+    <>
       {/** @ts-ignore */}
-      <Preview content={blog.content} />
-    </div>
+      <Header fontColor={"#c2c2c2"} />
+      {/** @ts-ignore */}
+      <Preview blog={blog} />
+    </>
   );
 }
 

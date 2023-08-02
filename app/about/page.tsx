@@ -1,7 +1,7 @@
 'use client'
 import { Common } from "@/components/canvas/View";
 import { Input, Form, Submit } from "@/components/canvas/items/r3f-form";
-import { Header } from "@/components/commons/Header";
+import Header from "@/components/commons/Header";
 import { Cloud, OrthographicCamera, Sky, Svg, Text, useGLTF, useTexture } from "@react-three/drei";
 import { extend, useFrame } from "@react-three/fiber";
 import dynamic from "next/dynamic";

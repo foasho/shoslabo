@@ -16,6 +16,7 @@ const Layout = ({ children }) => {
         overflow: 'auto',
         touchAction: 'auto',
       }}
+      id='mainlayout'
     >
       {children}
       {/** @ts-ignore */}

@@ -1,7 +1,7 @@
+"use client"
 import { useRouter } from "next/navigation"
 
-
-export const Header = ({
+const Header = ({
   fixed = true,
   fontColor = '#fff',
   title = "SOLB",
@@ -52,3 +52,5 @@ export const Header = ({
     </div>
   )
 }
+
+export default Header;

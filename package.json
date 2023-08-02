@@ -41,7 +41,7 @@
     "@skyway-sdk/sfu-bot": "^1.2.5",
     "@skyway-sdk/token": "^1.2.4",
     "@studio-freight/lenis": "^1.0.14",
-    "@uiw/react-markdown-preview": "^4.1.13",
+    "@uiw/react-markdown-preview": "^4.1.14",
     "@uiw/react-md-editor": "^3.23.3",
     "@uiw/react-prismjs": "^1.3.6",
     "aws-sdk": "^2.1420.0",

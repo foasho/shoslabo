@@ -52,12 +52,14 @@ const Editor = ({
   initDescription = '',
   initThumbnail = null,
   initKeywords = null,
+  blogId = null,
 }: {
   initContent?: string | undefined | null,
   initTitle?: string,
   initDescription?: string,
   initThumbnail?: string | null,
   initKeywords?: string | null,
+  blogId?: string | null,
 }) => {
   const [title, setTitle] = useState<string>(initTitle || '');
   const [description, setDescription] = useState<string>(initDescription || '');
@@ -134,7 +136,8 @@ const Editor = ({
         cancelButtonColor: '#d33',
       }).then(async (result) => {
         if (result.isConfirmed) {
-          const res = await fetch('/api/blog/create', {
+          const url = blogId ? `/api/blog/update?blogId=${blogId}` : '/api/blog/create';
+          const res = await fetch(url, {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',

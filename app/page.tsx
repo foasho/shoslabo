@@ -1,5 +1,5 @@
 'use client'
-import { Header } from '@/components/commons/Header';
+import Header from '@/components/commons/Header';
 import { Canvas } from '@react-three/fiber';
 import dynamic from 'next/dynamic'
 import { Suspense } from 'react';
