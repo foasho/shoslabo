@@ -55,7 +55,6 @@ export const SNSLinkPreview = ({ text }: { text: string }) => {
       (err) => null,
     )
     if (data) {
-      console.log(data);
       setOgData(data);
     }
   }
@@ -120,15 +119,19 @@ export const SNSLinkPreview = ({ text }: { text: string }) => {
         </div>
       }
       {isAny && !ogData &&
-        // ただのリンクとして表示する
-        <a
-          className="text-xs text-blue-500 whitespace-normal"
-          >
-          <MdOpenInNew
-            className="inline-block mr-1"
-          />
-          {text}
-        </a>
+        <div className="block w-3/4 mx-auto cursor-pointer mb-3">
+          <a
+            className="text-xs text-blue-500 whitespace-normal"
+            href={text}
+            target="_blank"
+            rel="noopener noreferrer"
+            >
+            <MdOpenInNew
+              className="inline-block mr-1"
+              />
+            {text}
+          </a>
+        </div>
       }
     </>
   );

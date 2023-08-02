@@ -42,15 +42,27 @@ const randomSeedStr = (seed: number = 19382721): string => {
   return String(x - Math.floor(x))
 }
 
+/**
+ * ブログ記事の編集
+ * @returns 
+ */
 const Editor = ({
   initContent = undefined,
+  initTitle = '',
+  initDescription = '',
+  initThumbnail = null,
+  initKeywords = null,
 }: {
-  initContent: string | undefined | null,
+  initContent?: string | undefined | null,
+  initTitle?: string,
+  initDescription?: string,
+  initThumbnail?: string | null,
+  initKeywords?: string | null,
 }) => {
-  const [title, setTitle] = useState<string>('');
-  const [description, setDescription] = useState<string>('');
-  const [thumbnail, setThumbnail] = useState<string | null>(null);
-  const [keywords, setKeywords] = useState<string | null>(null);
+  const [title, setTitle] = useState<string>(initTitle || '');
+  const [description, setDescription] = useState<string>(initDescription || '');
+  const [thumbnail, setThumbnail] = useState<string | null>(initThumbnail || null);
+  const [keywords, setKeywords] = useState<string | null>(initKeywords || null);
   const [content, setContent] = useState(initContent || '');
   const [viewType, setViewType] = useState<ViewType>(ViewType.Edit);
 
