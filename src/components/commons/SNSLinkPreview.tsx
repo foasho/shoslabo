@@ -65,19 +65,36 @@ export const SNSLinkPreview = ({ text }: { text: string }) => {
       getOGdata(text);
     }
   }, [isAny, text]);
-  
+
+  const domain = useMemo(() => {
+    if (ogData) {
+      try {
+        const url = new URL(ogData.ogUrl);
+        return url.origin;
+      } catch (error) {
+        console.log(error);
+      }
+    }
+    return "";
+  }, [ogData]);
+
   return (
     <>
       {isTwitter && <EmbedTwitter text={text} />}
       {isYoutube && <EmbedYoutube text={text} />}
       {isAny && ogData && 
-        <div className="block w-3/4 mx-auto cursor-pointer" onClick={
+        <div className="block w-3/4 mx-auto cursor-pointer mb-3" onClick={
           () => window.open(ogData.ogUrl, "_blank")
         }>
-          <div className="flex space-x-4 p-2 items-start border border-gray-300 rounded-lg relative">
+          <div className="flex space-x-4 px-2 py-3 items-start border border-gray-300 rounded-lg relative">
             <div className="w-20 h-20 md:w-32 md:h-32 lg:w-48 lg:h-48">
               <img
-                src={ogData.ogImage.length > 0 ? ogData?.ogImage[0].url : "https://source.unsplash.com/random"}
+                src={ 
+                  (ogData.ogImage && ogData.ogImage.length > 0) ? 
+                    ogData?.ogImage[0].url.includes("http") ? ogData?.ogImage[0].url : `${domain}${ogData?.ogImage[0].url}`
+                    : 
+                    "https://source.unsplash.com/random"
+                }
                 alt={ogData?.ogTitle}
                 className="object-cover h-full w-full rounded-lg my-auto mx-auto"
               />
@@ -92,7 +109,7 @@ export const SNSLinkPreview = ({ text }: { text: string }) => {
               href={ogData?.ogUrl} 
               target="_blank" 
               rel="noopener noreferrer" 
-              className="text-sm text-blue-500 whitespace-normal absolute -bottom-8 right-0"
+              className="text-[6px] md:text-xs text-blue-500 whitespace-normal absolute -bottom-4 right-0"
             >
               <MdOpenInNew 
                 className="inline-block mr-1"
@@ -100,8 +117,18 @@ export const SNSLinkPreview = ({ text }: { text: string }) => {
               {text}
             </a>
           </div>
-
         </div>
+      }
+      {isAny && !ogData &&
+        // ただのリンクとして表示する
+        <a
+          className="text-xs text-blue-500 whitespace-normal"
+          >
+          <MdOpenInNew
+            className="inline-block mr-1"
+          />
+          {text}
+        </a>
       }
     </>
   );
