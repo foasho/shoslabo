@@ -22,27 +22,27 @@ const Header = ({
           className='flex items-center '>
           <div
             onClick={() => router.push("/")}
-            className='ml-2 font-bold text-xl cursor-pointer'>
+            className='ml-2 font-bold text-xl cursor-pointer select-none'>
             {title}
           </div>
         </div>
         <div className='flex items-center'>
-          <div className='text-lg md:text-xl ml-2 md:ml-4 cursor-pointer'>
+          <div className='text-lg md:text-xl ml-2 md:ml-4 cursor-pointer select-none'>
             <a onClick={() => router.push("works")}>
               Works
             </a>
           </div>
-          <div className='text-lg md:text-xl ml-2 md:ml-4 cursor-pointer'>
+          <div className='text-lg md:text-xl ml-2 md:ml-4 cursor-pointer select-none'>
             <a onClick={() => router.push("blogs")}>
               Blog
             </a>
           </div>
-          <div className='text-lg md:text-xl ml-2 md:ml-4 cursor-pointer'>
+          <div className='text-lg md:text-xl ml-2 md:ml-4 cursor-pointer select-none'>
             <a onClick={() => router.push("arts")}>
               Art
             </a>
           </div>
-          <div className='text-lg md:text-xl ml-2 md:ml-4 cursor-pointer'>
+          <div className='text-lg md:text-xl ml-2 md:ml-4 cursor-pointer select-none'>
             <a onClick={() => router.push("about")}>
               About
             </a>
