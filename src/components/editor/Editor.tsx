@@ -1,14 +1,16 @@
 "use client"
 import { useEffect, useRef, useState } from "react";
 import '@uiw/react-md-editor/markdown-editor.css'
+import "./editor.css"
 import '@uiw/react-markdown-preview/markdown.css'
-import { MdOpenInNew, MdLogout, MdSave, MdHome } from "react-icons/md"
+import { MdOpenInNew, MdLogout, MdSave, MdHome, MdChangeCircle } from "react-icons/md"
 import mermaid from "mermaid"
 import plantumlEncoder from 'plantuml-encoder'
 import dynamic from "next/dynamic";
 import Swal from "sweetalert2";
 import { signOut, useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
+import { SNSLinkPreview } from "../commons/SNSLinkPreview";
 
 const MDEditor = dynamic(
   () => import("@uiw/react-md-editor").then((mod) => mod.default),
@@ -42,16 +44,16 @@ const randomSeedStr = (seed: number = 19382721): string => {
 
 const Editor = ({
   initContent = undefined,
-  viewType = ViewType.Live,
 }: {
   initContent: string | undefined | null,
-  viewType: ViewType
 }) => {
   const [title, setTitle] = useState<string>('');
   const [description, setDescription] = useState<string>('');
   const [thumbnail, setThumbnail] = useState<string | null>(null);
   const [keywords, setKeywords] = useState<string | null>(null);
   const [content, setContent] = useState(initContent || '');
+  const [viewType, setViewType] = useState<ViewType>(ViewType.Edit);
+
   const { data: session } = useSession();
   const router = useRouter();
 
@@ -141,7 +143,7 @@ const Editor = ({
               icon: 'error',
             })
           } else {
-            router.push(`/blogs/${data.data.id}`);
+            router.push(`/blogs/${data.id}`);
           }
         }
       })
@@ -274,6 +276,40 @@ const Editor = ({
               </div>
             </div>
 
+            {/** モード変更 */}
+            <div
+              className="fixed z-30 bottom-8 right-8 w-16 h-16 flex items-center justify-center"
+            >
+              <button
+                className="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow"
+                onClick={() => {
+                  switch (viewType) {
+                    case ViewType.Live:
+                      setViewType(ViewType.Preview)
+                      break
+                    case ViewType.Edit:
+                      setViewType(ViewType.Live)
+                      break
+                    case ViewType.Preview:
+                      setViewType(ViewType.Edit)
+                      break
+                  }
+                }
+                }
+              >
+                {(() => {
+                  switch (viewType) {
+                    case ViewType.Live:
+                      return <MdChangeCircle />
+                    case ViewType.Edit:
+                      return <MdChangeCircle />
+                    case ViewType.Preview:
+                      return <MdChangeCircle />
+                  }
+                }
+                )()}
+              </button>
+            </div>
             {/** Editor */}
             <div
               className="absolute top-[28vh] left-1/2 -translate-x-1/2 w-full px-6"
@@ -284,8 +320,11 @@ const Editor = ({
                 value={content}
                 onChange={onChangeEditor}
                 preview={viewType}
-                hideToolbar={viewType === ViewType.Preview}
-                visibleDragbar={false}
+                hideToolbar={true}
+                // visibleDragbar={false}
+                style={{
+                  fontFamily: "/fonts/MPLUS1-Light.ttf !important"
+                }}
                 previewOptions={{
                   components: {
                     code: Code,
@@ -301,19 +340,19 @@ const Editor = ({
                       </>
                     ),
                     a: ({ children, href, node: { properties } }) => {
-                      // リンク付きの場合は、クリックしたときに別タブで開く
+                      // リンク付きの場合は、OGPを表示する
                       if (href && href.startsWith('http')) {
                         return (
                           <>
-                            <a href={href} target='_blank' rel='noopener noreferrer'>
-                              {children.pop()}
-                            </a>
-                            <MdOpenInNew style={{ fontSize: '.8rem' }} />
+                            <SNSLinkPreview text={href} />
                           </>
                         )
                       }
                       return <a {...properties}>{children.pop()}</a>
                     },
+                    br: ({ children }) => {
+                      return <>{children}<br /></>
+                    }
                   },
                 }}
               />

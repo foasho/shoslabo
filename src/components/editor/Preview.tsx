@@ -1,14 +1,10 @@
 "use client"
-import { useEffect, useRef, useState } from "react";
+import React from 'react'
 import '@uiw/react-md-editor/markdown-editor.css'
 import '@uiw/react-markdown-preview/markdown.css'
-import { MdOpenInNew, MdLogout, MdSave, MdHome } from "react-icons/md"
-import mermaid from "mermaid"
-import plantumlEncoder from 'plantuml-encoder'
 import dynamic from "next/dynamic";
-import Swal from "sweetalert2";
-import { signOut, useSession } from "next-auth/react";
-import { useRouter } from "next/navigation";
+import { MdOpenInNew } from 'react-icons/md';
+import { SNSLinkPreview } from '../commons/SNSLinkPreview';
 
 const MDEditor = dynamic(
   () => import("@uiw/react-md-editor").then((mod) => mod.default),
@@ -29,15 +25,35 @@ const MDEditor = dynamic(
   }
 );
 
+const getOGP = async (url: string) => {
+
+}
+
 const Preview = ({ content }: { content: string }) => {
 
   return (
     <div className="container">
       {/** @ts-ignore */}
       <MDEditor
+        className="h-full w-full"
         value={content}
         preview="preview"
         hideToolbar={true}
+        fullscreen={true}
+        previewOptions={{
+          components: {
+            a: ({ children, href, node: { properties } }) => {
+              // リンク付きの場合は、クリックしたときに別タブで開く
+              if (href && href.startsWith('http')) {
+                // OGPの画像を表示するために、aタグの中にimgタグを入れる
+                return (
+                  <SNSLinkPreview text={href} />
+                )
+              }
+              return <a {...properties}>{children.pop()}</a>
+            },
+          }
+        }}
       />
     </div>
   )

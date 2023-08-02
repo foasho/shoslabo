@@ -33,7 +33,7 @@
     margin: 0;
     padding: 0;
     overflow: hidden;
-    font-family: "/fonts/MPLUS1-Light.ttf";
+    font-family: "/fonts/MPLUS1-Light.ttf" !important;
   }
 
   /* スクロールバーの幅 */
@@ -71,5 +71,10 @@
   ::-webkit-scrollbar-vertical {
     width: 5px;
     /* 垂直方向のスクロールバーの幅を調整 */
+  }
+  .w-md-editor .title {
+    line-height: unset !important;
+    font-size: unset !important;
+    font-weight: unset !important;
   }
 }

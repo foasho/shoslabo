@@ -1,0 +1,18 @@
+/**
+* MDEditorフォントずれ対策
+**/
+.w-md-editor-text * {
+  font-family: "/fonts/MPLUS1-Light.ttf" !important;
+}
+
+.w-md-editor-text-pre * {
+  font-family: "/fonts/MPLUS1-Light.ttf" !important;
+}
+
+.wmde-markdown-color * {
+  font-family: "/fonts/MPLUS1-Light.ttf" !important;
+}
+
+.wmde-markdown-color pre {
+  font-family: "/fonts/MPLUS1-Light.ttf" !important;
+}
