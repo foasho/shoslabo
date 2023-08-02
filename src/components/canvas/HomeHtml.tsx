@@ -115,7 +115,7 @@ export const HomeHtml = ({
           >
             <Suspense fallback={null}>
               {/** @ts-ignore */}
-              <View orbit className="h-64 w-full">
+              <View className="h-64 w-full">
                 <ambientLight />
                 <ReactLogo />
               </View>
@@ -142,7 +142,7 @@ export const HomeHtml = ({
           >
             <Suspense fallback={<Loading3D position={[0, 0, 0]} />}>
               {/** @ts-ignore */}
-              <View orbit className="h-64 w-full">
+              <View className="h-64 w-full">
                 <directionalLight intensity={0.5} position={[0, 1, 5]} />
                 <spotLight
                   position={[10, 10, 10]}
@@ -177,7 +177,7 @@ export const HomeHtml = ({
           >
             <Suspense fallback={null}>
               {/** @ts-ignore */}
-              <View orbit className="h-64 w-full">
+              <View className="h-64 w-full">
                 <ambientLight />
                 <CloudLogo />
               </View>
