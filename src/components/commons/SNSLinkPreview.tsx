@@ -98,7 +98,7 @@ export const SNSLinkPreview = ({ text }: { text: string }) => {
                   (ogData.ogImage && ogData.ogImage.length > 0) ? 
                     ogData?.ogImage[0].url.includes("http") ? ogData?.ogImage[0].url : `${domain}${ogData?.ogImage[0].url}`
                     : 
-                    "https://source.unsplash.com/random"
+                    "/icons/blank.png"
                 }
                 alt={ogData?.ogTitle}
                 className="object-cover h-full w-full rounded-lg my-auto mx-auto"

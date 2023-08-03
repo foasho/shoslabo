@@ -185,7 +185,7 @@ const Preview = ({ blog }: { blog: any }) => {
                 h3: ({ children }) => {
                   return (
                     <div
-                      className={`text-xl text-bold py-2 text-[${COLOR.third}] !border-none`}
+                      className={`text-xl text-bold pl-3 py-2 text-[${COLOR.third}] !border-none`}
                       style={{
                         color: COLOR.third,
                         fontWeight: 'bold',

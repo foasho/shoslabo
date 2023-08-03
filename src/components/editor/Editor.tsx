@@ -285,6 +285,7 @@ const Editor = ({
                     id="tags"
                     type="text"
                     placeholder="(例: タグ1,タグ2,タグ3,...)"
+                    value={keywords || ''}
                     onChange={(e) => setKeywords(e.target.value)}
                   />
                 </div>

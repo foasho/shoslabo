@@ -35,6 +35,7 @@ const Page = ({ params }) => {
           initKeywords={blog.keywords}
           initDescription={blog.description}
           initThumbnail={blog.image}
+          blogId={blog.id}
         />
       }
     </div>
