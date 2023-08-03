@@ -177,7 +177,7 @@ const Preview = ({ blog }: { blog: any }) => {
                 h2: ({ children }) => {
                   return (
                     <div
-                      className={`md:text-2xl text-xl text-bold py-3 text-[${COLOR.secondary}] !border-none`}
+                      className={`md:text-2xl text-xl text-bold pl-2 py-3 text-[${COLOR.secondary}] !border-none`}
                       style={{
                         color: COLOR.secondary,
                         fontWeight: 'bold',
