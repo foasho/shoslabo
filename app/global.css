@@ -72,9 +72,15 @@
     width: 5px;
     /* 垂直方向のスクロールバーの幅を調整 */
   }
+
   .w-md-editor .title {
     line-height: unset !important;
     font-size: unset !important;
     font-weight: unset !important;
+  }
+
+  /** なぞの"<svg class="oction oction-link"" を非表示にする */
+  .octicon-link {
+    display: none !important;
   }
 }
