@@ -1,8 +1,7 @@
-// import {} from 'funcs'
-
 import { PostType } from "@/interfaces/blog";
 import { Metadata } from "next";
 import { AppleWebApp } from "next/dist/lib/metadata/types/extra-types";
+import "./style.css"
 
 export interface Props {
   params: { blogId: string };

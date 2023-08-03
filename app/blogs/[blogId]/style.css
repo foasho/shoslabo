@@ -1,0 +1,4 @@
+  /** なぞの"<svg class="oction oction-link"" を非表示にする */
+  .wmde-markdown .octicon {
+    display: none !important;
+  }

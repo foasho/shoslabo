@@ -78,9 +78,4 @@
     font-size: unset !important;
     font-weight: unset !important;
   }
-
-  /** なぞの"<svg class="oction oction-link"" を非表示にする */
-  .wmde-markdown .octicon {
-    display: none !important;
-  }
 }
