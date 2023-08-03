@@ -97,7 +97,7 @@ const Preview = ({ blog }: { blog: any }) => {
             </div>
             {/** タグ */}
             <div
-              className="my-2 text-sm text-gray-500 "
+              className="py-2 text-sm text-gray-500 "
             >
               {blog.keywords.split(",").map((keyword, idx) => {
                 return (
