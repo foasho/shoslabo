@@ -89,7 +89,7 @@ export const SNSLinkPreview = ({ text }: { text: string }) => {
       {isYoutube && <EmbedYoutube text={text} />}
       {isAny && ogData && 
         <div className="block w-3/4 mx-auto cursor-pointer mb-3" onClick={
-          () => window.open(ogData.ogUrl, "_blank")
+          () => window.open(text, "_blank")
         }>
           <div className="flex space-x-4 px-2 py-3 items-start border border-gray-300 rounded-lg relative">
             <div className="w-20 h-20 md:w-32 md:h-32 lg:w-48 lg:h-48">
