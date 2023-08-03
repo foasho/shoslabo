@@ -157,8 +157,10 @@ const Preview = ({ blog }: { blog: any }) => {
                   return <>{children}<br /></>
                 },
                 h1: ({ children }) => {
+                  const textContent = React.Children.toArray(children).find(child => typeof child === 'string');
                   return (
                     <div
+                      id={`${textContent}`}
                       className={`md:text-3xl text-2xl text-bold py-7 text-[${COLOR.primary}] !border-none`}
                       style={{
                         color: COLOR.primary,
@@ -175,8 +177,10 @@ const Preview = ({ blog }: { blog: any }) => {
                   )
                 },
                 h2: ({ children }) => {
+                  const textContent = React.Children.toArray(children).find(child => typeof child === 'string');
                   return (
                     <div
+                      id={`${textContent}`}
                       className={`md:text-2xl text-xl text-bold pl-2 py-3 text-[${COLOR.secondary}] !border-none`}
                       style={{
                         color: COLOR.secondary,
