@@ -159,16 +159,16 @@ const Preview = ({ blog }: { blog: any }) => {
                 h1: ({ children }) => {
                   return (
                     <div
-                      className={`text-3xl text-bold py-7 text-[${COLOR.primary}] !border-none`}
+                      className={`md:text-3xl text-2xl text-bold py-7 text-[${COLOR.primary}] !border-none`}
                       style={{
                         color: COLOR.primary,
                         fontWeight: 'bold',
                       }}
                     >
-                      <div className="inline-block animate-slowspin mr-2">
+                      <div className="flex animate-slowspin mr-2">
                         <FiBox size={16} />
                       </div>
-                      <div className="inline-block">
+                      <div className="flex">
                         {children}
                       </div>
                     </div>
@@ -177,7 +177,7 @@ const Preview = ({ blog }: { blog: any }) => {
                 h2: ({ children }) => {
                   return (
                     <div
-                      className={`text-2xl text-bold py-3 text-[${COLOR.secondary}] !border-none`}
+                      className={`md:text-2xl text-xl text-bold py-3 text-[${COLOR.secondary}] !border-none`}
                       style={{
                         color: COLOR.secondary,
                         fontWeight: 'bold',
@@ -190,7 +190,20 @@ const Preview = ({ blog }: { blog: any }) => {
                 h3: ({ children }) => {
                   return (
                     <div
-                      className={`text-xl text-bold pl-3 py-2 text-[${COLOR.third}] !border-none`}
+                      className={`md:text-xl text-lg text-bold pl-3 py-2 text-[${COLOR.third}] !border-none`}
+                      style={{
+                        color: COLOR.third,
+                        fontWeight: 'bold',
+                      }}
+                    >
+                      {children}
+                    </div>
+                  )
+                },
+                h4: ({ children }) => {
+                  return (
+                    <div
+                      className={`md:text-xl text-lg text-bold pl-3 py-2 text-[${COLOR.third}] !border-none`}
                       style={{
                         color: COLOR.third,
                         fontWeight: 'bold',
