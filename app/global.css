@@ -80,7 +80,7 @@
   }
 
   /** なぞの"<svg class="oction oction-link"" を非表示にする */
-  .octicon-link {
+  .wmde-markdown .octicon {
     display: none !important;
   }
 }
