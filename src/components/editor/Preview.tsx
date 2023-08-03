@@ -118,7 +118,11 @@ const Preview = ({ blog }: { blog: any }) => {
         <div className='w-[90%] mx-auto mb-12'>
           {/** @ts-ignore */}
           <MarkdownPreview
-            data-color-mode="light"
+            wrapperElement={
+              {
+                "data-color-mode": "light"
+              }
+            }
             source={blog.content}
             components={
               {
