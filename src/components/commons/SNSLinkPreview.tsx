@@ -111,15 +111,15 @@ export const SNSLinkPreview = ({ text }: { text: string }) => {
               <p className="text-xs md:text-sm text-gray-700 whitespace-normal">{ogData?.ogDescription}</p>
             </div>
             <a 
-              href={ogData?.ogUrl} 
-              target="_blank" 
-              rel="noopener noreferrer" 
-              className="text-[6px] md:text-xs text-blue-500 whitespace-normal absolute -bottom-4 right-0"
+              onClick={(e) => window.open(text, "_blank")}
+              className="text-[6px] md:text-xs !text-blue-500 whitespace-normal absolute -bottom-4 right-0"
             >
-              <MdOpenInNew 
-                className="inline-block mr-1"
-              />
-              {text}
+              <span className="!text-blue-500">
+                <MdOpenInNew 
+                  className="inline-block mr-1"
+                />
+                {text}
+              </span>
             </a>
           </div>
         </div>
@@ -143,15 +143,16 @@ export const SNSLinkPreview = ({ text }: { text: string }) => {
               <p className="text-xs md:text-sm text-gray-700 whitespace-normal"></p>
             </div>
             <a
-              href={text}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-[6px] md:text-xs text-blue-500 whitespace-normal absolute -bottom-4 right-0"
+              onClick={(e) => window.open(text, "_blank")}
+              className="text-[6px] md:text-xs whitespace-normal absolute -bottom-4 right-0"
+              
             >
-              <MdOpenInNew
-                className="inline-block mr-1"
-              />
-              {text}
+              <span className="!text-blue-500">
+                <MdOpenInNew
+                  className="inline-block mr-1"
+                />
+                {text}
+              </span>
             </a>
           </div>
         </div>

@@ -106,12 +106,12 @@ const Preview = ({ blog }: { blog: any }) => {
                   </span>
                 )
               })}
-              {/** 作成日時 */}
-              <span
-                className="text-sm text-gray-500 mx-2"
-              >
-                {blog.createdAt.split("T")[0]}
-              </span>
+            </div>
+            {/** 作成日時 */}
+            <div
+              className="text-sm text-gray-500 mx-2"
+            >
+              {blog.createdAt.split("T")[0]}
             </div>
           </div>
         </div>
