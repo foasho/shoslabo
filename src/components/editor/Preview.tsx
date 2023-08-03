@@ -229,7 +229,6 @@ const Preview = ({ blog }: { blog: any }) => {
                     </strong>
                   )
                 },
-
               }
             }
           />

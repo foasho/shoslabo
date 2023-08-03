@@ -1,5 +1,5 @@
 "use client"
-import { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import '@uiw/react-md-editor/markdown-editor.css'
 import "./editor.css"
 import '@uiw/react-markdown-preview/markdown.css'
@@ -11,6 +11,7 @@ import Swal from "sweetalert2";
 import { signOut, useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { SNSLinkPreview } from "../commons/SNSLinkPreview";
+import { FiBox } from "react-icons/fi";
 
 const MDEditor = dynamic(
   () => import("@uiw/react-md-editor").then((mod) => mod.default),
@@ -30,6 +31,13 @@ const MDEditor = dynamic(
     ),
   }
 );
+
+const COLOR = {
+  primary: '#0099cc',
+  secondary: '#66cccc',
+  third: '#808080',
+  strong: '#FFA500',
+}
 
 enum ViewType {
   Preview = 'preview',
@@ -349,9 +357,14 @@ const Editor = ({
                         {children.map((p, i) => {
                           if (typeof p === 'string') {
                             const splitP = p.split('\n')
-                            return splitP.map((p, j) => <p key={`${p}${i}_${j}`}>{p}</p>)
+                            return splitP.map((p, j) => <p key={`${p}${i}_${j}`} className={"pl-3"}>{p}</p>)
                           }
-                          return <p key={`${p}${i}`}>{p}</p>
+                          return <p
+                            key={`${p}${i}`}
+                            className={"pl-3"}
+                          >
+                            {p}
+                          </p>
                         })}
                       </>
                     ),
@@ -368,7 +381,80 @@ const Editor = ({
                     },
                     br: ({ children }) => {
                       return <>{children}<br /></>
-                    }
+                    },
+                    h1: ({ children }) => {
+                      const textContent = React.Children.toArray(children).find(child => typeof child === 'string');
+                      return (
+                        <div
+                          id={`${textContent}`}
+                          className={`md:text-3xl text-2xl text-bold py-7 text-[${COLOR.primary}] !border-none`}
+                          style={{
+                            color: COLOR.primary,
+                            fontWeight: 'bold',
+                          }}
+                        >
+                          <div className="inline-block animate-slowspin mr-2">
+                            <FiBox size={16} />
+                          </div>
+                          <div className="inline-block">
+                            {children}
+                          </div>
+                        </div>
+                      )
+                    },
+                    h2: ({ children }) => {
+                      const textContent = React.Children.toArray(children).find(child => typeof child === 'string');
+                      return (
+                        <div
+                          id={`${textContent}`}
+                          className={`md:text-2xl text-xl text-bold pl-2 py-3 text-[${COLOR.secondary}] !border-none`}
+                          style={{
+                            color: COLOR.secondary,
+                            fontWeight: 'bold',
+                          }}
+                        >
+                          {children}
+                        </div>
+                      )
+                    },
+                    h3: ({ children }) => {
+                      return (
+                        <div
+                          className={`md:text-xl text-lg text-bold pl-3 py-2 text-[${COLOR.third}] !border-none`}
+                          style={{
+                            color: COLOR.third,
+                            fontWeight: 'bold',
+                          }}
+                        >
+                          {children}
+                        </div>
+                      )
+                    },
+                    h4: ({ children }) => {
+                      return (
+                        <div
+                          className={`md:text-xl text-lg text-bold pl-3 py-2 text-[${COLOR.third}] !border-none`}
+                          style={{
+                            color: COLOR.third,
+                            fontWeight: 'bold',
+                          }}
+                        >
+                          {children}
+                        </div>
+                      )
+                    },
+                    strong: ({ children }) => {
+                      return (
+                        <strong
+                          style={{
+                            color: COLOR.strong,
+                            fontWeight: 'bold',
+                          }}
+                        >
+                          {children}
+                        </strong>
+                      )
+                    },
                   },
                 }}
               />
