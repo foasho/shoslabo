@@ -53,9 +53,9 @@ const Preview = ({ blog }: { blog: any }) => {
       }
       return !isCode;
     });
-    
+
     let currentHeader: any;
-    if (blog){
+    if (blog) {
       withoutLines.forEach((line) => {
         // #の数でヘッダーのレベルを判定し、##までchildrenに格納する
         const headerLevel = line.match(/^#+/);
@@ -117,8 +117,9 @@ const Preview = ({ blog }: { blog: any }) => {
         </div>
         <div className='w-[90%] mx-auto mb-12'>
           {/** @ts-ignore */}
-          <MarkdownPreview 
-            source={blog.content} 
+          <MarkdownPreview
+            data-color-mode="light"
+            source={blog.content}
             components={
               {
                 p: ({ children }) => (
@@ -128,12 +129,12 @@ const Preview = ({ blog }: { blog: any }) => {
                         const splitP = p.split('\n')
                         return splitP.map((p, j) => <p key={`${p}${i}_${j}`} className={"pl-3"}>{p}</p>)
                       }
-                      return <p 
-                          key={`${p}${i}`}
-                          className={"pl-3"}
-                        >
-                          {p}
-                        </p>
+                      return <p
+                        key={`${p}${i}`}
+                        className={"pl-3"}
+                      >
+                        {p}
+                      </p>
                     })}
                   </>
                 ),
@@ -153,7 +154,7 @@ const Preview = ({ blog }: { blog: any }) => {
                 },
                 h1: ({ children }) => {
                   return (
-                    <div 
+                    <div
                       className={`text-3xl text-bold py-7 text-[${COLOR.primary}] !border-none`}
                       style={{
                         color: COLOR.primary,
@@ -171,7 +172,7 @@ const Preview = ({ blog }: { blog: any }) => {
                 },
                 h2: ({ children }) => {
                   return (
-                    <div 
+                    <div
                       className={`text-2xl text-bold py-3 text-[${COLOR.secondary}] !border-none`}
                       style={{
                         color: COLOR.secondary,
@@ -197,7 +198,7 @@ const Preview = ({ blog }: { blog: any }) => {
                 },
                 strong: ({ children }) => {
                   return (
-                    <strong 
+                    <strong
                       style={{
                         color: COLOR.strong,
                         fontWeight: 'bold',
@@ -213,7 +214,7 @@ const Preview = ({ blog }: { blog: any }) => {
           />
         </div>
       </div>
-      <div 
+      <div
         className="md:w-1/4 md:inline-block hidden fixed z-10 right-2 bottom-2"
       >
         <div className="px-2 py-4">
@@ -226,7 +227,7 @@ const Preview = ({ blog }: { blog: any }) => {
               return (
                 <div key={`header-${idx}`}>
                   <div className="mb-2">
-                    <a href={"#"+header.header} style={
+                    <a href={"#" + header.header} style={
                       {
                         color: COLOR.primary,
                       }
@@ -237,8 +238,8 @@ const Preview = ({ blog }: { blog: any }) => {
                   {header.children.map((child, idx) => {
                     return (
                       <div key={`child-${idx}`} className="ml-4 mb-2">
-                        <a 
-                          href={"#" +child.header}
+                        <a
+                          href={"#" + child.header}
                           style={
                             {
                               color: COLOR.secondary
