@@ -165,10 +165,10 @@ const Preview = ({ blog }: { blog: any }) => {
                         fontWeight: 'bold',
                       }}
                     >
-                      <div className="flex animate-slowspin mr-2">
+                      <div className="inline-block animate-slowspin mr-2">
                         <FiBox size={16} />
                       </div>
-                      <div className="flex">
+                      <div className="inline-block">
                         {children}
                       </div>
                     </div>
