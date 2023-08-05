@@ -1,6 +1,9 @@
 /**
 * MDEditorフォントずれ対策
 **/
+.w-md-editor {
+  --md-editor-font-family: "/fonts/MPLUS1-Light.ttf" !important;
+}
 .w-md-editor-text * {
   font-family: "/fonts/MPLUS1-Light.ttf" !important;
 }
