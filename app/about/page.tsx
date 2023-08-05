@@ -36,7 +36,7 @@ const Page = () => {
   const fontBold = "/fonts/MPLUS1-Bold.ttf";
   const [device, setDevice] = useState<"mobile" | "desktop">("desktop");
   const [name, setName] = useState<string>("");
-  const [sw, setSw] = useState<"about" | "contact">("about");
+  const [sw, setSw] = useState<"about" | "contact">("contact");
   const [company, setCompany] = useState<string>("");
   const [email, setEmail] = useState<string>("");
   const [message, setMessage] = useState<string>("");
