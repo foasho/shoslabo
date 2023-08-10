@@ -14,7 +14,7 @@ const Page = ({ params }) => {
   const { blogId } = params;
   const [blog, setBlog] = React.useState<any>(null);
 
-  const getBlog = async (blogId) => {
+  const getBlog = async (blogId: string) => {
     const res = await fetch(`/api/blog/get?blogId=${blogId}`);
     return res.json();
   }

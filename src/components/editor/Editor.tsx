@@ -66,7 +66,7 @@ const Editor = ({
   initThumbnail = null,
   initKeywords = null,
   blogId = null,
-  initStatus = EStatus.Draft,
+  initStatus = null,
 }: {
   initContent?: string | undefined | null,
   initTitle?: string,
@@ -74,14 +74,14 @@ const Editor = ({
   initThumbnail?: string | null,
   initKeywords?: string | null,
   blogId?: string | null,
-  initStatus?: EStatus,
+  initStatus?: EStatus | null,
 }) => {
   const [title, setTitle] = useState<string>(initTitle || '');
   const [description, setDescription] = useState<string>(initDescription || '');
   const [thumbnail, setThumbnail] = useState<string | null>(initThumbnail || null);
   const [keywords, setKeywords] = useState<string | null>(initKeywords || null);
   const [content, setContent] = useState(initContent || '');
-  const [status, setStatus] = useState<EStatus>(initStatus);
+  const [status, setStatus] = useState<EStatus>(initStatus || EStatus.Draft);
   const [viewType, setViewType] = useState<ViewType>(ViewType.Edit);
 
   const { data: session } = useSession();
