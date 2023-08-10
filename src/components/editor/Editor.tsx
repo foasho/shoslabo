@@ -50,6 +50,11 @@ const randomSeedStr = (seed: number = 19382721): string => {
   return String(x - Math.floor(x))
 }
 
+enum EStatus {
+  Draft = 0,
+  Published = 1,
+}
+
 /**
  * ブログ記事の編集
  * @returns 
@@ -61,6 +66,7 @@ const Editor = ({
   initThumbnail = null,
   initKeywords = null,
   blogId = null,
+  initStatus = EStatus.Draft,
 }: {
   initContent?: string | undefined | null,
   initTitle?: string,
@@ -68,12 +74,14 @@ const Editor = ({
   initThumbnail?: string | null,
   initKeywords?: string | null,
   blogId?: string | null,
+  initStatus?: EStatus,
 }) => {
   const [title, setTitle] = useState<string>(initTitle || '');
   const [description, setDescription] = useState<string>(initDescription || '');
   const [thumbnail, setThumbnail] = useState<string | null>(initThumbnail || null);
   const [keywords, setKeywords] = useState<string | null>(initKeywords || null);
   const [content, setContent] = useState(initContent || '');
+  const [status, setStatus] = useState<EStatus>(initStatus);
   const [viewType, setViewType] = useState<ViewType>(ViewType.Edit);
 
   const { data: session } = useSession();
@@ -156,6 +164,7 @@ const Editor = ({
               image: thumbnail,
               keywords,
               content,
+              status,
             }),
           })
           const data = await res.json()
@@ -282,20 +291,42 @@ const Editor = ({
                 </div>
                 {/** タグ入力(任意) */}
                 <div className="w-2/3 px-2 pr-16" data-te-input-wrapper-init>
-                  <label
-                    className="block text-gray-700 text-sm font-bold mb-2"
-                    htmlFor="tags"
-                  >
-                    タグ(任意)
-                  </label>
-                  <input
-                    className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                    id="tags"
-                    type="text"
-                    placeholder="(例: タグ1,タグ2,タグ3,...)"
-                    value={keywords || ''}
-                    onChange={(e) => setKeywords(e.target.value)}
-                  />
+                  <div className="w-2/3 inline-block">
+                    <label
+                      className="block text-gray-700 text-sm font-bold mb-2"
+                      htmlFor="tags"
+                    >
+                      タグ(任意)
+                    </label>
+                    <input
+                      className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                      id="tags"
+                      type="text"
+                      placeholder="(例: タグ1,タグ2,タグ3,...)"
+                      value={keywords || ''}
+                      onChange={(e) => setKeywords(e.target.value)}
+                    />
+                  </div>
+                  <div className="w-1/3 inline-block">
+                    {/** Status選択 */}
+                    <div className="px-2">
+                      <label
+                        className="block text-gray-700 text-sm font-bold mb-2"
+                        htmlFor="status"
+                      >
+                        公開状態
+                      </label>
+                      <select
+                        className="block py-2 px-3 w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
+                        id="status"
+                        value={status}
+                        onChange={(e) => setStatus(Number(e.target.value))}
+                      >
+                        <option value={EStatus.Draft}>公開</option>
+                        <option value={EStatus.Published}>下書き</option>
+                      </select>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>

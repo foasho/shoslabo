@@ -10,9 +10,10 @@ interface CreateBlogProps {
   content: string;
   image: string;
   keywords?: string;
+  status?: number;
 }
 export const createBlog = async (props: CreateBlogProps) => {
-  const { title, content, keywords, description, image } = props;
+  const { title, content, keywords, description, image, status } = props;
   const blog = await prisma.blog.create({
     data: {
       title,
@@ -20,16 +21,22 @@ export const createBlog = async (props: CreateBlogProps) => {
       image,
       content,
       keywords,
+      status,
     },
   });
   return blog;
 }
 
 /**
- * すべてのBlogを取得する
+ * すべてのBlogを取得す
+ * ※Statusが1のもののみ取得する
  */
 export const getBlogs = async () => {
-  const blogs = await prisma.blog.findMany();
+  const blogs = await prisma.blog.findMany({
+    where: {
+      status: 1,
+    },
+  });
   return blogs;
 }
 
@@ -40,7 +47,7 @@ interface UpdateBlogProps extends CreateBlogProps {
   id: string;
 }
 export const updateBlog = async (props: UpdateBlogProps) => {
-  const { id, title, content, keywords, description, image } = props;
+  const { id, title, content, keywords, description, image, status } = props;
   const blog = await prisma.blog.update({
     where: {
       id,
@@ -51,6 +58,7 @@ export const updateBlog = async (props: UpdateBlogProps) => {
       image,
       content,
       keywords,
+      status,
     },
   });
   return blog;

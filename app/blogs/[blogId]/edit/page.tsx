@@ -36,6 +36,7 @@ const Page = ({ params }) => {
           initDescription={blog.description}
           initThumbnail={blog.image}
           blogId={blog.id}
+          initStatus={blog.status}
         />
       }
     </div>

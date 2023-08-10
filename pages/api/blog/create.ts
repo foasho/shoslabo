@@ -6,7 +6,7 @@ export default async function handle(req: NextApiRequest, res: NextApiResponse) 
   try {
     switch (req.method) {
       case 'POST': {
-        const { title, content, description, image, keywords } = req.body;
+        const { title, content, description, image, keywords, status } = req.body;
         if (!title || !content) {
           return res.status(400).json({ message: 'Missing title or content' });
         }
@@ -16,6 +16,7 @@ export default async function handle(req: NextApiRequest, res: NextApiResponse) 
           description,
           image,
           keywords,
+          status,
         });
         return res.json(blog);
       }
