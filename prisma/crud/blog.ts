@@ -31,7 +31,12 @@ export const createBlog = async (props: CreateBlogProps) => {
  * すべてのBlogを取得す
  * ※Statusが1のもののみ取得する
  */
-export const getBlogs = async () => {
+export const getBlogs = async (isAdmin=false) => {
+  // 管理者の場合はすべてのBlogを取得する
+  if (isAdmin) {
+    const blogs = await prisma.blog.findMany();
+    return blogs;
+  }
   const blogs = await prisma.blog.findMany({
     where: {
       status: 1,
