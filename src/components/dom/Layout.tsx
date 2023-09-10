@@ -2,7 +2,11 @@
 
 import { useRef } from 'react'
 import dynamic from 'next/dynamic'
-const Scene = dynamic(() => import('@/components/canvas/Scene'), { ssr: false })
+import { HeaderProps } from '@/components/dom/Header';
+
+const Scene = dynamic(() => import('@/components/canvas/Scene'), { ssr: false });
+
+const Header = dynamic<HeaderProps>(() => import('@/components/dom/Header'), { ssr: false });
 
 const Layout = ({ children }) => {
   const ref = useRef<any>();
@@ -18,8 +22,8 @@ const Layout = ({ children }) => {
       }}
       id='mainlayout'
     >
+
       {children}
-      {/** @ts-ignore */}
       <Scene
         style={{
           position: 'fixed',
@@ -32,6 +36,7 @@ const Layout = ({ children }) => {
         eventSource={ref}
         eventPrefix='client'
       />
+      <Header fontColor='#1e1e1a' />
     </div>
   )
 }

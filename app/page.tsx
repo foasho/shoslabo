@@ -1,24 +1,8 @@
-'use client'
-import Header from '@/components/commons/Header';
-import dynamic from 'next/dynamic'
+import Image from "next/image"
+import { Home } from "./_components/Home"
+import { Typography } from "@/components/commons/Typography"
 
-const Home = dynamic(() => import('@/components/canvas/Home').then((mod) => mod.Home), { 
-  ssr: false,
-  loading: () => (
-    <div className='flex h-96 w-full flex-col items-center justify-center'>
-      <svg className='-ml-1 mr-3 h-5 w-5 animate-spin text-black' fill='none' viewBox='0 0 24 24'>
-        <circle className='opacity-25' cx='12' cy='12' r='10' stroke='currentColor' strokeWidth='4' />
-        <path
-          className='opacity-75'
-          fill='currentColor'
-          d='M4 12a8 8 0 0 1 8-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 0 1 4 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z'
-        />
-      </svg>
-    </div>
-  ),
-});
-
-export default function Page() {
+export default async function Page() {
 
   return (
     <>
@@ -30,9 +14,30 @@ export default function Page() {
           }
         }
       >
-          <Header />
-          {/** @ts-ignore */}
+        <div className="flex h-screen w-full md:w-1/2 lg:w-2/3">
           <Home />
+        </div>
+        <div className={"absolute right-0 top-0 z-10 hidden h-screen bg-red-500 md:block md:w-1/2 lg:w-1/3"}>
+          <div className="h-full w-full divide-dotted">
+            <div className="flex h-2/3 items-center justify-center">
+              <div>
+                <Typography variant="h1">
+                  かなざわ在住
+                </Typography>
+                <Typography variant="h1">
+                  ITエンジニア
+                </Typography>
+
+              </div>
+            </div>
+            <div className="flex h-1/3 items-center justify-center">
+              <img
+                src="/img/yagasuri.png"
+                className="h-full w-full"
+              />
+            </div>
+          </div>
+        </div>
       </div>
     </>
   )

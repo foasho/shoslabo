@@ -1,7 +1,7 @@
 'use client'
 import { useState } from 'react';
 import dynamic from 'next/dynamic'
-import Header from '@/components/commons/Header';
+import Header from '@/components/dom/Header';
 import { useRouter } from 'next/navigation';
 
 export default function Page() {

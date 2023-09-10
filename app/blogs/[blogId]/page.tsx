@@ -6,7 +6,7 @@ const Preview = dynamic(() => import('@/components/editor/Preview'), {
   ssr: false
 });
 
-const Header = dynamic(() => import('@/components/commons/Header'), {
+const Header = dynamic(() => import('@/components/dom/Header'), {
   ssr: false
 });
 

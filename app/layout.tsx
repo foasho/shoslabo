@@ -1,6 +1,7 @@
 import { Layout } from '@/components/dom/Layout'
 import '@/global.css';
 import { Metadata } from "next";
+import { hannari } from '@/styles/font';
 
 const title = 'Sho\'s Labo'
 const url = 'https://shoslabo.vercel.app/'
@@ -56,7 +57,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang='ja' className='antialiased'>
       <head />
-      <body>
+      <body className={`${hannari.variable}`}>
         <Layout>{children}</Layout>
       </body>
     </html>
