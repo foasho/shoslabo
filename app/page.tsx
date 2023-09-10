@@ -27,7 +27,6 @@ export default async function Page() {
                 <Typography variant="h1">
                   ITエンジニア
                 </Typography>
-
               </div>
             </div>
             <div className="flex h-1/3 items-center justify-center">

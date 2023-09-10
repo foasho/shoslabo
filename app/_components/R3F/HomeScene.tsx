@@ -1,5 +1,8 @@
 "use client"
+import { Center, useAnimations, useFBX } from '@react-three/drei';
 import dynamic from 'next/dynamic';
+import { useEffect, useRef } from 'react';
+import { Group } from 'three';
 
 const View = dynamic(() => import('@/components/canvas/View').then((mod) => mod.View), {
   ssr: false,
@@ -25,10 +28,35 @@ export const HomeScene = () => {
   return (
     <View className={"h-full w-full"} orbit>
       <Common />
-      <mesh>
-        <boxGeometry args={[1, 1, 1]} />
-        <meshStandardMaterial attach="material" color="hotpink" />
-      </mesh>
+      <Center>
+        <mesh>
+          <boxGeometry args={[1, 1, 1]} />
+          <meshStandardMaterial attach="material" color="hotpink" />
+        </mesh>
+        <Avatar />
+      </Center>
     </View>
   )
 };
+
+const Avatar = () => {
+
+  const grp = useRef<Group>(null);
+
+  const fbx = useFBX('/models/avatar/TPose.fbx');
+  const { animations: typingAnimation } = useFBX('/models/avatar/Typing.fbx');
+  typingAnimation[0].name = 'Typing';
+  const { actions } = useAnimations(typingAnimation, fbx);
+
+  useEffect(() => {
+    if (actions["Typing"]){
+      actions["Typing"].play();
+    }
+  }, []);
+
+  return (
+    <group scale={0.01}>
+      <primitive object={fbx} />
+    </group>
+  )
+}
