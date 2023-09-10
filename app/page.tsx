@@ -1,8 +1,6 @@
 'use client'
 import Header from '@/components/commons/Header';
-import { Canvas } from '@react-three/fiber';
 import dynamic from 'next/dynamic'
-import { Suspense } from 'react';
 
 const Home = dynamic(() => import('@/components/canvas/Home').then((mod) => mod.Home), { 
   ssr: false,
@@ -25,7 +23,7 @@ export default function Page() {
   return (
     <>
       <div
-        className="absolute w-full top-0"
+        className="absolute top-0 w-full"
         style={
           {
             height: '100%',

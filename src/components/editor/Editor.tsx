@@ -192,16 +192,16 @@ const Editor = ({
   return (
     <>
       <div
-        className={"h-full w-full relative"}
+        className={"relative h-full w-full"}
         data-color-mode={'light'}
       >
         {/** ログアウトボタン/保存ボタン */}
         <div
-          className="absolute z-10 top-10 right-2 h-[20vh] flex flex-col justify-center items-center gap-4"
+          className="absolute right-2 top-10 z-10 flex h-[20vh] flex-col items-center justify-center gap-4"
         >
           <div>
             <button
-              className="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow"
+              className="rounded border border-gray-400 bg-white px-4 py-2 font-semibold text-gray-800 shadow hover:bg-gray-100"
               onClick={() => save()}
             >
               <MdSave />
@@ -209,7 +209,7 @@ const Editor = ({
           </div>
           <div>
             <button
-              className="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow"
+              className="rounded border border-gray-400 bg-white px-4 py-2 font-semibold text-gray-800 shadow hover:bg-gray-100"
               onClick={() => signOut()}
             >
               <MdLogout />
@@ -217,7 +217,7 @@ const Editor = ({
           </div>
           <div>
             <button
-              className="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow"
+              className="rounded border border-gray-400 bg-white px-4 py-2 font-semibold text-gray-800 shadow hover:bg-gray-100"
               onClick={() => router.push("/")}
             >
               <MdHome />
@@ -226,18 +226,18 @@ const Editor = ({
         </div>
         {session && (session.user as any).isAdmin &&
           <>
-            <div className="absolute top-0 w-full py-8 px-4">
-              <div className="flex items-center mb-2">
+            <div className="absolute top-0 w-full px-4 py-8">
+              <div className="mb-2 flex items-center">
                 {/** タイトル入力 */}
                 <div className="w-1/3 px-2" data-te-input-wrapper-init>
                   <label
-                    className="block text-gray-700 text-sm font-bold mb-2"
+                    className="mb-2 block text-sm font-bold text-gray-700"
                     htmlFor="title"
                   >
                     タイトル
                   </label>
                   <input
-                    className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                    className="focus:shadow-outline w-full appearance-none rounded border px-3 py-2 leading-tight text-gray-700 shadow focus:outline-none"
                     id="title"
                     type="text"
                     value={title}
@@ -248,13 +248,13 @@ const Editor = ({
                 {/** 説明入力(任意) */}
                 <div className="w-2/3 px-2 pr-16" data-te-input-wrapper-init>
                   <label
-                    className="block text-gray-700 text-sm font-bold mb-2"
+                    className="mb-2 block text-sm font-bold text-gray-700"
                     htmlFor="description"
                   >
                     説明(任意)
                   </label>
                   <input
-                    className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                    className="focus:shadow-outline w-full appearance-none rounded border px-3 py-2 leading-tight text-gray-700 shadow focus:outline-none"
                     id="title"
                     type="text"
                     value={description}
@@ -263,17 +263,17 @@ const Editor = ({
                   />
                 </div>
               </div>
-              <div className="flex items-center mb-2">
+              <div className="mb-2 flex items-center">
                 {/** 画像 */}
                 <div className="w-1/3 px-2">
                   <label
-                    className="block text-gray-700 text-sm font-bold mb-2"
+                    className="mb-2 block text-sm font-bold text-gray-700"
                     htmlFor="file_input"
                   >
                     サムネイル
                   </label>
                   <input
-                    className="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
+                    className="block w-full cursor-pointer rounded-lg border border-gray-300 bg-gray-50 text-sm text-gray-900 focus:outline-none dark:border-gray-600 dark:bg-gray-700 dark:text-gray-400 dark:placeholder:text-gray-400"
                     id="file_input"
                     type="file"
                     accept="image/*"
@@ -291,15 +291,15 @@ const Editor = ({
                 </div>
                 {/** タグ入力(任意) */}
                 <div className="w-2/3 px-2 pr-16" data-te-input-wrapper-init>
-                  <div className="w-2/3 inline-block">
+                  <div className="inline-block w-2/3">
                     <label
-                      className="block text-gray-700 text-sm font-bold mb-2"
+                      className="mb-2 block text-sm font-bold text-gray-700"
                       htmlFor="tags"
                     >
                       タグ(任意)
                     </label>
                     <input
-                      className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                      className="focus:shadow-outline w-full appearance-none rounded border px-3 py-2 leading-tight text-gray-700 shadow focus:outline-none"
                       id="tags"
                       type="text"
                       placeholder="(例: タグ1,タグ2,タグ3,...)"
@@ -307,17 +307,17 @@ const Editor = ({
                       onChange={(e) => setKeywords(e.target.value)}
                     />
                   </div>
-                  <div className="w-1/3 inline-block">
+                  <div className="inline-block w-1/3">
                     {/** Status選択 */}
                     <div className="px-2">
                       <label
-                        className="block text-gray-700 text-sm font-bold mb-2"
+                        className="mb-2 block text-sm font-bold text-gray-700"
                         htmlFor="status"
                       >
                         公開状態
                       </label>
                       <select
-                        className="block py-2 px-3 w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
+                        className="block w-full cursor-pointer rounded-lg border border-gray-300 bg-gray-50 px-3 py-2 text-sm text-gray-900 focus:outline-none dark:border-gray-600 dark:bg-gray-700 dark:text-gray-400 dark:placeholder:text-gray-400"
                         id="status"
                         value={status}
                         onChange={(e) => setStatus(Number(e.target.value))}
@@ -333,10 +333,10 @@ const Editor = ({
 
             {/** モード変更 */}
             <div
-              className="fixed z-30 bottom-8 right-8 w-16 h-16 flex items-center justify-center"
+              className="fixed bottom-8 right-8 z-30 flex h-16 w-16 items-center justify-center"
             >
               <button
-                className="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow"
+                className="rounded border border-gray-400 bg-white px-4 py-2 font-semibold text-gray-800 shadow hover:bg-gray-100"
                 onClick={() => {
                   switch (viewType) {
                     case ViewType.Live:
@@ -367,7 +367,7 @@ const Editor = ({
             </div>
             {/** Editor */}
             <div
-              className="absolute top-[28vh] left-1/2 -translate-x-1/2 w-full px-6"
+              className="absolute left-1/2 top-[28vh] w-full -translate-x-1/2 px-6"
             >
               {/** @ts-ignore */}
               <MDEditor
@@ -418,13 +418,13 @@ const Editor = ({
                       return (
                         <div
                           id={`${textContent}`}
-                          className={`md:text-3xl text-2xl text-bold py-7 text-[${COLOR.primary}] !border-none`}
+                          className={`text-bold text-[ py-7 text-2xl md:text-3xl${COLOR.primary}] !border-none`}
                           style={{
                             color: COLOR.primary,
                             fontWeight: 'bold',
                           }}
                         >
-                          <div className="inline-block animate-slowspin mr-2">
+                          <div className="mr-2 inline-block animate-slowspin">
                             <FiBox size={16} />
                           </div>
                           <div className="inline-block">
@@ -438,7 +438,7 @@ const Editor = ({
                       return (
                         <div
                           id={`${textContent}`}
-                          className={`md:text-2xl text-xl text-bold pl-2 py-3 text-[${COLOR.secondary}] !border-none`}
+                          className={`text-bold text-[ py-3 pl-2 text-xl md:text-2xl${COLOR.secondary}] !border-none`}
                           style={{
                             color: COLOR.secondary,
                             fontWeight: 'bold',
@@ -451,7 +451,7 @@ const Editor = ({
                     h3: ({ children }) => {
                       return (
                         <div
-                          className={`md:text-xl text-lg text-bold pl-3 py-2 text-[${COLOR.third}] !border-none`}
+                          className={`text-bold text-[ py-2 pl-3 text-lg md:text-xl${COLOR.third}] !border-none`}
                           style={{
                             color: COLOR.third,
                             fontWeight: 'bold',
@@ -464,7 +464,7 @@ const Editor = ({
                     h4: ({ children }) => {
                       return (
                         <div
-                          className={`md:text-xl text-lg text-bold pl-3 py-2 text-[${COLOR.third}] !border-none`}
+                          className={`text-bold text-[ py-2 pl-3 text-lg md:text-xl${COLOR.third}] !border-none`}
                           style={{
                             color: COLOR.third,
                             fontWeight: 'bold',
@@ -493,8 +493,8 @@ const Editor = ({
           </>
         }
         {!session &&
-          <div id="login_title" className="my-4 text-gray-700 text-bold">
-            <h1 className="text-4xl font-bold text-center">
+          <div id="login_title" className="text-bold my-4 text-gray-700">
+            <h1 className="text-center text-4xl font-bold">
               権限がありません。
             </h1>
           </div>

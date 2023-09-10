@@ -121,7 +121,7 @@ const Page = () => {
         {/** 後ろの背景 */}
         {/** @ts-ignore */}
         <View
-          className="w-full h-screen fixed z-0 left-0 md:right-4 bg-transparent"
+          className="fixed left-0 z-0 h-screen w-full bg-transparent md:right-4"
         >
           <OrthographicCamera
             position={[0.1, 0.05, 4]}

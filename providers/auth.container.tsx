@@ -1,7 +1,6 @@
 "use client"
 import { Login } from "@/components/commons/Login";
 import { SessionProvider, useSession } from "next-auth/react";
-import WagmiProvider from "./wagmi.container";
 import { Session } from "next-auth";
 
 /**
@@ -17,13 +16,11 @@ const AuthProvider = ({
 ) => {
 
   return (
-    <WagmiProvider>
-      <SessionProvider session={session} refetchInterval={0}>
-        <SessionProviderWrapper>
-          {children}
-        </SessionProviderWrapper>
-      </SessionProvider>
-    </WagmiProvider>
+    <SessionProvider session={session} refetchInterval={0}>
+      <SessionProviderWrapper>
+        {children}
+      </SessionProviderWrapper>
+    </SessionProvider>
   )
 }
 
@@ -32,7 +29,7 @@ const SessionProviderWrapper = ({ children }) => {
   return (
     <>
       {data &&
-        <div className="w-full h-full">
+        <div className="h-full w-full">
           {children}
         </div>
       }
