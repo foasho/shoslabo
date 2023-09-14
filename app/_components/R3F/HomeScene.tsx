@@ -4,6 +4,7 @@ import dynamic from 'next/dynamic';
 import { useEffect, useRef } from 'react';
 import { Group } from 'three';
 
+
 const View = dynamic(() => import('@/components/canvas/View').then((mod) => mod.View), {
   ssr: false,
   loading: () => (
@@ -27,7 +28,7 @@ const Common = dynamic(() => import('@/components/canvas/View').then((mod) => mo
 export const HomeScene = () => {
   return (
     <View className={"h-full w-full"} orbit>
-      <Common />
+      <Common color='#6592C6' />
       <Center>
         <mesh>
           <boxGeometry args={[1, 1, 1]} />
@@ -40,7 +41,6 @@ export const HomeScene = () => {
 };
 
 const Avatar = () => {
-
   const grp = useRef<Group>(null);
 
   const fbx = useFBX('/models/avatar/TPose.fbx');
@@ -49,13 +49,14 @@ const Avatar = () => {
   const { actions } = useAnimations(typingAnimation, fbx);
 
   useEffect(() => {
-    if (actions["Typing"]){
+    if (actions["Typing"]) {
       actions["Typing"].play();
     }
   }, []);
 
+
   return (
-    <group scale={0.01}>
+    <group scale={0.01} rotation={[0, -Math.PI / 4, 0]}>
       <primitive object={fbx} />
     </group>
   )

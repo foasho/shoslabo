@@ -1,3 +1,5 @@
+const plugin = require("tailwindcss/plugin");
+
 module.exports = {
   mode: 'jit',
   content: [
@@ -22,5 +24,20 @@ module.exports = {
   variants: {
     extend: {},
   },
-  plugins: [],
+  plugins: [
+    function({ addUtilities }) {
+      const newUtilities = {
+        '.vertical-rl': {
+          writingMode: 'vertical-rl',
+        },
+        '.vertical-lr': {
+          writingMode: 'vertical-lr',
+        },
+        '.horizontal-tb': {
+          writingMode: 'horizontal-tb',
+        }
+      }
+      addUtilities(newUtilities)
+    },
+  ],
 }
