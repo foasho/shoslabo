@@ -44,7 +44,7 @@ export const Typography = ({
       {variant === "h1" && (
         <h1
           className={clsx(
-            "text-[32px] md:text-[36px]  md:leading-[1.4]",
+            "text-[32px] md:text-[42px]  md:leading-[1.4]",
             commonHeadingClass,
             commonClass
           )}

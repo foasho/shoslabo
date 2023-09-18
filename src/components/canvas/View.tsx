@@ -12,11 +12,9 @@ export const Common = (
 ) => (
   <Suspense fallback={null}>
     {color && <color attach='background' args={[color]} />}
-    <ambientLight intensity={0.5} />
+    <ambientLight intensity={0.75} />
     <pointLight position={[20, 30, 10]} intensity={1} />
     <pointLight position={[-10, -10, -10]} color='blue' />
-    {/** @ts-ignore */}
-    <PerspectiveCamera makeDefault fov={40} position={[0, 0, 6]} />
   </Suspense>
 )
 
@@ -44,7 +42,7 @@ const View = forwardRef(
   { 
     children, 
     orbit, 
-    orbitEnabledZoom,
+    orbitEnabledZoom = true,
     position,
     debug, 
     ...props

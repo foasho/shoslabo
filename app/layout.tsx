@@ -1,4 +1,3 @@
-import { Layout } from '@/components/dom/Layout'
 import '@/global.css';
 import { Metadata } from "next";
 import { hannari } from '@/styles/font';
@@ -58,7 +57,7 @@ export default function RootLayout({ children }) {
     <html lang='ja' className='antialiased'>
       <head />
       <body className={`${hannari.variable}`}>
-        <Layout>{children}</Layout>
+        {children}
       </body>
     </html>
   )

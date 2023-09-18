@@ -24,6 +24,7 @@ const Layout = ({ children }) => {
     >
 
       {children}
+      {/** @ts-ignore */}
       <Scene
         style={{
           position: 'fixed',
@@ -36,7 +37,8 @@ const Layout = ({ children }) => {
         eventSource={ref}
         eventPrefix='client'
       />
-      <Header fontColor='#1e1e1a' />
+      {/** @ts-ignore */}
+      <Header />
     </div>
   )
 }
