@@ -4,7 +4,7 @@ import { useFrame, useThree, extend } from '@react-three/fiber';
 import { Bloom, DepthOfField, EffectComposer, N8AO, Noise, TiltShift2 } from '@react-three/postprocessing';
 import dynamic from 'next/dynamic';
 import { Suspense, useEffect, useRef, useState } from 'react';
-import { DoubleSide, Group, Vector3 } from 'three';
+import { DoubleSide, Euler, Group, Vector3 } from 'three';
 import { easing, geometry } from "maath"
 import { hoveredStateAtom } from '@/(main)/_atoms/hovered';
 import { useRecoilState } from 'recoil';
@@ -160,9 +160,21 @@ const Room = () => {
 
   useCursor(hovered ? true : false);
 
+  /**
+   * GSAPでTargetまでカメラを移動させる
+   */
+  const moveToTarget = (targetPos: Vector3, targetRot: Euler) => {
+    // TODO: カメラの位置を取得する
+  }
+
   return (
     <group scale={1.5} dispose={null}>
       {/** ロボット */}
+      {hovered === "robot" &&
+        <Annotation position={[0.717, -0.704, 0.693]} rotation={[0, Math.PI/4, 0]} scale={0.2}>
+          個人開発
+        </Annotation>
+      }
       <group
         ref={ref}
         position={[0.717, -0.904, 0.693]}
@@ -269,7 +281,7 @@ const Room = () => {
       <mesh geometry={nodes.後ろ支え.geometry} material={materials.木目} position={[0.768, -0.72, -0.695]} rotation={[0.355, -0.445, 0.123]} scale={[0.999, 0.643, 0.315]} />
       {hovered === "canvas" &&
         <Annotation position={[0.750, -0.30, -0.606]} scale={0.25}>
-          趣味の油絵
+          趣味
         </Annotation>
       }
       <mesh
@@ -300,6 +312,11 @@ const Room = () => {
       <mesh geometry={nodes.椅子足001.geometry} material={materials.木目} position={[0.645, -0.842, -0.154]} rotation={[0, -0.395, 0]} scale={[0.024, 0.106, 0.025]} />
 
       {/** モニター */}
+      {hovered === "monitor" &&
+        <Annotation position={[-0.5, -0.05, 0.032]} rotation={[0, Math.PI/3, 0]} scale={0.25}>
+          制作実績
+        </Annotation>
+      }
       <mesh
         geometry={nodes.モニター.geometry}
         material={materials.MAT_Plastic}
@@ -319,7 +336,7 @@ const Room = () => {
           screenspace={false}
           opacity={hovered === "monitor" ? 1 : 0}
           transparent={true}
-          thickness={0.01}
+          thickness={0.02}
           angle={Math.PI}
         />
       </mesh>
@@ -359,12 +376,14 @@ const Room = () => {
 
 type AnnotationProps = {
   position: [number, number, number] | Vector3;
+  rotation?: [number, number, number] | Euler;
   scale?: [number, number, number] | number | Vector3;
   children: React.ReactNode;
 };
 const Annotation = (
   {
     position,
+    rotation = [0, 0, 0],
     scale = [1, 1, 1],
     children
   }: AnnotationProps
@@ -385,6 +404,7 @@ const Annotation = (
   return (
     <Html
       position={position}
+      rotation={rotation}
       scale={scale}
       transform
       occlude="blending"
