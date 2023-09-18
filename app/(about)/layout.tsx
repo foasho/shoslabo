@@ -54,6 +54,6 @@ export const metadata: Metadata = {
 
 export default function AboutLayout({ children }) {
   return (
-    <>{children}</>
+    <Layout>{children}</Layout>
   )
 }

@@ -9,7 +9,7 @@ import { LoadingJP } from "./_components/dom/LoadingJP";
 export default function Page() {
 
   return (
-    <Suspense fallback={<LoadingJP/>}>
+    <Suspense fallback={<LoadingJP />}>
       <div
         className="absolute top-0 w-full"
         style={
@@ -26,7 +26,7 @@ export default function Page() {
         </div>
         <div className={"absolute right-0 top-0 z-10 hidden h-screen bg-red-500 md:block md:w-1/2 lg:w-1/3"}>
           <div className="h-full w-full divide-dotted">
-            <div className="flex h-2/3 items-center justify-center">
+            <div className="flex h-3/5 items-center justify-center">
               <div className="vertical-rl">
                 <Typography variant="h1" className={"pt-8"}>
                   <span className={"horizontal-tb"}>

@@ -1,16 +1,16 @@
 "use client"
-import { Center, useAnimations, useFBX, useGLTF, Outlines, Environment, Lightformer, Cloud, MeshReflectorMaterial, OrbitControls, Sky, PerspectiveCamera, useCursor } from '@react-three/drei';
-import { useFrame, useThree } from '@react-three/fiber';
+import { Center, useAnimations, useFBX, useGLTF, Outlines, Environment, Lightformer, Cloud, MeshReflectorMaterial, OrbitControls, Sky, PerspectiveCamera, useCursor, Html } from '@react-three/drei';
+import { useFrame, useThree, extend } from '@react-three/fiber';
 import { Bloom, DepthOfField, EffectComposer, N8AO, Noise, TiltShift2 } from '@react-three/postprocessing';
 import dynamic from 'next/dynamic';
 import { Suspense, useEffect, useRef, useState } from 'react';
-import { DoubleSide, Group } from 'three';
-import { easing } from "maath"
+import { DoubleSide, Group, Vector3 } from 'three';
+import { easing, geometry } from "maath"
 import { hoveredStateAtom } from '@/(main)/_atoms/hovered';
 import { useRecoilState } from 'recoil';
 import { useTimeManager } from '@/(main)/_providers/TimeManeger';
 import { Kenrokuen } from './Kenrokuen';
-
+extend(geometry);
 
 const View = dynamic(() => import('@/components/canvas/View').then((mod) => mod.View), {
   ssr: false,
@@ -68,12 +68,12 @@ const Effects = () => {
   useEffect(() => {
     setReady(true);
   }, []);
-    
+
   const { readyStart } = useTimeManager();
 
   useEffect(() => {
     // 時間を開始
-    if (ready){
+    if (ready) {
       readyStart();
     }
   }, [ready]);
@@ -137,10 +137,10 @@ const Avatar = () => {
   });
 
   return (
-    <group 
+    <group
       ref={ref}
-      position={[0.17, -1.45, 0]} 
-      scale={0.01} 
+      position={[0.17, -1.45, 0]}
+      scale={0.01}
       rotation={[0, -Math.PI / 2, 0]}
     >
       <primitive object={fbx} castShadow />
@@ -153,10 +153,11 @@ const Avatar = () => {
  */
 const Room = () => {
   const ref = useRef<Group>(null);
+  const hoverColor = "#E6B422";
   const [hovered, setHovered] = useRecoilState(hoveredStateAtom);
   // @ts-ignore
   const { nodes, materials } = useGLTF('/shosroom.glb');
-  
+
   useCursor(hovered ? true : false);
 
   return (
@@ -180,7 +181,7 @@ const Room = () => {
           <group position={[0, 0.81, 0]}>
             <mesh geometry={nodes.pCube1_Corps_0.geometry} material={materials.Corps} >
               <Outlines
-                color={"red"}
+                color={hoverColor}
                 screenspace={false}
                 opacity={hovered === "robot" ? 1 : 0}
                 transparent={true}
@@ -266,6 +267,11 @@ const Room = () => {
       <mesh geometry={nodes.左右.geometry} material={materials.木目} position={[0.592, -0.591, -0.65]} rotation={[-0.237, -0.333, -0.197]} scale={[1, 1, 0.326]} />
       <mesh geometry={nodes.支え.geometry} material={materials.木目} position={[0.716, -0.675, -0.562]} rotation={[-0.16, -0.366, 1.513]} scale={[1, 0.652, 0.326]} />
       <mesh geometry={nodes.後ろ支え.geometry} material={materials.木目} position={[0.768, -0.72, -0.695]} rotation={[0.355, -0.445, 0.123]} scale={[0.999, 0.643, 0.315]} />
+      {hovered === "canvas" &&
+        <Annotation position={[0.750, -0.30, -0.606]} scale={0.25}>
+          趣味の油絵
+        </Annotation>
+      }
       <mesh
         geometry={nodes.キャンバス.geometry}
         material={materials['04___Default']}
@@ -282,7 +288,7 @@ const Room = () => {
           }}
       >
         <Outlines
-          color={"red"}
+          color={hoverColor}
           screenspace={false}
           opacity={hovered === "canvas" ? 1 : 0}
           transparent={true}
@@ -309,7 +315,7 @@ const Room = () => {
           }}
       >
         <Outlines
-          color={"red"}
+          color={hoverColor}
           screenspace={false}
           opacity={hovered === "monitor" ? 1 : 0}
           transparent={true}
@@ -351,6 +357,50 @@ const Room = () => {
   )
 }
 
+type AnnotationProps = {
+  position: [number, number, number] | Vector3;
+  scale?: [number, number, number] | number | Vector3;
+  children: React.ReactNode;
+};
+const Annotation = (
+  {
+    position,
+    scale = [1, 1, 1],
+    children
+  }: AnnotationProps
+) => {
+
+  let args = [1.66, 0.47, 0.24];
+  if (typeof scale === "number") {
+    args.map((v, i) => {
+      args[i] = v * scale;
+    });
+  }
+  if (Array.isArray(scale)) {
+    args.map((v, i) => {
+      args[i] = v * scale[i];
+    });
+  }
+
+  return (
+    <Html
+      position={position}
+      scale={scale}
+      transform
+      occlude="blending"
+      geometry={
+        // @ts-ignore
+        <roundedPlaneGeometry args={args} />
+      }
+    >
+      <div className="flex cursor-pointer select-none items-center justify-center space-x-1 rounded-full bg-gradient-to-r from-yellow-400 via-yellow-500 to-yellow-600 p-1 px-2 text-xs font-light tracking-wider text-white shadow-inner transition-all duration-200 ease-in-out focus:outline-none"
+      >
+        {children}
+      </div>
+    </Html>
+  )
+}
+
 /**
  * 丸い時計
  */
@@ -370,7 +420,7 @@ const Floor = () => {
   return (
     <mesh position={[0, -1.6, 0]} rotation={[-Math.PI / 2, 0, 0]}>
       <planeGeometry args={[100, 100]} />
-      <MeshReflectorMaterial mirror={1} color={0xffffff} opacity={0.75}/>
+      <MeshReflectorMaterial mirror={1} color={0xffffff} opacity={0.75} />
     </mesh>
   )
 }
