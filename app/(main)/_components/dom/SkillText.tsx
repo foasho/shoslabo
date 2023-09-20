@@ -12,7 +12,7 @@ import {
 export const SkillText = () => {
 
   const { start } = useTimeManager();
-  const [view, setView] = useState<"skill" | "sns" | null>(null);
+  const [view, setView] = useState<"skill" | "design" | "sns" | null>(null);
 
   return (
     <>
@@ -30,7 +30,7 @@ export const SkillText = () => {
               whileHover={{ scale: 1.1 }}
               whileTap={{ scale: 0.9 }}
             >
-              <Typography variant="h3" className="block cursor-pointer">
+              <Typography variant="h4" className="block cursor-pointer">
                 <Link href="/works">
                   - 制作 / 仕事実績
                 </Link>
@@ -41,9 +41,20 @@ export const SkillText = () => {
               whileHover={{ scale: 1.1 }}
               whileTap={{ scale: 0.9 }}
             >
-              <Typography variant="h3" className="block cursor-pointer">
+              <Typography variant="h4" className="block cursor-pointer">
                 <span onClick={() => setView("skill")}>
-                  - スキルセット
+                  - プログラミングスキル
+                </span>
+              </Typography>
+            </motion.div>
+            <motion.div
+              key={'skilldesign'}
+              whileHover={{ scale: 1.1 }}
+              whileTap={{ scale: 0.9 }}
+            >
+              <Typography variant="h4" className="block cursor-pointer">
+                <span onClick={() => setView("design")}>
+                  - デザインスキル
                 </span>
               </Typography>
             </motion.div>
@@ -52,7 +63,7 @@ export const SkillText = () => {
               whileHover={{ scale: 1.1 }}
               whileTap={{ scale: 0.9 }}
             >
-              <Typography variant="h3" className="block cursor-pointer">
+              <Typography variant="h4" className="block cursor-pointer">
                 <span onClick={() => setView("sns")}>
                   -
                   <span className="pl-5">
@@ -66,7 +77,7 @@ export const SkillText = () => {
               whileHover={{ scale: 1.1 }}
               whileTap={{ scale: 0.9 }}
             >
-              <Typography variant="h3" className="block cursor-pointer">
+              <Typography variant="h4" className="block cursor-pointer">
                 <Link href="/contact">
                   - お問い合わせ
                 </Link>
@@ -76,7 +87,7 @@ export const SkillText = () => {
         }
         {view !== null &&
           <div>
-            <Typography variant="h3" className="block cursor-pointer">
+            <Typography variant="h4" className="block cursor-pointer">
               <span onClick={() => setView(null)}>
                 <BsArrowLeft className="inline-block" />
                 戻る
@@ -99,7 +110,7 @@ export const SkillText = () => {
                 whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.9 }}
               >
-                <Typography variant="h3" className="block cursor-pointer">
+                <Typography variant="h4" className="block cursor-pointer">
                   <Link href="https://github.com/foasho" target="_blank">
                     Github
                   </Link>
@@ -110,7 +121,7 @@ export const SkillText = () => {
                 whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.9 }}
               >
-                <Typography variant="h3" className="block cursor-pointer">
+                <Typography variant="h4" className="block cursor-pointer">
                   <Link href="https://twitter.com/sakanosho" target="_blank">
                     Twitter
                   </Link>
@@ -121,7 +132,7 @@ export const SkillText = () => {
                 whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.9 }}
               >
-                <Typography variant="h3" className="block cursor-pointer">
+                <Typography variant="h4" className="block cursor-pointer">
                   <Link href="https://qiita.com/osakasho" target="_blank">
                     Qiita
                   </Link>
@@ -132,7 +143,7 @@ export const SkillText = () => {
                 whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.9 }}
               >
-                <Typography variant="h3" className="block cursor-pointer">
+                <Typography variant="h4" className="block cursor-pointer">
                   <Link href="https://zenn.dev/solb" target="_blank">
                     Zenn
                   </Link>
@@ -141,9 +152,48 @@ export const SkillText = () => {
             </motion.ul>
           </>
         }
+        {view === "design" &&
+          <>
+            <motion.ul
+              key={'design-list'}
+              initial={{ opacity: 0 }} //　初期状態
+              animate={{ opacity: 1 }} // マウント時
+              exit={{ opacity: 0 }} // アンマウント時
+              transition={{ duration: 3 }} // アニメーションの仕方
+            >
+              <motion.li
+                key={'design-figma'}
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.9 }}
+              >
+                <Typography variant="h4" className="block cursor-pointer">
+                  - Figma
+                </Typography>
+              </motion.li>
+              <motion.li
+                key={'design-blender'}
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.9 }}
+              >
+                <Typography variant="h4" className="block cursor-pointer">
+                  - Blender
+                </Typography>
+              </motion.li>
+              <motion.li
+                key={'design-painter'}
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.9 }}
+              >
+                <Typography variant="h4" className="block cursor-pointer">
+                  - Painter
+                </Typography>
+              </motion.li>
+            </motion.ul>
+          </>
+        }
         {view === "skill" &&
           <>
-            <Typography variant="h3" className="block cursor-pointer">
+            <Typography variant="h4" className="block cursor-pointer">
               プログラミング言語
             </Typography>
             <motion.ul
@@ -159,7 +209,7 @@ export const SkillText = () => {
                 whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.9 }}
               >
-                <Typography variant="h3" className="block cursor-pointer">
+                <Typography variant="h4" className="block cursor-pointer">
                   JavaScript
                 </Typography>
               </motion.li>
@@ -168,7 +218,7 @@ export const SkillText = () => {
                 whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.9 }}
               >
-                <Typography variant="h3" className="block cursor-pointer">
+                <Typography variant="h4" className="block cursor-pointer">
                   TypeScript
                 </Typography>
               </motion.li>
@@ -177,7 +227,7 @@ export const SkillText = () => {
                 whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.9 }}
               >
-                <Typography variant="h3" className="block cursor-pointer">
+                <Typography variant="h4" className="block cursor-pointer">
                   Python
                 </Typography>
               </motion.li>
@@ -186,7 +236,7 @@ export const SkillText = () => {
                 whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.9 }}
               >
-                <Typography variant="h3" className="block cursor-pointer">
+                <Typography variant="h4" className="block cursor-pointer">
                   PHP
                 </Typography>
               </motion.li>
@@ -195,7 +245,7 @@ export const SkillText = () => {
                 whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.9 }}
               >
-                <Typography variant="h3" className="block cursor-pointer">
+                <Typography variant="h4" className="block cursor-pointer">
                   C++
                 </Typography>
               </motion.li>
@@ -204,7 +254,7 @@ export const SkillText = () => {
                 whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.9 }}
               >
-                <Typography variant="h3" className="block cursor-pointer">
+                <Typography variant="h4" className="block cursor-pointer">
                   Golang
                 </Typography>
               </motion.li>
