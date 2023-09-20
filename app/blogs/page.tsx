@@ -1,8 +1,23 @@
-'use client'
-import { useEffect, useMemo, useState } from 'react';
-import dynamic from 'next/dynamic'
-import Header from '@/components/dom/Header';
-import { useRouter } from 'next/navigation';
+import Header from "@/components/dom/Header";
+import Image from "next/image";
+import Link from "next/link";
+
+
+const getBlogs = async (): Promise<any[]> => {
+  const _blogs = await fetch(`${process.env.NEXT_PUBLIC_SERVICE_URL}/api/blog/list`, {
+    cache: "force-cache",
+  }).then((res) => {
+    if (res.status === 200) {
+      return res.json();
+    }
+    else {
+      return [];
+    }
+  }).catch((err) => {
+    return [];
+  });
+  return _blogs;
+}
 
 interface BlogProp {
   key: string;
@@ -15,111 +30,55 @@ interface BlogProp {
   updatedAt: string;
 }
 
-export default function Page() {
+export default async function BlogPage() {
 
-  const router = useRouter();
-  const [searchText, setSearchText] = useState('');
-  const [blogs, setBlogs] = useState<BlogProp[]>([]);
-
-  const getBlogs = async () => {
-    const res = await fetch('/api/blog/list', {
-      next: {
-        revalidate: 30,
-      }
-    });
-    return res.json();
-  }
-
-  useEffect(() => {
-    getBlogs().then((datas: any[]) => {
-      console.log(datas);
-      const _blogs = datas.map((data) => {
-        const param = {
-          key: data.id,
-          title: data.title,
-          description: data.description,
-          image: data.image,
-          route: `/blogs/${data.id}`,
-          tags: data.tags ? data.tags.split(",") : [],
-          createdAt: data.createdAt,
-          updatedAt: data.updatedAt,
-        }
-        return param;
-      });
-      setBlogs(_blogs);
-    });
-  }, []);
-
-  const filteredCards = useMemo(
-    () => blogs.filter((card) => {
-      // 検索文字列が空の場合は全てのカードを表示
-      if (searchText === '') {
-        return true;
-      }
-      // 小文字に変換して検索
-      const title = card.title.toLowerCase();
-      const description = card.description.toLowerCase();
-      const tags = card.tags.join(' ').toLowerCase();
-      const search = searchText.toLowerCase();
-      return title.includes(search) || description.includes(search) || tags.includes(search);
-    })
-    , [blogs, searchText]);
+  const blogs = await getBlogs();
 
   return (
-    <div className="fixed w-screen h-screen top-0 left-0 overflow-y-auto z-10">
+    <div className="fixed left-0 top-0 z-10 h-screen w-screen overflow-y-auto">
       <Header fontColor={"#1e1e1e"} />
       <div
-        className="container mx-auto px-4 py-8 text-gray-800 pt-24"
+        className="container mx-auto px-4 py-8 pt-24 text-gray-800"
       >
         {/** タイトル */}
-        <div className="text-4xl font-bold mb-8">
+        <div className="mb-8 text-4xl font-bold">
           Blog
         </div>
         {/** サブタイトル */}
-        <div className="text-xl font-bold mb-8">
+        <div className="mb-8 text-xl font-bold">
           ここには、技術的なメモを残していきます。
         </div>
-        {/** 検索 */}
-        <div className="mb-8">
-          <input
-            className="w-full px-4 py-2 border border-gray-400 rounded-lg focus:outline-none focus:border-indigo-500"
-            type="text"
-            placeholder="検索"
-            onChange={(e) => setSearchText(e.target.value)}
-            value={searchText}
-          />
-        </div>
         {/** カードリスト */}
-        <div className="flex flex-wrap -mx-4">
-          {filteredCards.map((card, idx) => (
-            <div
+        <div className="-mx-4 flex flex-wrap">
+          {blogs.map((card, idx) => (
+            <Link
               key={`card-${idx}`}
-              className="w-full md:w-1/2 lg:w-1/3 px-4 mb-8"
-              onClick={() => {
-                if (card.route.startsWith('http')) {
-                  window.open(card.route, '_blank');
-                } else {
-                  router.push(card.route);
-                }
-              }}
+              href={`/${card.route}`}
+              className="mb-8 w-full px-4 md:w-1/2 lg:w-1/3"
             >
-              <div className="bg-white rounded-lg overflow-hidden shadow-lg">
-                <img
-                  className="w-full h-56 object-cover object-center"
+              <div className="overflow-hidden rounded-lg bg-white shadow-lg">
+                <Image
+                  className="h-56 w-full object-cover object-center"
                   src={card.image}
                   alt="avatar"
+                  width={224}
+                  height={450}
                 />
                 <div className="p-4">
-                  <p className="uppercase tracking-wide text-sm font-bold text-gray-700">
-                    {card.tags.map((tag, i) => (
-                      <span key={`tag-${i}`} className="mr-2">{tag}</span>
-                    ))}
+                  <p className="text-sm font-bold uppercase tracking-wide text-gray-700">
+                    {card.tags &&
+                      <>
+                        {card.tags.map((tag, i) => (
+                          <span key={`tag-${i}`} className="mr-2">{tag}</span>
+                        ))}
+                      </>
+                    }
                   </p>
                   <p className="text-3xl font-semibold">{card.title}</p>
                   <p className="mt-2 text-gray-600">{card.description}</p>
                 </div>
               </div>
-            </div>
+            </Link>
           ))}
         </div>
       </div>

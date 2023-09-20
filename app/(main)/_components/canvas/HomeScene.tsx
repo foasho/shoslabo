@@ -6,10 +6,11 @@ import dynamic from 'next/dynamic';
 import { Suspense, useEffect, useRef, useState } from 'react';
 import { DoubleSide, Euler, Group, Vector3 } from 'three';
 import { easing, geometry } from "maath"
-import { hoveredStateAtom } from '@/(main)/_atoms/hovered';
-import { useRecoilState } from 'recoil';
-import { useTimeManager } from '@/(main)/_providers/TimeManeger';
+import { hoveredStateAtom } from '../../_atoms/hovered';
+import { modeStateAtom } from '../../_atoms/scene';
 import { Kenrokuen } from './Kenrokuen';
+import { useRecoilState } from 'recoil';
+import { useTimeManager } from '../../_providers/TimeManeger';
 extend(geometry);
 
 const View = dynamic(() => import('@/components/canvas/View').then((mod) => mod.View), {
@@ -30,12 +31,17 @@ const View = dynamic(() => import('@/components/canvas/View').then((mod) => mod.
 
 
 export const HomeScene = () => {
+
+  const [mode, setMode] = useRecoilState(modeStateAtom);
+
   return (
     // @ts-ignore
     <View className={"h-full w-full"}>
       <Center>
         <group rotation={[0, -Math.PI / 4, 0]}>
-          <Avatar />
+          {mode === "walk" &&
+            <Avatar />
+          }
           <Room />
           <CircleClock />
           <Floor />
@@ -171,7 +177,7 @@ const Room = () => {
     <group scale={1.5} dispose={null}>
       {/** ロボット */}
       {hovered === "robot" &&
-        <Annotation position={[0.717, -0.704, 0.693]} rotation={[0, Math.PI/4, 0]} scale={0.2}>
+        <Annotation position={[0.717, -0.704, 0.693]} rotation={[0, Math.PI / 4, 0]} scale={0.2}>
           個人開発
         </Annotation>
       }
@@ -281,7 +287,7 @@ const Room = () => {
       <mesh geometry={nodes.後ろ支え.geometry} material={materials.木目} position={[0.768, -0.72, -0.695]} rotation={[0.355, -0.445, 0.123]} scale={[0.999, 0.643, 0.315]} />
       {hovered === "canvas" &&
         <Annotation position={[0.750, -0.30, -0.606]} scale={0.25}>
-          趣味
+          趣味や作品
         </Annotation>
       }
       <mesh
@@ -313,7 +319,7 @@ const Room = () => {
 
       {/** モニター */}
       {hovered === "monitor" &&
-        <Annotation position={[-0.5, -0.05, 0.032]} rotation={[0, Math.PI/3, 0]} scale={0.25}>
+        <Annotation position={[-0.5, -0.05, 0.032]} rotation={[0, Math.PI / 3, 0]} scale={0.25}>
           制作実績
         </Annotation>
       }

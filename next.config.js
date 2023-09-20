@@ -17,12 +17,15 @@ const nextConfig = {
   //   styledComponents: true,
   // },
   reactStrictMode: true, // Recommended for the `pages` directory, default in `app`.
-  experimental: {
-    reactRoot: 'concurrent',
-    appDir: true,
-    // esmExternals: true,
+  // Romove Next more than 13.15.1 default parameters.
+  // experimental: {
+  //   reactRoot: 'concurrent',
+  //   appDir: true,
+  //   // esmExternals: true,
+  // },
+  images: {
+    domains: ['solb-v1.s3.us-east-2.amazonaws.com', "i.pinimg.com"],
   },
-  images: {},
   webpack(config, { isServer }) {
     // audio support
     config.module.rules.push({
@@ -64,12 +67,15 @@ module.exports = (_phase, { defaultConfig }) => {
     ...nextConfig,
   })
 
-  const finalConfig = {}
+  const finalConfig = {
+
+  };
   Object.keys(wConfig).forEach((key) => {
     if (!KEYS_TO_OMIT.includes(key)) {
       finalConfig[key] = wConfig[key]
     }
-  })
+  });
+  
 
   return finalConfig
 }

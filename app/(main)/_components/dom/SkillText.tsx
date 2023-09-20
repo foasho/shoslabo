@@ -1,5 +1,5 @@
 "use client";
-import React, { useState} from 'react';
+import React, { useState } from 'react';
 import Image from 'next/image';
 import { motion } from 'framer-motion';
 import { Typography } from "@/components/commons/Typography";
@@ -85,7 +85,62 @@ export const SkillText = () => {
           </div>
         }
         {view === "sns" &&
-          <></>}
+          <>
+            <motion.ul
+              key={'skill-list'}
+              initial={{ opacity: 0 }} //　初期状態
+              animate={{ opacity: 1 }} // マウント時
+              exit={{ opacity: 0 }} // アンマウント時
+              transition={{ duration: 3 }} // アニメーションの仕方
+              className={"grid grid-cols-2 gap-2"}
+            >
+              <motion.li
+                key={'lang-github'}
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.9 }}
+              >
+                <Typography variant="h3" className="block cursor-pointer">
+                  <Link href="https://github.com/foasho" target="_blank">
+                    Github
+                  </Link>
+                </Typography>
+              </motion.li>
+              <motion.li
+                key={'lang-twitter'}
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.9 }}
+              >
+                <Typography variant="h3" className="block cursor-pointer">
+                  <Link href="https://twitter.com/sakanosho" target="_blank">
+                    Twitter
+                  </Link>
+                </Typography>
+              </motion.li>
+              <motion.li
+                key={'lang-qiita'}
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.9 }}
+              >
+                <Typography variant="h3" className="block cursor-pointer">
+                  <Link href="https://qiita.com/osakasho" target="_blank">
+                    Qiita
+                  </Link>
+                </Typography>
+              </motion.li>
+              <motion.li
+                key={'lang-zenn'}
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.9 }}
+              >
+                <Typography variant="h3" className="block cursor-pointer">
+                  <Link href="https://zenn.dev/solb" target="_blank">
+                    Zenn
+                  </Link>
+                </Typography>
+              </motion.li>
+            </motion.ul>
+          </>
+        }
         {view === "skill" &&
           <>
             <Typography variant="h3" className="block cursor-pointer">

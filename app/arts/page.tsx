@@ -1,15 +1,8 @@
-'use client'
-import { Suspense, useState } from 'react';
-import dynamic from 'next/dynamic'
 import Header from '@/components/dom/Header';
-import { useRouter } from 'next/navigation';
 import Image from 'next/image';
-import { Loading2D } from '@/components/commons/Loading2D';
+import Link from 'next/link';
 
-export default function Page() {
-
-  const router = useRouter();
-  const [searchText, setSearchText] = useState('');
+export default function ArtPage() {
 
   const cards = [
     {
@@ -54,67 +47,39 @@ export default function Page() {
     },
   ];
 
-  const filteredCards = cards.filter((card) => {
-    // 検索文字列が空の場合は全てのカードを表示
-    if (searchText === '') {
-      return true;
-    }
-    // 小文字に変換して検索
-    const title = card.title.toLowerCase();
-    const description = card.description.toLowerCase();
-    const tags = card.tags.join(' ').toLowerCase();
-    const search = searchText.toLowerCase();
-    return title.includes(search) || description.includes(search) || tags.includes(search);
-  });
-
   return (
-    <div className="fixed w-screen h-screen top-0 left-0 overflow-y-auto z-10">
+    <div className="fixed left-0 top-0 z-10 h-screen w-screen overflow-y-auto">
       <Header fontColor={"#1e1e1e"} />
       <div
-        className="container mx-auto px-4 py-8 text-gray-800 pt-24"
+        className="container mx-auto px-4 py-8 pt-24 text-gray-800"
       >
         {/** タイトル */}
-        <div className="text-4xl font-bold mb-8">
+        <div className="mb-8 text-4xl font-bold">
           Arts / Designs
         </div>
         {/** サブタイトル */}
-        <div className="text-xl font-bold mb-8">
+        <div className="mb-8 text-xl font-bold">
           趣味の油絵やWebGLで作ったアート、そのほかデザインしたものを紹介します。
         </div>
-        {/** 検索 */}
-        <div className="mb-8">
-          <input
-            className="w-full px-4 py-2 border border-gray-400 rounded-lg focus:outline-none focus:border-indigo-500"
-            type="text"
-            placeholder="検索"
-            onChange={(e) => setSearchText(e.target.value)}
-            value={searchText}
-          />
-        </div>
         {/** カードリスト */}
-        <div className="flex flex-wrap -mx-4">
-          {filteredCards.map((card, idx) => (
-            <div
+        <div className="-mx-4 flex flex-wrap">
+          {cards.map((card, idx) => (
+            <Link
               key={`card-${idx}`}
-              className="w-full md:w-1/2 lg:w-1/3 px-4 mb-8"
-              onClick={() => {
-                if (card.route.startsWith('http')) {
-                  window.open(card.route, '_blank');
-                } else {
-                  router.push(card.route);
-                }
-              }}
+              href={`${card.route}`}
+              target='_blank'
+              className="mb-8 w-full px-4 md:w-1/2 lg:w-1/3"
             >
-              <div className="bg-white rounded-lg overflow-hidden shadow-lg">
-                <Suspense fallback={<Loading2D/>}>
-                <img
-                  className="w-full h-56 object-cover object-center"
+              <div className="overflow-hidden rounded-lg bg-white shadow-lg">
+                <Image
+                  className="h-56 w-full object-cover object-center"
                   src={card.image}
-                  alt="avatar"
+                  alt=""
+                  width={224}
+                  height={450}
                 />
-                </Suspense>
                 <div className="p-4">
-                  <p className="uppercase tracking-wide text-sm font-bold text-gray-700">
+                  <p className="text-sm font-bold uppercase tracking-wide text-gray-700">
                     {card.tags.map((tag, i) => (
                       <span key={`tag-${i}`} className="mr-2">{tag}</span>
                     ))}
@@ -123,7 +88,7 @@ export default function Page() {
                   <p className="mt-2 text-gray-600">{card.description}</p>
                 </div>
               </div>
-            </div>
+            </Link>
           ))}
         </div>
       </div>
