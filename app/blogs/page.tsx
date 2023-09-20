@@ -53,7 +53,7 @@ export default async function BlogPage() {
           {blogs.map((card, idx) => (
             <Link
               key={`card-${idx}`}
-              href={`/${card.route}`}
+              href={`/blogs/${card.id}`}
               className="mb-8 w-full px-4 md:w-1/2 lg:w-1/3"
             >
               <div className="overflow-hidden rounded-lg bg-white shadow-lg">

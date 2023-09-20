@@ -41,7 +41,7 @@ const Header = ({
             </Link>
           </div>
           <div className='ml-2 cursor-pointer select-none text-lg md:ml-4 md:text-xl'>
-            <Link href={"/art"}>
+            <Link href={"/arts"}>
               Art
             </Link>
           </div>
