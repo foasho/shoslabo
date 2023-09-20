@@ -20,7 +20,7 @@ const getBlog = async (blogId: string): Promise<any> => {
 
 export async function generateMetadata(
   { params }: Props
-): Promise<Metadata>{
+): Promise<Metadata> {
   const { blogId } = params;
   const blog = await getBlog(blogId);
   const title = blog.title;
@@ -73,8 +73,8 @@ export async function generateMetadata(
 
 export default function BlogLayout({ children }) {
   return (
-    <>
+    <section className="fixed left-0 top-0 z-10 h-screen w-screen overflow-y-auto">
       {children}
-    </>
+    </section>
   );
 }

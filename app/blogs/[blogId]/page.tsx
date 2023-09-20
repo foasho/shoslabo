@@ -1,4 +1,3 @@
-import React, { useEffect } from 'react';
 import { Props } from "./layout";
 import dynamic from 'next/dynamic';
 
@@ -12,9 +11,7 @@ const Header = dynamic(() => import('@/components/dom/Header'), {
 
 const getBlog = async ({ blogId }): Promise<any> => {
   const res = await fetch(`${process.env.NEXTAUTH_URL}/api/blog/get?blogId=${blogId}`, {
-    next: {
-      revalidate: 30,
-    }
+    cache: "force-cache",
   });
   return res.json();
 }
