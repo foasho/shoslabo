@@ -1,5 +1,4 @@
-"use client"
-import { useRouter } from "next/navigation"
+import Link from "next/link";
 
 export type HeaderProps = {
   fixed?: boolean;
@@ -12,8 +11,6 @@ const Header = ({
   title = "SOLB",
 }: HeaderProps) => {
 
-  const router = useRouter();
-
   return (
     <div
       className='top-0 z-10 flex h-20 w-full items-center justify-center bg-transparent'
@@ -25,32 +22,33 @@ const Header = ({
       <div className='flex h-full w-11/12 items-center justify-between'>
         <div
           className='flex items-center '>
-          <div
-            onClick={() => router.push("/")}
-            className='ml-2 cursor-pointer select-none text-xl font-bold'>
+          <Link
+            href='/'
+            className='ml-2 cursor-pointer select-none text-xl font-bold'
+          >
             {title}
-          </div>
+          </Link>
         </div>
         <div className='flex items-center'>
           <div className='ml-2 cursor-pointer select-none text-lg md:ml-4 md:text-xl'>
-            <a onClick={() => router.push("works")}>
+            <Link href='/works'>
               Works
-            </a>
+            </Link>
           </div>
           <div className='ml-2 cursor-pointer select-none text-lg md:ml-4 md:text-xl'>
-            <a onClick={() => router.push("blogs")}>
+            <Link href={"/blogs"}>
               Blog
-            </a>
+            </Link>
           </div>
           <div className='ml-2 cursor-pointer select-none text-lg md:ml-4 md:text-xl'>
-            <a onClick={() => router.push("arts")}>
+            <Link href={"/art"}>
               Art
-            </a>
+            </Link>
           </div>
           <div className='ml-2 cursor-pointer select-none text-lg md:ml-4 md:text-xl'>
-            <a onClick={() => router.push("about")}>
+            <Link href={"/about"}>
               About
-            </a>
+            </Link>
           </div>
         </div>
       </div>
