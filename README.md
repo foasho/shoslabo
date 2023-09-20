@@ -1,5 +1,5 @@
 # shoslabo
-
+portfolio site of shoosaka.
 
 ```
 yarn prisma studio
