@@ -68,7 +68,7 @@ export default function Page() {
         {/** サブタイトル */}
         <div className="mb-8 text-xl font-bold">
           開発実績
-          <div className="text-light text-xs text-gray-400">
+          <div className="text-xs text-gray-400">
             ※ここに掲載させていただいている実績は、許可をいただけたもののみ掲載しています。
           </div>
         </div>
