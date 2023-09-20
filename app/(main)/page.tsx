@@ -17,7 +17,7 @@ export default function Page() {
         <SeasonSelect />
         <Home />
       </div>
-      <div className={"absolute right-0 top-0 z-10 hidden h-screen bg-red-500 md:block md:w-1/3"}>
+      <div className={"absolute right-0 top-0 z-10 hidden h-screen bg-[#BA2636] md:block md:w-1/3"}>
         <div className="h-full w-full divide-dotted">
           <SideText />
         </div>
