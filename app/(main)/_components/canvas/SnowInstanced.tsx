@@ -29,12 +29,11 @@ export const SnowInstanced = (
     const temp: any = []
     for (let i = 0; i < count; i++) {
       const t = Math.random() * 100;
-      const factor = 20 + Math.random() * 100;
       // Position
       const xFactor = -position.x + Math.random() * position.x * 2;
       const yFactor = -position.y + Math.random() * position.y * 2;
       const zFactor = -position.z + Math.random() * position.z * 2;
-      temp.push({ t, factor, xFactor, yFactor, zFactor, mx: 0, my: 0 })
+      temp.push({ t, xFactor, yFactor, zFactor, mx: 0, my: 0 })
     }
     return temp;
   }, [count])
@@ -47,12 +46,12 @@ export const SnowInstanced = (
   useFrame((state, delta) => {
     if (mesh.current === null) return;
     particles.forEach((particle, i) => {
-      let { t, factor } = particle;
-      t = particle.t += fallSpeed;
+      let { t } = particle;
+      t = particle.t += fallSpeed * randomRange(0.8, 1.2);
       // マウスの動きで風を再現
       const { x, y } = mouse.current;
-      particle.mx += (x - state.mouse.x) * 0.01;
-      particle.my += (y - state.mouse.y) * 0.01;
+      particle.mx += (x - state.mouse.x) * 0.1;
+      particle.my += (y - state.mouse.y) * 0.1;
 
       // 落ちるように移動
       // -0.5まで落ちたら上に戻す
@@ -62,9 +61,9 @@ export const SnowInstanced = (
         particle.yFactor = -position.y + Math.random() * position.y * 2;
       }
       dummy.position.set(
-        particle.xFactor + particle.mx / factor,
+        particle.xFactor + particle.mx,
         particle.yFactor - t,
-        particle.zFactor + particle.my / factor
+        particle.zFactor + particle.my
       );
 
       dummy.updateMatrix();
