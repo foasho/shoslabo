@@ -1,7 +1,10 @@
 "use client";
+import { useRecoilValue } from "recoil";
 import { useFrame } from "@react-three/fiber";
 import { useEffect, useMemo, useRef } from "react";
 import { InstancedMesh, Object3D, Vector3 } from "three";
+import { seasonStateAtom } from "@/(main)/_atoms/season";
+import { useTexture } from "@react-three/drei";
 
 const randomRange = (min: number, max: number) => Math.random() * (max - min) + min;
 
@@ -36,7 +39,7 @@ export const SnowInstanced = (
       temp.push({ t, xFactor, yFactor, zFactor, mx: 0, my: 0 })
     }
     return temp;
-  }, [count])
+  }, [count]);
 
   useEffect(() => {
     if (mesh.current === null) return;

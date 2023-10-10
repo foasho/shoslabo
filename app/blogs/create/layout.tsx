@@ -1,6 +1,6 @@
 
-import AuthProvider from "@/auth.container";
-import ClientOnly from "@/client-only";
+import AuthProvider from "@/AuthProvider";
+import ClientOnly from "@/ClientOnly";
 
 export default function CreateBlogLayout({ children }) {
 

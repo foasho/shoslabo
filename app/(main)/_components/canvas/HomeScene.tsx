@@ -12,6 +12,7 @@ import { Kenrokuen } from './Kenrokuen';
 import { useRecoilState } from 'recoil';
 import { useTimeManager } from '../../_providers/TimeManeger';
 import { SnowInstanced } from './SnowInstanced';
+import { AutumnLeaf } from './Autumn';
 extend(geometry);
 
 const View = dynamic(() => import('@/components/canvas/View').then((mod) => mod.View), {
@@ -60,7 +61,8 @@ export const HomeScene = () => {
           segments={5} // Number of particles
         /> */}
       </group>
-      <SnowInstanced />
+      <AutumnLeaf />
+      {/* <SnowInstanced /> */}
       <ambientLight intensity={0.5} />
       <pointLight position={[3, 2, 3]} intensity={50} color={"#ffffe0"} castShadow />
       <pointLight position={[-3, 5, -3]} intensity={50} color={0xff0054} castShadow />

@@ -1,6 +1,5 @@
 'use client'
 import { signIn, useSession } from "next-auth/react";
-import React from "react";
 import { Loading2D } from "./Loading2D";
 import { useRouter } from "next/navigation";
 

@@ -2,8 +2,8 @@
 import React from "react";
 import dynamic from "next/dynamic";
 import { Loading2D } from "@/components/commons/Loading2D";
-import ClientOnly from "@/client-only";
-import AuthProvider from "@/auth.container";
+import ClientOnly from "@/ClientOnly";
+import AuthProvider from "@/AuthProvider";
 
 const Editor = dynamic(() => import("@/components/editor/Editor"), {
   ssr: false,
