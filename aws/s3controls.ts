@@ -1,9 +1,18 @@
-import { S3 } from "aws-sdk";
+import {
+  S3Client,
+  ListObjectsCommand,
+  GetObjectCommand,
+  PutObjectCommand
+} from "@aws-sdk/client-s3";
+import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
 
-const s3 = new S3({
-  accessKeyId: process.env.AWS_ACCESS_KEY_ID,
-  secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
+
+const s3 = new S3Client({
   region: process.env.AWS_REGION,
+  credentials: {
+    accessKeyId: process.env.AWS_ACCESS_KEY_ID as string,
+    secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY as string,
+  },
 });
 
 /**
@@ -26,11 +35,9 @@ export const publicUrl = (key: string) => {
  * プライベートURLを取得する
  */
 export const getSingedUrl = async (key: string) => {
-  return await s3.getSignedUrlPromise('getObject', {
-    Bucket: process.env.S3_BUCKET_NAME!,
-    Key: key,
-    Expires: 60 * 60 * 24, // 24 hour
-  });
+  const command = new GetObjectCommand({ Bucket: process.env.S3_BUCKET_NAME as string, Key: key });
+  const src = await getSignedUrl(s3, command, { expiresIn: 3600 });
+  return src;
 }
 
 /**
@@ -40,36 +47,23 @@ export const uploadFileToS3 = async (
   file: Buffer,
   contentType: string,
   filePath: string,
-  isPublic = true,
-): Promise<S3.ManagedUpload.SendData> => {
-  const params: S3.PutObjectRequest = {
-    Bucket: process.env.S3_BUCKET_NAME as string,
-    Key: filePath,
-    Body: file,
-    ContentType: contentType,
-  };
+): Promise<any> => {
+  try {
+    await s3.send(new PutObjectCommand({ 
+      Bucket: process.env.S3_BUCKET_NAME as string, 
+      Key: filePath, 
+      Body: file
+    }));
+  }
+  catch (error) {
+    console.error("error: ", error);
+  }
 
-  const signedUrl = isPublic? publicUrl(filePath) : (await getSingedUrl(filePath));
 
-  return new Promise((resolve, reject) => {
-    s3.upload(params, (err, data: any) => {
-      if (err) {
-        reject(err);
-      } else {
-        data.signedUrl = signedUrl;
-        resolve(data);
-      }
-    });
-  });
-};
+  const signedUrl = await getSingedUrl(filePath);
 
-/**
- * JSONファイルをS3にアップロードする
- */
-export const uploadJsonToS3 = async (
-  jsonObject: any,
-  filePath: string,
-): Promise<S3.ManagedUpload.SendData> => {
-  const file = Buffer.from(JSON.stringify(jsonObject));
-  return uploadFileToS3(file, 'application/json', filePath);
+  return {
+    signedUrl: signedUrl,
+    publicUrl: publicUrl(filePath),
+  }
 };

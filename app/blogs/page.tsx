@@ -2,10 +2,13 @@ import Header from "@/components/dom/Header";
 import Image from "next/image";
 import Link from "next/link";
 
-
+// ISRで実装
 const getBlogs = async (): Promise<any[]> => {
   const _blogs = await fetch(`${process.env.NEXT_PUBLIC_SERVICE_URL}/api/blog/list`, {
-    cache: "force-cache",
+    next: {
+      // 5分後に再取得
+      revalidate: 300
+    }
   }).then((res) => {
     if (res.status === 200) {
       return res.json();
@@ -17,17 +20,6 @@ const getBlogs = async (): Promise<any[]> => {
     return [];
   });
   return _blogs;
-}
-
-interface BlogProp {
-  key: string;
-  title: string;
-  description: string;
-  image: string;
-  route: string;
-  tags: string[];
-  createdAt: string;
-  updatedAt: string;
 }
 
 export default async function BlogPage() {

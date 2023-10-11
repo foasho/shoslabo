@@ -1,8 +1,7 @@
 import { useTexture } from "@react-three/drei";
 import { useFrame } from "@react-three/fiber";
 import { useEffect, useMemo, useRef } from "react";
-import { Vector3, Group, InstancedMesh, Color, Object3D } from "three";
-
+import { Vector3, InstancedMesh, Object3D, DoubleSide } from "three";
 
 const randomRange = (min: number, max: number) => Math.random() * (max - min) + min;
 
@@ -44,6 +43,8 @@ export const AutumnLeaf = (
         return leaf3;
       case 3:
         return leaf4;
+      default:
+        return leaf1;
     }
   }
 
@@ -55,21 +56,24 @@ export const AutumnLeaf = (
       const xFactor = -position.x + Math.random() * position.x * 2;
       const yFactor = -position.y + Math.random() * position.y * 2;
       const zFactor = -position.z + Math.random() * position.z * 2;
-      temp.push({ t, xFactor, yFactor, zFactor, mx: 0, my: 0 })
+      // Rotation
+      const rx = Math.PI * randomRange(-1, 1);
+      const ry = Math.PI * randomRange(-1, 1);
+      const rz = Math.PI * randomRange(-1, 1);
+      temp.push({ 
+        t, 
+        xFactor, 
+        yFactor, 
+        zFactor, 
+        mx: 0, 
+        my: 0,
+        rx,
+        ry,
+        rz,
+      })
     }
     return temp;
   }, [count]);
-
-  useEffect(() => {
-    if (mesh.current === null) return;
-    // particles.forEach((particle, i) => {
-    //   dummy.rotation.z = Math.random() * Math.PI * 2;
-    //   dummy.rotation.x = Math.random() * Math.PI * 2;
-    //   dummy.rotation.y = Math.random() * Math.PI * 2;
-    //   dummy.updateMatrix();
-    //   mesh.current!.setMatrixAt(i, dummy.matrix);
-    // });
-  }, [count, position]);
 
   // 毎フレーム事にFallSpeed分下に移動させる
   useFrame((state, delta) => {
@@ -92,9 +96,14 @@ export const AutumnLeaf = (
       );
 
       // Frame Rotation
-      dummy.rotation.z += 0.0005 * Math.sin(t * 0.1);
-      dummy.rotation.x += 0.0005 * Math.sin(t * 0.1);
-      dummy.rotation.y += 0.0005 * Math.sin(t * 0.1);
+      particle.rx += 0.03;
+      particle.ry += 0.03;
+      particle.rz += 0.02;
+      dummy.rotation.set(
+        particle.rx,
+        particle.ry,
+        particle.rz
+      );
 
       dummy.updateMatrix();
       mesh.current!.setMatrixAt(i, dummy.matrix);
@@ -105,35 +114,12 @@ export const AutumnLeaf = (
   return (
     <instancedMesh ref={mesh} args={[undefined, undefined, count]}>
       <planeGeometry args={[size, size]} />
-
       <meshStandardMaterial
         attach="material"
-        map={leaf1}
+        map={getTex()}
         transparent={true}
-        // onBeforeCompile={(shader) => {
-        //   // Send the textures you can to use in the shader
-        //   shader.uniforms.uTexture = { value: leaf4 }
-
-        //   shader.vertexShader = `
-        //     varying vec2 vUv;
-
-        //     ${shader.vertexShader}
-        //   `
-
-        //   // Implement the texture logic in the fragment shader
-        //   shader.fragmentShader = `
-        //     varying vec2 vUv;
-        //     uniform sampler2D uTexture;// テクスチャは sampler2D 型
-
-        //     void main() {
-        //       vec3 color = texture2D( uTexture, vUv ).rgb;
-        //       gl_FragColor = vec4( color, 1.0 );
-        //       // gl_FragColor = vec4( 1.0, 0.3, 0.4, 1.0 );
-        //     }
-        //   `;
-        // }}
+        side={DoubleSide}
       />
-
     </instancedMesh>
   )
 };

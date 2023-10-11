@@ -12,17 +12,7 @@ const withPWA = require('@ducanh2912/next-pwa').default({
 })
 
 const nextConfig = {
-  // uncomment the following snippet if using styled components
-  // compiler: {
-  //   styledComponents: true,
-  // },
   reactStrictMode: true, // Recommended for the `pages` directory, default in `app`.
-  // Romove Next more than 13.15.1 default parameters.
-  // experimental: {
-  //   reactRoot: 'concurrent',
-  //   appDir: true,
-  //   // esmExternals: true,
-  // },
   images: {
     domains: ['solb-v1.s3.us-east-2.amazonaws.com', "i.pinimg.com"],
   },
@@ -44,16 +34,19 @@ const nextConfig = {
           },
         },
       ],
-    })
+    });
 
     // shader support
     config.module.rules.push({
       test: /\.(glsl|vs|fs|vert|frag)$/,
       exclude: /node_modules/,
       use: ['raw-loader', 'glslify-loader'],
-    })
+    });
 
-    return config
+    // fix for fs: Webpack5
+    // config.resolve.fallback = { fs: false };
+
+    return config;
   },
 }
 

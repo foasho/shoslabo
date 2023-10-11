@@ -1,12 +1,12 @@
-import type { NextApiRequest, NextApiResponse } from 'next';
+import { NextResponse } from 'next/server';
 import { createTransport } from "nodemailer";
 
-export default async function handler(req: NextApiRequest, res: NextApiResponse) {
+export async function POST(req: Request) {
   if (req.method !== "POST") {
-    res.status(405).json({ error: "Method not allowed" });
+    NextResponse.json({ error: "Method not allowed" }, { status: 405 });
     return;
   }
-  const { name, company, email, message } = req.body;
+  const { name, company, email, message } = await req.json();
   const transposer = createTransport({
     host: "smtp.gmail.com",
     port: 465,
@@ -35,9 +35,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   try {
     await transposer.sendMail(mailData);
     await transposer.sendMail(mailData2);
-    res.status(200).json({ status: "OK" });
+    NextResponse.json({ status: "OK" }, { status: 200 });
   } catch (error) {
-    console.log(error);
-    res.status(500).json({ error: error.message });
+    NextResponse.json({ error: error.message }, { status: 500 });
   }
 }
