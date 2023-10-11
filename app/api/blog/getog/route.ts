@@ -77,5 +77,5 @@ export async function GET(req: Request) {
     }
     return NextResponse.json({ message: 'Not Found' }, { status: 404 });
   }
-  NextResponse.json({ message: 'Bad Request' }, { status: 400 });
+  return NextResponse.json({ message: 'Bad Request' }, { status: 400 });
 }

@@ -2,10 +2,6 @@ import { NextResponse } from 'next/server';
 import { createTransport } from "nodemailer";
 
 export async function POST(req: Request) {
-  if (req.method !== "POST") {
-    NextResponse.json({ error: "Method not allowed" }, { status: 405 });
-    return;
-  }
   const { name, company, email, message } = await req.json();
   const transposer = createTransport({
     host: "smtp.gmail.com",
@@ -35,8 +31,8 @@ export async function POST(req: Request) {
   try {
     await transposer.sendMail(mailData);
     await transposer.sendMail(mailData2);
-    NextResponse.json({ status: "OK" }, { status: 200 });
+    return NextResponse.json({ status: "OK" }, { status: 200 });
   } catch (error) {
-    NextResponse.json({ error: error.message }, { status: 500 });
+    return NextResponse.json({ error: error.message }, { status: 500 });
   }
 }

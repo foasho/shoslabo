@@ -19,11 +19,9 @@ export async function GET(req: Request) {
     const user = await getUserByAddress(address);
     return NextResponse.json(user);
   }
-  else {
-    // Otherwise, fetch all users
-    const users = await getUsers();
-    return NextResponse.json(users);
-  }
+  // Otherwise, fetch all users
+  const users = await getUsers();
+  return NextResponse.json(users);
 };
 
 export async function POST(req: Request) {
@@ -36,6 +34,7 @@ export async function POST(req: Request) {
     const user = await createUser({ email, name, address });
     return NextResponse.json(user);
   }
+  return NextResponse.json({ message: 'Missing address' }, { status: 400 });
 }
 
 export async function PUT(req: Request) {
