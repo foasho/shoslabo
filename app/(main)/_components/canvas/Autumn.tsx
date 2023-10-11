@@ -17,7 +17,7 @@ export const AutumnLeaf = (
     count = 100,
     position = new Vector3(4, 4, 4),
     size = 0.2,
-    fallSpeed = 0.015,
+    fallSpeed = 0.005,
     dummy = new Object3D()
   }: AutumnLeafProps
 ) => {
