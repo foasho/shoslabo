@@ -3,16 +3,14 @@ import { Center, useAnimations, useFBX, useGLTF, Outlines, Environment, Lightfor
 import { useFrame, useThree, extend } from '@react-three/fiber';
 import { Bloom, DepthOfField, EffectComposer, N8AO, Noise, TiltShift2 } from '@react-three/postprocessing';
 import dynamic from 'next/dynamic';
-import { Suspense, useEffect, useRef, useState } from 'react';
-import { DoubleSide, Euler, Group, Vector3 } from 'three';
+import { useEffect, useRef, useState } from 'react';
+import { Euler, Group, Vector3 } from 'three';
 import { easing, geometry } from "maath"
 import { hoveredStateAtom } from '../../_atoms/hovered';
 import { modeStateAtom } from '../../_atoms/scene';
-import { Kenrokuen } from './Kenrokuen';
 import { useRecoilState } from 'recoil';
 import { useTimeManager } from '../../_providers/TimeManeger';
-import { SnowInstanced } from './SnowInstanced';
-import { AutumnLeaf } from './Autumn';
+import { SeasonScene } from "./Season";
 extend(geometry);
 
 const View = dynamic(() => import('@/components/canvas/View').then((mod) => mod.View), {
@@ -49,7 +47,6 @@ export const HomeScene = () => {
           <Floor />
         </group>
       </Center>
-      {/* <Kenrokuen/> */}
       <group
         position={[0, 5, -10]}
       >
@@ -61,13 +58,13 @@ export const HomeScene = () => {
           segments={5} // Number of particles
         /> */}
       </group>
-      <AutumnLeaf />
-      {/* <SnowInstanced /> */}
+      <SeasonScene />
       <ambientLight intensity={0.5} />
       <pointLight position={[3, 2, 3]} intensity={50} color={"#ffffe0"} castShadow />
       <pointLight position={[-3, 5, -3]} intensity={50} color={0xff0054} castShadow />
       <Effects />
       {/* <OrbitControls/> */}
+      <Rig />
       <color attach="background" args={['#1C1C1A']} />
     </View>
   )
@@ -99,7 +96,6 @@ const Effects = () => {
           {/* <Environment preset="studio" frames={Infinity} blur={0.8} background >
           </Environment> */}
           {/* <fog attach="fog" args={['#ffffff', 0.1, 100]} /> */}
-          <Rig />
         </>
       )}
     </>
