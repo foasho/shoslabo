@@ -1,7 +1,7 @@
 "use client"
 import { Center, useAnimations, useFBX, useGLTF, Outlines, Environment, Lightformer, Cloud, MeshReflectorMaterial, OrbitControls, Sky, PerspectiveCamera, useCursor, Html } from '@react-three/drei';
 import { useFrame, useThree, extend } from '@react-three/fiber';
-import { Bloom, DepthOfField, EffectComposer, N8AO, Noise, TiltShift2 } from '@react-three/postprocessing';
+import { DepthOfField, EffectComposer } from '@react-three/postprocessing';
 import dynamic from 'next/dynamic';
 import { useEffect, useRef, useState } from 'react';
 import { Euler, Group, Vector3 } from 'three';
@@ -47,17 +47,6 @@ export const HomeScene = () => {
           <Floor />
         </group>
       </Center>
-      <group
-        position={[0, 5, -10]}
-      >
-        {/* <Cloud 
-          opacity={0.8}
-          speed={0.4} // Rotation speed
-          width={10} // Width of the full cloud
-          depth={1} // Z-dir depth
-          segments={5} // Number of particles
-        /> */}
-      </group>
       <SeasonScene />
       <ambientLight intensity={0.5} />
       <pointLight position={[3, 2, 3]} intensity={50} color={"#ffffe0"} castShadow />
@@ -83,7 +72,7 @@ const Effects = () => {
     if (ready) {
       readyStart();
     }
-  }, [ready]);
+  }, [ready, readyStart]);
 
   return (
     <>
