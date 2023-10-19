@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { Community } from "./Community";
 
 export type HeaderProps = {
   fixed?: boolean;
@@ -44,6 +45,9 @@ const Header = ({
             <Link href={"/arts"}>
               Art
             </Link>
+          </div>
+          <div className='ml-2 cursor-pointer select-none text-lg md:ml-4 md:text-xl'>
+            <Community/>
           </div>
           <div className='ml-2 cursor-pointer select-none text-lg md:ml-4 md:text-xl'>
             <Link href={"/about"}>
