@@ -43,7 +43,7 @@ export default function Page() {
       description: "R3F + Masonryライブラリ",
       image: "/works/r3f-dom-masonry.png",
       route: "https://main.d3iw6f1p5q2t54.amplifyapp.com/?path=/story/r3fdommasonry--random-heights",
-      tags: ["個人開発", "OSS", "R3F", "React"],
+      tags: ["ライブラリ", "R3F", "React"],
     },
     {
       key: "card-6",
@@ -51,7 +51,7 @@ export default function Page() {
       description: "R3F + イヤホンデモ",
       image: "/works/r3f-earphones.png",
       route: "https://zippy-pony-1c4f8f.netlify.app/",
-      tags: ["個人開発", "R3F", "React"],
+      tags: ["R3F", "React"],
     },
     {
       key: "card-7",
