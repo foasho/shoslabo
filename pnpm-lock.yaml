@@ -107,6 +107,9 @@ dependencies:
   nodemailer:
     specifier: ^6.9.3
     version: 6.9.7
+  nprogress:
+    specifier: ^0.2.0
+    version: 0.2.0
   open-graph-scraper:
     specifier: ^6.2.2
     version: 6.3.2
@@ -211,6 +214,9 @@ devDependencies:
   '@types/nodemailer':
     specifier: ^6.4.8
     version: 6.4.13
+  '@types/nprogress':
+    specifier: ^0.2.2
+    version: 0.2.2
   '@types/open-graph-scraper':
     specifier: ^4.8.2
     version: 4.8.4
@@ -3923,6 +3929,10 @@ packages:
     resolution: {integrity: sha512-889Vq/77eEpidCwh52sVWpbnqQmIwL8yVBekNbrztVEaWKOCRH3Eq6hjIJh1jwsGDEAJEH0RR+YhpH9mfELLKA==}
     dependencies:
       '@types/node': 20.8.9
+    dev: true
+
+  /@types/nprogress@0.2.2:
+    resolution: {integrity: sha512-2wLrSJXLztGmr7wXwM0hA/wuIOY9DznVdd+ZFofHOiXcj9JnVt+2ZeLRJ7v5ZVlmheSkUOSg3Q3O4Ce7yji79A==}
     dev: true
 
   /@types/offscreencanvas@2019.7.2:
@@ -9182,6 +9192,10 @@ packages:
     dependencies:
       path-key: 3.1.1
     dev: true
+
+  /nprogress@0.2.0:
+    resolution: {integrity: sha512-I19aIingLgR1fmhftnbWWO3dXc0hSxqHQHQb3H8m+K3TnEn/iSeTZZOyvKXWqQESMwuUVnatlCnZdLBZZt2VSA==}
+    dev: false
 
   /nth-check@2.1.1:
     resolution: {integrity: sha512-lqjrjmaOoAnWfMmBPL+XNnynZh2+swxiX3WUE0s4yEHI6m+AwrK2UZOimIRl3X/4QctVqS8AiZjFqyOGrMXb/w==}

@@ -1,13 +1,14 @@
-import '@/global.css';
+import "@/global.css";
 import { Metadata } from "next";
-import { hannari } from '@/styles/font';
+import { hannari } from "@/styles/font";
+import { NLoader } from "./loader";
 
-const title = 'Sho\'s Labo'
-const url = 'https://shoslabo.vercel.app/'
-const description = 'Portfolio Site of ShoOsaka'
-const author = 'ShoOsaka'
-const twitter = '@sakanosho'
-const themeColor = '#efcb16';
+const title = "Sho's Labo";
+const url = "https://shoslabo.vercel.app/";
+const description = "Portfolio Site of ShoOsaka";
+const author = "ShoOsaka";
+const twitter = "@sakanosho";
+const themeColor = "#efcb16";
 
 export const metadata: Metadata = {
   metadataBase: new URL(url),
@@ -27,8 +28,8 @@ export const metadata: Metadata = {
     apple: [
       { rel: "apple-touch-icon", url: "/icons/apple-touch-icon.png" },
       { rel: "apple-touch-icon", url: "/icons/favicon-16x16.png", sizes: "16x16" },
-      { rel: "apple-touch-icon", url: "/icons/favicon-32x32.png", sizes: "32x32", href: '/icons/favicon-32x32.png' },
-      { rel: "apple-touch-icon", url: "/icons/apple-touch-icon.png", sizes: "180x180" }
+      { rel: "apple-touch-icon", url: "/icons/favicon-32x32.png", sizes: "32x32", href: "/icons/favicon-32x32.png" },
+      { rel: "apple-touch-icon", url: "/icons/apple-touch-icon.png", sizes: "180x180" },
     ],
   },
   appleWebApp: {
@@ -48,8 +49,8 @@ export const metadata: Metadata = {
     url: url,
     description: description,
     siteName: title,
-    images: '/icons/share.png',
-  }
+    images: "/icons/share.png",
+  },
 };
 
 export default function RootLayout({ children }) {
@@ -58,7 +59,8 @@ export default function RootLayout({ children }) {
       <head />
       <body className={`${hannari.variable}`}>
         {children}
+        <NLoader />
       </body>
     </html>
-  )
+  );
 }

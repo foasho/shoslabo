@@ -18,7 +18,7 @@ module.exports = {
       },
       animation: {
         slowspin: 'slowspin 4s linear infinite',
-      },
+      }
     },
   },
   variants: {
