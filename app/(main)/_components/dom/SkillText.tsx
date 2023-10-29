@@ -43,7 +43,7 @@ export const SkillText = () => {
             >
               <Typography variant="h4" className="block cursor-pointer">
                 <span onClick={() => setView("skill")}>
-                  - プログラミングスキル
+                  - プログラミング
                 </span>
               </Typography>
             </motion.div>
@@ -54,7 +54,7 @@ export const SkillText = () => {
             >
               <Typography variant="h4" className="block cursor-pointer">
                 <span onClick={() => setView("design")}>
-                  - デザインスキル
+                  - デザイン
                 </span>
               </Typography>
             </motion.div>
