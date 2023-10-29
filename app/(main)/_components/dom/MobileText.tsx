@@ -14,30 +14,6 @@ export const MobileText = () => {
     <>
       {start &&
         <>
-          <motion.div
-            key={'kumo'}
-            initial={{ opacity: 0 }} // 初期状態
-            animate={{ opacity: 1 }} // マウント時
-            exit={{ opacity: 0 }} // アンマウント時
-            transition={{ duration: 3 }} // アニメーションの仕方
-          >
-            <div className="fixed -right-24 -top-24 z-10 block md:hidden">
-              <Image
-                src={"/img/kumo.png"}
-                alt="Picture"
-                height={320}
-                width={320}
-              />
-            </div>
-            <div className="fixed -bottom-96 -left-24 z-10 block md:hidden">
-              <Image
-                src={"/img/kumo.png"}
-                alt="Picture"
-                height={480}
-                width={640}
-              />
-            </div>
-          </motion.div>
           <Typography variant="h1" className="fixed left-0 top-24 z-20 block w-full select-none pl-24 sm:pl-48 md:hidden">
             <span className="text-[#E6B422]">
               金沢に住む
