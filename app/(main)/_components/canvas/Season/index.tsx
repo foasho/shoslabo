@@ -2,6 +2,7 @@ import { AutumnLeaf } from "./Autumn";
 import { SnowInstanced } from "./SnowInstanced";
 import { useRecoilValue } from "recoil";
 import { seasonStateAtom } from '../../../_atoms/season';
+import { Trees } from "./Trees";
 
 
 export const SeasonScene = () => {
@@ -14,6 +15,10 @@ export const SeasonScene = () => {
       {selectedSeason === "Summer" && (<></>)}
       {selectedSeason === "Autumn" && (<AutumnLeaf />)}
       {selectedSeason === "Winter" && (<SnowInstanced />)}
+
+      {selectedSeason && (
+        <Trees season={selectedSeason} />
+      )}
     </>
   )
 }

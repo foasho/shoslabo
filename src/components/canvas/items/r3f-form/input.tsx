@@ -18,6 +18,7 @@ import {
 import { Edges, Mask, RoundedBox, useCursor, useMask } from "@react-three/drei";
 import { Text } from "./text";
 import { useFormContext } from "./form";
+// @ts-ignore
 import { getCaretAtPoint } from "troika-three-text";
 import { damp } from "three/src/math/MathUtils";
 import { geometry } from 'maath';

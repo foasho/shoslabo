@@ -16,7 +16,7 @@ export const Community = () => {
           <span className='ml-2 text-2xl'>Dicsordコミュニティ</span>
           <div>
             <span className='text-xl font-bold'>
-              朝活フロントエンド
+              フロントエンド勉強会
             </span>
           </div>
           <div className="text-left">

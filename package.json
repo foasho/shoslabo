@@ -64,7 +64,7 @@
     "sweetalert2": "^11.7.5",
     "sweetalert2-react-content": "^5.0.7",
     "three": "^0.156.1",
-    "three-custom-shader-material": "^5.3.7",
+    "three-custom-shader-material": "^5.4.0",
     "three-mesh-bvh": "^0.6.7",
     "three-stdlib": "^2.23.10",
     "tunnel-rat": "^0.1.2"
