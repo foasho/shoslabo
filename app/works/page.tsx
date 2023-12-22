@@ -6,23 +6,7 @@ export default function Page() {
 
   const cards = [
     {
-      key: "work-1",
-      title: "PrimeMeterEye",
-      description: "株式会社プライムキャスト 様",
-      image: "/works/pme.png",
-      route: "https://www.primemeter-eye.com/",
-      tags: ["Python", "Tensorflow", "FastAPI", "C++", "React"],
-    },
-    {
-      key: "card-2",
-      title: "Uniee",
-      description: "株式会社プライムキャスト 様",
-      image: "/works/uniee.png",
-      route: "https://uniee.vercel.app/",
-      tags: ["React", "Three.js", "R3F", "Next.js"],
-    },
-    {
-      key: "card-3",
+      key: "card-1",
       title: "お絵描き道場",
       description: "多機能Webペイントツール",
       image: "/works/oekaki.png",
@@ -30,7 +14,7 @@ export default function Page() {
       tags: ["個人開発", "Django", "Python", "Vue.js"],
     },
     {
-      key: "card-4",
+      key: "card-2",
       title: "NinjaGL(調整中)",
       description: "WebGLゲームエンジン",
       image: "/works/ninjagl.png",
@@ -38,7 +22,7 @@ export default function Page() {
       tags: ["個人開発", "Three.js", "Next.js", "R3F"],
     },
     {
-      key: "card-5",
+      key: "card-3",
       title: "r3f-dom-masonry",
       description: "R3F + Masonryライブラリ",
       image: "/works/r3f-dom-masonry.png",
@@ -46,17 +30,17 @@ export default function Page() {
       tags: ["ライブラリ", "R3F", "React"],
     },
     {
-      key: "card-6",
+      key: "card-4",
       title: "r3f-earphones",
       description: "R3F + イヤホンデモ",
       image: "/works/r3f-earphones.png",
       route: "https://zippy-pony-1c4f8f.netlify.app/",
-      tags: ["R3F", "React"],
+      tags: ["R3F", "Three.js", "React"],
     },
     {
-      key: "card-7",
+      key: "card-5",
       title: "らくらく健康IoT(調整中)",
-      description: "オープンソースIoTプロジェクト",
+      description: "オープンソースIoT",
       image: "/works/rakuken.png",
       route: "https://rakuken-iot.net/",
       tags: ["個人開発", "Python", "FastAPI", "Kotlin", "C++"],
@@ -75,10 +59,7 @@ export default function Page() {
         </div>
         {/** サブタイトル */}
         <div className="mb-8 text-xl font-bold">
-          開発実績
-          <div className="text-xs text-gray-400">
-            ※ここに掲載させていただいている実績は、許可をいただけたもののみ掲載しています。
-          </div>
+          個人開発 / 作品集
         </div>
         {/** カードリスト */}
         <div className="-mx-4 flex flex-wrap">
