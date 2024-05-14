@@ -5,7 +5,7 @@ import { getOrCreateUserByAdress } from "@/crud/user";
 
 // For more information on each option (and a full list of options) go to
 // https://next-auth.js.org/configuration/options
-export const options: NextAuthOptions = {
+export const authOptions: NextAuthOptions = {
   providers: [
     // Google
     GoogleProvider({
@@ -38,6 +38,6 @@ export const options: NextAuthOptions = {
 }
 
 // eslint-disable-next-line no-return-await
-const handler = NextAuth(options);
+const handler = NextAuth(authOptions);
 
 export { handler as GET, handler as POST };

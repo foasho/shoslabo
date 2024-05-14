@@ -12,8 +12,7 @@ interface CreateBlogProps {
   keywords?: string;
   status?: number;
 }
-export const createBlog = async (props: CreateBlogProps) => {
-  const { title, content, keywords, description, image, status } = props;
+export const createBlog = async ({ title, content, keywords, description, image, status }: CreateBlogProps) => {
   const blog = await prisma.blog.create({
     data: {
       title,

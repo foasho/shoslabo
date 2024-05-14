@@ -1,9 +1,7 @@
-"use client"
+"use client";
 import React from "react";
 import dynamic from "next/dynamic";
 import { Loading2D } from "@/components/commons/Loading2D";
-import ClientOnly from "@/ClientOnly";
-import AuthProvider from "@/AuthProvider";
 
 const Editor = dynamic(() => import("@/components/editor/Editor"), {
   ssr: false,
@@ -17,7 +15,7 @@ const Page = ({ params }) => {
   const getBlog = async (blogId: string) => {
     const res = await fetch(`/api/blog/get?blogId=${blogId}`);
     return res.json();
-  }
+  };
 
   React.useEffect(() => {
     getBlog(blogId).then((data) => {
@@ -25,9 +23,11 @@ const Page = ({ params }) => {
     });
   }, [blogId]);
 
+  console.log(blog);
+
   return (
-    <div className="w-full h-full bg-slate-200">
-      {blog &&
+    <div className='h-full w-full bg-slate-200'>
+      {blog && (
         // @ts-ignore
         <Editor
           initContent={blog.content}
@@ -38,9 +38,9 @@ const Page = ({ params }) => {
           blogId={blog.id}
           initStatus={blog.status}
         />
-      }
+      )}
     </div>
-  )
-}
+  );
+};
 
 export default Page;
