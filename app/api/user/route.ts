@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
 import { getUsers, getUserByAddress, createUser, updateUser, deleteUser, getUserById } from "@/crud/user";
 import { getServerSession } from "next-auth/next";
-import { options } from "@/api/auth/[...nextauth]/route";
+import { authOptions } from "@/api/auth/[...nextauth]/route";
 
 export async function GET(req: Request) {
   const { searchParams } = new URL(req.url);
@@ -25,7 +25,7 @@ export async function GET(req: Request) {
 };
 
 export async function POST(req: Request) {
-  const session = await getServerSession(options);
+  const session = await getServerSession(authOptions);
   {/** @ts-ignore */ }
   const address = session.address as string;
   if (address) {
@@ -39,7 +39,7 @@ export async function POST(req: Request) {
 
 export async function PUT(req: Request) {
   // Update an existing user
-  const session = await getServerSession(options);
+  const session = await getServerSession(authOptions);
   const { ...updateData } = req.body;
   {/** @ts-ignore */ }
   const userId = session?.user.id as string;

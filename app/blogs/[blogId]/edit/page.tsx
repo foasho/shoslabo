@@ -23,8 +23,6 @@ const Page = ({ params }) => {
     });
   }, [blogId]);
 
-  console.log(blog);
-
   return (
     <div className='h-full w-full bg-slate-200'>
       {blog && (

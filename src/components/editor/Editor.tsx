@@ -13,6 +13,7 @@ import { useRouter } from "next/navigation";
 import { SNSLinkPreview } from "../commons/SNSLinkPreview";
 import { FiBox } from "react-icons/fi";
 import Image from "next/image";
+import clsx from "clsx";
 
 const MDEditor = dynamic(() => import("@uiw/react-md-editor").then((mod) => mod.default), {
   ssr: false,
@@ -185,6 +186,10 @@ const Editor = ({
       });
     }
   };
+
+  const color_primary = `text-[${COLOR.primary}]`;
+  const color_secondary = `text-[${COLOR.secondary}]`;
+  const color_third = `text-[${COLOR.third}]`;
 
   return (
     <>
@@ -397,7 +402,7 @@ const Editor = ({
                       return (
                         <div
                           id={`${textContent}`}
-                          className={`text-[ py-7 text-2xl font-bold md:text-3xl${COLOR.primary}] !border-none`}
+                          className={clsx(`!border-none py-7 text-2xl font-bold md:text-3xl`, color_primary)}
                           style={{
                             color: COLOR.primary,
                             fontWeight: "bold",
@@ -415,7 +420,7 @@ const Editor = ({
                       return (
                         <div
                           id={`${textContent}`}
-                          className={`text-[ py-3 pl-2 text-xl font-bold md:text-2xl${COLOR.secondary}] !border-none`}
+                          className={clsx(`!border-none py-5 text-xl font-bold md:text-2xl`, color_secondary)}
                           style={{
                             color: COLOR.secondary,
                             fontWeight: "bold",
@@ -428,7 +433,7 @@ const Editor = ({
                     h3: ({ children }) => {
                       return (
                         <div
-                          className={`text-[ py-2 pl-3 text-lg font-bold md:text-xl${COLOR.third}] !border-none`}
+                          className={clsx(`!border-none py-2 pl-3 text-lg font-bold md:text-xl`, color_third)}
                           style={{
                             color: COLOR.third,
                             fontWeight: "bold",
@@ -441,7 +446,7 @@ const Editor = ({
                     h4: ({ children }) => {
                       return (
                         <div
-                          className={`text-[ py-2 pl-3 text-lg font-bold md:text-xl${COLOR.third}] !border-none`}
+                          className={clsx(`!border-none py-2 pl-3 text-lg font-bold md:text-xl`, color_third)}
                           style={{
                             color: COLOR.third,
                             fontWeight: "bold",
