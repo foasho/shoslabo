@@ -45,6 +45,14 @@ export default function Page() {
       route: "https://rakuken-iot.net/",
       tags: ["個人開発", "Python", "FastAPI", "Kotlin", "C++"],
     },
+    {
+      key: "card-6",
+      title: "JARVIS英会話",
+      description: "英会話教師JARVIS",
+      image: "/works/jarvis-english.png",
+      route: "https://english-lesson.vercel.app/",
+      tags: ["個人開発", "AI", "Next.js", "R3F"],
+    },
   ];
 
   return (
@@ -59,7 +67,7 @@ export default function Page() {
         </div>
         {/** サブタイトル */}
         <div className="mb-8 text-xl font-bold">
-          個人開発 / 作品集
+          個人開発 / 作品集 とかで主に仕事外で遊びで作ってるものです。
         </div>
         {/** カードリスト */}
         <div className="-mx-4 flex flex-wrap">
