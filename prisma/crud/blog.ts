@@ -30,13 +30,22 @@ export const createBlog = async ({ title, content, keywords, description, image,
  * すべてのBlogを取得す
  * ※Statusが1のもののみ取得する
  */
-export const getBlogs = async (isAdmin=false) => {
+export const getBlogs = async (isAdmin=false, orderBy: "asc"|"desc"="desc") => {
   // 管理者の場合はすべてのBlogを取得する
   if (isAdmin) {
-    const blogs = await prisma.blog.findMany();
+    const blogs = await prisma.blog.findMany(
+      {
+        orderBy: {
+          createdAt: orderBy,
+        },
+      }
+    );
     return blogs;
   }
   const blogs = await prisma.blog.findMany({
+    orderBy: {
+      createdAt: orderBy,
+    },
     where: {
       status: 1,
     },
