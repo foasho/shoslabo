@@ -46,7 +46,7 @@ export default function Page() {
     },
     {
       key: "card-6",
-      title: "スマートホーム執事AI-WILL",
+      title: "AI執事-WILL",
       description: "スマートホームAIアシスタント",
       image: "/works/will.png",
       route: "https://will-with-rakuken-iot.vercel.app",
